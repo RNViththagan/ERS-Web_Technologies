@@ -10,12 +10,12 @@ if ($result = mysqli_query($con, $sql)) {
     if ($obj['role'] == "Admin_Master"){
         header("location:master/index.php");
         ob_end_flush();
-        exit();
+        exit;
     }
     else{
         header("location:admin/index.php");
         ob_end_flush();
-        exit();
+        exit;
     }
     exit();
 
