@@ -20,16 +20,21 @@ if (isset($_POST['submit'])) {
 function login($table, $field)
 {
     $con = $GLOBALS['con'];
-    $sql = "select * from $table where $field = '" . $_POST['username'] . "' and status='active'";
+    if($field == "admin")
+        $username =strtolower($_POST['username']);
+    else
+        $username =strtoupper($_POST['username']);
+
+    $sql = "select * from $table where $field = '" . $username . "' and status='active'";
 
     if ($result = mysqli_query($con, $sql)) {
         if ($result->num_rows) {
             if ($field != "email") {
-                $sql = "select password from student_details where $field = '" . $_POST['username'] . "'";
+                $sql = "select password from student_details where $field = '" . $username . "'";
                 $result = mysqli_query($con, $sql);
                 $obj = mysqli_fetch_assoc($result);
                 if (password_verify($_POST['password'], $obj['password'])) {
-                    $_SESSION['userid'] = $_POST['username'];
+                    $_SESSION['userid'] = $username;
                     header("location:index.php");
                     exit();
                 } else {
@@ -41,7 +46,7 @@ function login($table, $field)
                 $obj = mysqli_fetch_assoc($result);
                 if (password_verify($_POST['password'], $obj['password'])) {
                     session_start();
-                    $_SESSION['userid'] = $_POST['username'];
+                    $_SESSION['userid'] = $username;
                     header("location:admin_select.php");
                     exit();
                 } else {
@@ -70,7 +75,7 @@ function login($table, $field)
             rel="shortcut icon"
             href="img/logo/ERS_logo_icon.ico"
             type="image/x-icon"/>
-    <title>ERS | Login Page</title>
+    <title>ERS | Login</title>
     <link rel="stylesheet" href="css/style.css"/>
     <link rel="stylesheet" href="css/main.css">
     <script src="https://cdn.tailwindcss.com"></script>

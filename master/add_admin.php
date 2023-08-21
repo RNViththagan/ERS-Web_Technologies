@@ -8,7 +8,7 @@ if (!isset($_SESSION['userid'])) {
 
 include("../connect.php");
 if (isset($_POST['submit'])) {
-    $email = $_POST['email'];
+    $email = strtolower($_POST['email']);
 
     $query = "SELECT * from admin where email='$email'";
 

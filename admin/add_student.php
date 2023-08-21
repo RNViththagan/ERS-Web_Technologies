@@ -7,8 +7,8 @@ if (!isset($_SESSION['userid'])) {
 
 include("../connect.php");
 if (isset($_POST['submit'])) {
-    $email = $_POST['email'];
-    $regno = $_POST['regno'];
+    $email = strtolower($_POST['email']);
+    $regno = strtoupper($_POST['regno']);
 
     $query = "SELECT * from student where reg_no='$regno' or email='$email'";
 
@@ -20,7 +20,6 @@ if (isset($_POST['submit'])) {
 
         $query = "INSERT INTO student (reg_no,email) values('$regno','$email')";
         if (!mysqli_query($con, $query)) {
-
             $msg[0] = "error!";
             $msg[1] = "warning";
         } else {
