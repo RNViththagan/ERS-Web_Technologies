@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION['userid'])) {
+if (!isset($_SESSION['role'])) {
     header("location:../login.php");
     exit();
 }
@@ -15,7 +15,7 @@ if (!isset($_SESSION['userid'])) {
     <title>Dashboard</title>
 </head>
 <body>
-    Welcome admin <br>
+    Welcome admin  <br><?php echo $_SESSION['userid'] ?><br>
     <a href="../logout.php">logout</a><br>
     <a href="add_student.php">add student</a>
 
