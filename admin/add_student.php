@@ -1,9 +1,10 @@
 <?php
 session_start();
-if (!isset($_SESSION['userid'])) {
+if (!isset($_SESSION['role'])) {
     header("location:../login.php");
     exit();
 }
+
 
 include("../connect.php");
 if (isset($_POST['submit'])) {

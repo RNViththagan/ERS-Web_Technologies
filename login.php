@@ -20,10 +20,11 @@ if (isset($_POST['submit'])) {
 function login($table, $field)
 {
     $con = $GLOBALS['con'];
-    if($field == "admin")
+    if($table == "admin")
         $username =strtolower($_POST['username']);
     else
         $username =strtoupper($_POST['username']);
+
 
     $sql = "select * from $table where $field = '" . $username . "' and status='active'";
 
@@ -41,14 +42,18 @@ function login($table, $field)
                     $GLOBALS['msg'][0] = "Password is wrong!";
                     $GLOBALS['msg'][1] = "warning";
                 }
-
             } else {
                 $obj = mysqli_fetch_assoc($result);
                 if (password_verify($_POST['password'], $obj['password'])) {
-                    session_start();
-                    $_SESSION['userid'] = $username;
-                    header("location:admin_select.php");
-                    exit();
+                    $sql = "select role from admin where email = '" . $username . "'";
+                    if ($result = mysqli_query($con, $sql)) {
+                        $obj = mysqli_fetch_assoc($result);
+                        $_SESSION['role'] = $obj['role'];
+                        $_SESSION['userid'] = $username;
+                        header("location:admin_select.php");
+                        exit();
+                    }
+
                 } else {
                     $GLOBALS['msg'][0] = "Password is wrong!";
                     $GLOBALS['msg'][1] = "warning";
@@ -124,7 +129,7 @@ function login($table, $field)
         </form>
         <div class="text-center mt-7">
             <p>Don't have an account?</p>
-            <a href="register.php" class="text-[var(--primary)] underline formbutton"
+            <a href="register/index.php" class="text-[var(--primary)] underline formbutton"
             >Sign-Up</a
             >
         </div>
