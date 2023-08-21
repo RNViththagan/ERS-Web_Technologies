@@ -1,0 +1,10 @@
+input.formbutton:hover{
+    cursor: pointer;
+}
+.warning{
+    color: red;
+}
+
+.done{
+    color: rgb(20, 211, 100);
+}
