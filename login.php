@@ -20,6 +20,7 @@ if (isset($_POST['submit'])) {
 function login($table, $field)
 {
     $con = $GLOBALS['con'];
+
     if($table == "admin")
         $username =strtolower($_POST['username']);
     else
@@ -53,7 +54,6 @@ function login($table, $field)
                         header("location:admin_select.php");
                         exit();
                     }
-
                 } else {
                     $GLOBALS['msg'][0] = "Password is wrong!";
                     $GLOBALS['msg'][1] = "warning";
