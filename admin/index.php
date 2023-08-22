@@ -14,6 +14,11 @@ if (!isset($_SESSION['role'])) {
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link
+            rel="shortcut icon"
+            href="../img/logo/ERS_logo_icon.ico"
+            type="image/x-icon"/>
+    <title>ERS | Login</title>
     <title>Dashboard</title>
 
     <link rel = "stylesheet" type = "text/css" href = "../css/style_index.css">
