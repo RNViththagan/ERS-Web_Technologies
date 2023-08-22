@@ -15,9 +15,10 @@
     box-shadow: 5px 5px 35px rgba(0, 0, 0, 0.4);
     padding: 40px 5px;
     width: 80%;
-    height: 600px;
+    /* height: 600px; */
     margin: auto;
     margin-top: 100px;
+    margin-bottom: 100px;
   }
 
 .card h1{
@@ -40,12 +41,61 @@
   
 }
 
-/* .hero{
-    width: 100%;
-    min-height: 100vh;
-    background: #eceaff;
-    color: #525252; 
-} */
+.filter{
+    text-align: right;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.filter select{
+    width: 150px;
+    height: 30px;
+    border-radius: 15px;
+    margin-right: 40px;
+}
+
+button{
+    width: 80px;
+    height: 30px;
+    border-radius: 15px;
+    font-size: 20px;
+    margin-right: 5%;
+}
+
+.filter label{
+    font-size: 20px;
+    padding-right: 10px;
+}
+
+table{
+    width: 90%;
+    border-collapse: collapse;
+    text-align: left;
+    overflow: hidden;
+    margin: auto;
+    margin-top: 20px;
+}
+
+th{
+    padding: 20px 30px;
+    letter-spacing: 2px;
+    font-size: 25px;
+}
+
+td{
+    padding: 15px 30px;
+    letter-spacing: 2px;
+    font-size: 18px;
+}
+
+tr:nth-child(even){
+    background-color: #ececec;
+}
+
+
+
+
+
 nav{
     background: black;
     width: 100%;
@@ -55,6 +105,7 @@ nav{
     justify-content: space-between;
     position: fixed;
     top: 0;
+    
  }
 
  .logo{
@@ -178,15 +229,6 @@ nav{
     padding: 8px;
     margin-right: 15px;
  }
-
- /* .sub-menu-link span{
-    font-size: 22px;
-    transition: transform 0.5s;
- }
-
- .sub-menu-link:hover span{
-    transform: translateX(5px);
- } */
 
  .sub-menu-link:hover p{
     font-weight: 600;
