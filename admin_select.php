@@ -3,10 +3,10 @@ ob_start();
 session_start();
 if (isset($_SESSION['role'])) {
     if ($_SESSION['role'] == "Admin_Master") {
-        header("Location:master");
+        header("Location:master/");
         exit;
     } else {
-        header("Location:admin");
+        header("Location:admin/");
         exit;
     }
 }
