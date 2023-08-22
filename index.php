@@ -13,6 +13,7 @@ elseif (isset($_SESSION['role'])) {
         exit;
     }
 }
+
 include("connect.php");
 ?>
     <!doctype html>
@@ -25,7 +26,8 @@ include("connect.php");
         <title>Dashboard</title>
     </head>
     <body>
-    Welcome Student <br><?php echo $_SESSION['userid'] ?><br>
+      Welcome Student <br><?php echo $_SESSION['userid'] ?><br>
+
     <a href="logout.php"> logout</a>
 
     </body>
