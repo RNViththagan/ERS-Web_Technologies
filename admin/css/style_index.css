@@ -4,6 +4,9 @@
     box-sizing: border-box;
 }
 
+body{
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
 .card {
     background-color: white;
     border: none;
@@ -29,7 +32,7 @@ h1{
 nav{
     background: black;
     width: 100%;
-    padding: 10px 5%;
+    padding: 10px 2%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -66,8 +69,8 @@ nav{
  .sub-menu-wrap{
     position: absolute;
     top: 100%;
-    right: 5%;
-    width: 320px;
+    right: 1%;
+    width: 250px;
     max-height: 0px;
     overflow: hidden;
     transition: max-height 0.5s;  
@@ -80,7 +83,7 @@ nav{
  .sub-menu{
     background: #b9b9b9;
     padding: 20px;
-    margin: 10px;
+    margin: 10px;  
     border-radius: 15px 0px 15px 15px;
  }
 
@@ -103,7 +106,7 @@ nav{
     border: 0;
     height: 1px;
     width: 100%;
-    background: #ccc;
+    background: #000000;
     margin: 15px 0 10px;
  }
 
@@ -113,10 +116,17 @@ nav{
     text-decoration: none;
     color: #525252;
     margin: 12px 0;
+    transition: transform 0.5s ease;
+ }
+
+ .sub-menu-link:hover {
+    transform: translateX(5px);
+    
  }
 
  .sub-menu-link p{
     width: 100%;
+    font-size: 20px;
  }
 
  .sub-menu-link img{
@@ -127,14 +137,14 @@ nav{
     margin-right: 15px;
  }
 
- .sub-menu-link span{
+ /* .sub-menu-link span{
     font-size: 22px;
     transition: transform 0.5s;
  }
 
  .sub-menu-link:hover span{
     transform: translateX(5px);
- }
+ } */
 
  .sub-menu-link:hover p{
     font-weight: 600;
