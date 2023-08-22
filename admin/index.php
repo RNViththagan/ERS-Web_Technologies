@@ -1,6 +1,8 @@
 <?php
 session_start();
-if (!isset($_SESSION['userid'])) {
+
+if (!isset($_SESSION['role'])) {
+
     header("location:../login.php");
     exit();
 }
@@ -13,6 +15,7 @@ if (!isset($_SESSION['userid'])) {
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dashboard</title>
+
     <link rel = "stylesheet" type = "text/css" href = "css/style_index.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
 </head>
@@ -78,6 +81,7 @@ if (!isset($_SESSION['userid'])) {
         }
     </script>
     
+
 
 </body>
 </html>

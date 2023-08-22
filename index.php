@@ -4,6 +4,16 @@ if (!isset($_SESSION['userid'])) {
     header("location:login.php");
     exit();
 }
+elseif (isset($_SESSION['role'])) {
+    if ($_SESSION['role'] == "Admin_Master") {
+        header("Location:master");
+        exit;
+    } else {
+        header("Location:admin");
+        exit;
+    }
+}
+
 include("connect.php");
 ?>
     <!doctype html>
@@ -16,7 +26,8 @@ include("connect.php");
         <title>Dashboard</title>
     </head>
     <body>
-    Welcome <?php echo $_SESSION['userid'] ?><br>
+      Welcome Student <br><?php echo $_SESSION['userid'] ?><br>
+
     <a href="logout.php"> logout</a>
 
     </body>

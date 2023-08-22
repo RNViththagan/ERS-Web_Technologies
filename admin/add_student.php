@@ -1,14 +1,18 @@
 <?php
 session_start();
-if (!isset($_SESSION['userid'])) {
+
+if (!isset($_SESSION['role'])) {
+
     header("location:../login.php");
     exit();
 }
 
+
 include("../connect.php");
 if (isset($_POST['submit'])) {
-    $email = $_POST['email'];
-    $regno = $_POST['regno'];
+    $email = strtolower($_POST['email']);
+    $regno = strtoupper($_POST['regno']);
+
 
     $query = "SELECT * from student where reg_no='$regno' or email='$email'";
 
