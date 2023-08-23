@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Registration</title>
-    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
 </head>
 
 <body>
@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) {
         <div class="formcomp">
             <label for="role">Role: </label>
             <select name="role">
-                <option value="Admin_Exam">Admin_Exam</option>
+                <option value="Admin_Subject">Admin_Subject</option>
                 <option value="Admin_Student">Admin_Student</option>
             </select>
         </div>

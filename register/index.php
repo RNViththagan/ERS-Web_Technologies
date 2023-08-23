@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link
             rel="shortcut icon"
-            href="../img/logo/ERS_logo_icon.ico"
+            href="../assets/img/logo/ERS_logo_icon.ico"
             type="image/x-icon"/>
     <title>ERS | Register</title>
     <script
             src="https://kit.fontawesome.com/5ce4b972fd.js"
             crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../css/style.css"/>
-    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../assets/css/style.css"/>
+    <link rel="stylesheet" href="../assets/css/main.css">
 </head>
 
 <body class="w-full h-full">
@@ -22,7 +22,7 @@
     <!-- Mobile n tab view design -->
     <div class="lg:hidden flex flex-col items-center">
         <img
-                src="../img/logo/ERS_logo.gif"
+                src="../assets/img/logo/ERS_logo.gif"
                 alt="ERS_logo"
                 class="w-28 align-middle"/>
         <h2 class="my-5 text-lg">Exam Registration System</h2>
@@ -75,7 +75,7 @@
         <div>
             <h2>Exam Registration System</h2>
             <img
-                    src="../img/undraw_online_test_re_kyfx.svg"
+                    src="../assets/img/undraw_online_test_re_kyfx.svg"
                     alt="Online test vector img"
                     class="w-60"/>
             <div>

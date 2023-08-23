@@ -1,12 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;900&display=swap");
+
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-body{
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-}
 .card {
     background-color: white;
     border: none;
@@ -14,21 +15,87 @@ body{
     box-shadow: 5px 5px 35px rgba(0, 0, 0, 0.4);
     padding: 40px 5px;
     width: 80%;
-    height: 600px;
+    /* height: 600px; */
     margin: auto;
-    margin-top: 50px;
+    margin-top: 100px;
+    margin-bottom: 100px;
   }
 
-h1{
-    text-align: center;
+.card h1{
+   font-size: 50px;
+   text-align: center;
+   padding-bottom: 30px;
 }
 
-/* .hero{
-    width: 100%;
-    min-height: 100vh;
-    background: #eceaff;
-    color: #525252; 
-} */
+.card h2{
+   font-size: 30px;
+   padding-top: 30px;
+   text-align: center;
+}
+
+.card img{
+   width: 400px;
+   display: block;
+  margin-left: auto;
+  margin-right: auto;
+  
+}
+
+.filter{
+    text-align: right;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.filter select{
+    width: 150px;
+    height: 30px;
+    border-radius: 15px;
+    margin-right: 40px;
+}
+
+button{
+    width: 80px;
+    height: 30px;
+    border-radius: 15px;
+    font-size: 20px;
+    margin-right: 5%;
+}
+
+.filter label{
+    font-size: 20px;
+    padding-right: 10px;
+}
+
+table{
+    width: 90%;
+    border-collapse: collapse;
+    text-align: left;
+    overflow: hidden;
+    margin: auto;
+    margin-top: 20px;
+}
+
+th{
+    padding: 20px 30px;
+    letter-spacing: 2px;
+    font-size: 25px;
+}
+
+td{
+    padding: 15px 30px;
+    letter-spacing: 2px;
+    font-size: 18px;
+}
+
+tr:nth-child(even){
+    background-color: #ececec;
+}
+
+
+
+
+
 nav{
     background: black;
     width: 100%;
@@ -36,20 +103,45 @@ nav{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative;
+    position: fixed;
+    top: 0;
+    
  }
 
  .logo{
     width: 120px;
  }
 
+ .user{
+   display: flex;
+ }
+
+ .user p{
+   padding-top: 5px;
+   color: #fff;
+   font-size: 20px;
+   letter-spacing:2px;
+ }
+
  .user-pic{
+   margin-left: 10px;
+   margin-right: 2px;
     width: 40px;
     border-radius: 50%;
     cursor: pointer;
-    margin-left: 30px;
  }
 
+ .user img{
+   padding-top: 10px;
+   width: 15px;
+   height: 25px;
+   cursor: pointer;
+ }
+
+ nav span{
+   color: #fff;
+ }
+ 
  nav ul{
     width: 100%;
     text-align: right;
@@ -81,8 +173,8 @@ nav{
  } 
 
  .sub-menu{
-    background: #b9b9b9;
-    padding: 20px;
+    background:#c1c1c1;
+    padding: 10px;
     margin: 10px;  
     border-radius: 15px 0px 15px 15px;
  }
@@ -92,9 +184,6 @@ nav{
     align-items: center;
  }
 
- .user-info h3{
-    font-weight: 500;
- }
 
  .user-info svg{
     width: 60px;
@@ -111,15 +200,19 @@ nav{
  }
 
  .sub-menu-link{
+    
+    border-radius: 15px;
     display: flex; 
     align-items: center;
     text-decoration: none;
     color: #525252;
-    margin: 12px 0;
+    margin: 10px 0;
     transition: transform 0.5s ease;
  }
 
  .sub-menu-link:hover {
+   transition: transform 0.5s ease;
+   background-color: #e5e5e5;
     transform: translateX(5px);
     
  }
@@ -136,15 +229,6 @@ nav{
     padding: 8px;
     margin-right: 15px;
  }
-
- /* .sub-menu-link span{
-    font-size: 22px;
-    transition: transform 0.5s;
- }
-
- .sub-menu-link:hover span{
-    transform: translateX(5px);
- } */
 
  .sub-menu-link:hover p{
     font-weight: 600;
