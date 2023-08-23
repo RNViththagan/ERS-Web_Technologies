@@ -45,8 +45,59 @@ CREATE TABLE `admin` (
 
 LOCK TABLES `admin` WRITE;
 /*!40000 ALTER TABLE `admin` DISABLE KEYS */;
-INSERT INTO `admin` VALUES ('admin_master@nexus.com','$2y$10$9D28If.TzaiX6I3ZoMBVYOuJsMAFu06/8AaGj9rYUvHpx./OmcIO2','Admin_Master','active'),('stud_admin1@nexus.com','$2y$10$IUzrF9GhBdTzDXXbmxA19.XZuxKo9le3hETfrRsqKG35goK4w1npS','Admin_Student','active');
+INSERT INTO `admin` VALUES ('admin_master@nexus.com','$2y$10$9D28If.TzaiX6I3ZoMBVYOuJsMAFu06/8AaGj9rYUvHpx./OmcIO2','Admin_Master','active'),('stud_admin1@nexus.com','$2y$10$IUzrF9GhBdTzDXXbmxA19.XZuxKo9le3hETfrRsqKG35goK4w1npS','Admin_Student','active'),('subj_admin1@nexus.com','$2y$10$6IniUusMCkDLxZFhTVWyL.Nk0BBkFuzzLUzSCdFOqy32NexOPRNvi','Admin_Subject','Active');
 /*!40000 ALTER TABLE `admin` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `combination`
+--
+
+DROP TABLE IF EXISTS `combination`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `combination` (
+  `combinationID` int(11) NOT NULL AUTO_INCREMENT,
+  `combinationName` varchar(50) NOT NULL,
+  PRIMARY KEY (`combinationID`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `combination`
+--
+
+LOCK TABLES `combination` WRITE;
+/*!40000 ALTER TABLE `combination` DISABLE KEYS */;
+INSERT INTO `combination` VALUES (1,'CSC - Direct Intake'),(2,'BOT, ZOO, FSC'),(3,'CHE, BOT, FSC'),(4,'CHE, BOT, ZOO'),(5,'CHE, ZOO, FSC'),(6,'CHE, PMM, AMM'),(7,'CSC, AMM, CHE'),(8,'CSC, AMM, PHY'),(9,'CSC, AMM, STA'),(10,'CSC, PMM, AMM'),(11,'CSC, PMM, CHE'),(12,'CSC, STA, PMM');
+/*!40000 ALTER TABLE `combination` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `combination_subjects`
+--
+
+DROP TABLE IF EXISTS `combination_subjects`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `combination_subjects` (
+  `combinationID` int(11) NOT NULL,
+  `subject` varchar(50) NOT NULL,
+  PRIMARY KEY (`combinationID`,`subject`),
+  KEY `subject` (`subject`),
+  CONSTRAINT `combination_subjects_ibfk_1` FOREIGN KEY (`combinationID`) REFERENCES `combination` (`combinationID`),
+  CONSTRAINT `combination_subjects_ibfk_2` FOREIGN KEY (`subject`) REFERENCES `subject` (`subject`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `combination_subjects`
+--
+
+LOCK TABLES `combination_subjects` WRITE;
+/*!40000 ALTER TABLE `combination_subjects` DISABLE KEYS */;
+INSERT INTO `combination_subjects` VALUES (1,'CSC - Direct Intake'),(2,'BOT'),(2,'FSC'),(2,'ZOO'),(3,'BOT'),(3,'CHE'),(3,'FSC'),(4,'CHE'),(5,'CHE'),(6,'CHE'),(7,'CSC'),(8,'CSC'),(9,'AMM'),(9,'CSC'),(9,'STA'),(10,'AMM'),(10,'CSC'),(10,'PMM'),(11,'CHE'),(11,'CSC'),(11,'PMM'),(12,'CSC'),(12,'PMM'),(12,'STA');
+/*!40000 ALTER TABLE `combination_subjects` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -70,7 +121,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES ('2020/CSC/051','viththagan1999@gmail.com','active');
+INSERT INTO `student` VALUES ('2020/CSC/051','viththagan1999@gmail.com','active'),('2020/CSC/074','saaru27kesan@gmail.com','disabled');
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -101,6 +152,29 @@ LOCK TABLES `student_details` WRITE;
 INSERT INTO `student_details` VALUES ('2020/CSC/051','','$2y$10$EtWMWC7enKBQqMHRL4LcUOAg/l4VxWH74dF7a5U7fFW.y9rxQy6k6','','verified');
 /*!40000 ALTER TABLE `student_details` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `subject`
+--
+
+DROP TABLE IF EXISTS `subject`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `subject` (
+  `subject` varchar(50) NOT NULL,
+  PRIMARY KEY (`subject`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `subject`
+--
+
+LOCK TABLES `subject` WRITE;
+/*!40000 ALTER TABLE `subject` DISABLE KEYS */;
+INSERT INTO `subject` VALUES ('AMM'),('BOT'),('CHE'),('CSC'),('CSC - Direct Intake'),('FSC'),('PHY'),('PMM'),('STA'),('ZOO');
+/*!40000 ALTER TABLE `subject` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -111,4 +185,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-19  3:35:51
+-- Dump completed on 2023-08-24  2:27:25
