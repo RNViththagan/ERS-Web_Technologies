@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) {
         <div class="formcomp">
             <label for="role">Role: </label>
             <select name="role">
-                <option value="Admin_Exam">Admin_Exam</option>
+                <option value="Admin_Subject">Admin_Subject</option>
                 <option value="Admin_Student">Admin_Student</option>
             </select>
         </div>

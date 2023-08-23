@@ -18,8 +18,7 @@ if (!isset($_SESSION['role'])) {
             rel="shortcut icon"
             href="../img/logo/ERS_logo_icon.ico"
             type="image/x-icon"/>
-    <title>ERS | Login</title>
-    <title>Dashboard</title>
+    <title>ERS | Admin</title>
 
     <link rel = "stylesheet" type = "text/css" href = "../css/style_index.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
@@ -48,7 +47,7 @@ if (!isset($_SESSION['role'])) {
                     </div>
                     <hr> -->
 
-                    <a href="#" class="sub-menu-link">
+                    <a href="../admin" class="sub-menu-link">
                         <img src="../img/panels/profile.png">
                         <p>Dashboard</p>
                         <!-- <span>></span> -->
@@ -58,11 +57,20 @@ if (!isset($_SESSION['role'])) {
                         <p>Profile</p>
                         <!-- <span>></span> -->
                     </a>
-                    <a href="add_student.php" class="sub-menu-link">
+                    <?php if ($_SESSION['role'] == "Admin_Student") {?>
+                    <a href="index.php?page=addstd" class="sub-menu-link">
                         <img src="../img/panels/profile.png">
                         <p>Student</p>
                         <!-- <span>></span> -->
                     </a>
+                    <?php } ?>
+                    <?php if ($_SESSION['role'] == "Admin_Subject") {?>
+                    <a href="index.php?page=subcomb" class="sub-menu-link">
+                        <img src="../img/panels/profile.png">
+                        <p>Subject combination</p>
+                        <!-- <span>></span> -->
+                    </a>
+                    <?php } ?>
                     <hr>
                     <a href="../logout.php" class="sub-menu-link">
                         <img src="../img/panels/profile.png">
@@ -75,7 +83,28 @@ if (!isset($_SESSION['role'])) {
     </div>
 
     <div class = "card">
-        <h1>Exam Registration System</h1> <br>
+        <?php
+        if ($_SESSION['role'] == "Admin_Student") {
+            if(isset($_GET['page'])){
+                if($_GET['page'] === "addstd"){
+                    include("add_student.php");
+                }
+                else
+                    include("subj_admin_dashboard.php");
+            }
+            else
+                include("stud_admin_dashboard.php");
+        }elseif ($_SESSION['role'] == "Admin_Subject")
+            if(isset($_GET['page'])){
+                if($_GET['page'] === "subcomb"){
+                    include("subject_combination.php");
+                }
+                else
+                    include("subj_admin_dashboard.php");
+            }
+            else
+                include("subj_admin_dashboard.php");
+        ?>
     </div>
 
     <script>
