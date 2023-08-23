@@ -30,7 +30,7 @@
 
 .login-bg {
   height: 100vh;
-  background-image: url("imgbg.png");
+  background-image: url("../img/login_bg.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
