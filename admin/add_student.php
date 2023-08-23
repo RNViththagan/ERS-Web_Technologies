@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../assets/css/main.css">
 <h1 class="titlehead">Add admin</h1>
 <div class="container">
     <form action="" method="post">
