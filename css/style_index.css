@@ -1,12 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;900&display=swap");
+
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
-body{
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-}
 .card {
     background-color: white;
     border: none;
@@ -16,11 +17,27 @@ body{
     width: 80%;
     height: 600px;
     margin: auto;
-    margin-top: 50px;
+    margin-top: 100px;
   }
 
-h1{
-    text-align: center;
+.card h1{
+   font-size: 50px;
+   text-align: center;
+   padding-bottom: 30px;
+}
+
+.card h2{
+   font-size: 30px;
+   padding-top: 30px;
+   text-align: center;
+}
+
+.card img{
+   width: 400px;
+   display: block;
+  margin-left: auto;
+  margin-right: auto;
+  
 }
 
 /* .hero{
@@ -36,20 +53,44 @@ nav{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    position: relative;
+    position: fixed;
+    top: 0;
  }
 
  .logo{
     width: 120px;
  }
 
+ .user{
+   display: flex;
+ }
+
+ .user p{
+   padding-top: 5px;
+   color: #fff;
+   font-size: 20px;
+   letter-spacing:2px;
+ }
+
  .user-pic{
+   margin-left: 10px;
+   margin-right: 2px;
     width: 40px;
     border-radius: 50%;
     cursor: pointer;
-    margin-left: 30px;
  }
 
+ .user img{
+   padding-top: 10px;
+   width: 15px;
+   height: 25px;
+   cursor: pointer;
+ }
+
+ nav span{
+   color: #fff;
+ }
+ 
  nav ul{
     width: 100%;
     text-align: right;
@@ -81,8 +122,8 @@ nav{
  } 
 
  .sub-menu{
-    background: #b9b9b9;
-    padding: 20px;
+    background:#c1c1c1;
+    padding: 10px;
     margin: 10px;  
     border-radius: 15px 0px 15px 15px;
  }
@@ -92,9 +133,6 @@ nav{
     align-items: center;
  }
 
- .user-info h3{
-    font-weight: 500;
- }
 
  .user-info svg{
     width: 60px;
@@ -111,15 +149,19 @@ nav{
  }
 
  .sub-menu-link{
+    
+    border-radius: 15px;
     display: flex; 
     align-items: center;
     text-decoration: none;
     color: #525252;
-    margin: 12px 0;
+    margin: 10px 0;
     transition: transform 0.5s ease;
  }
 
  .sub-menu-link:hover {
+   transition: transform 0.5s ease;
+   background-color: #e5e5e5;
     transform: translateX(5px);
     
  }
