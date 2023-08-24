@@ -68,7 +68,7 @@ h1.sub_comb{
     border: 1px solid #acacac;
     border-radius: 999px;
     padding: 5px 15px;
-    padding-right: 0px;
+    padding-right: 0;
     margin: 5px auto;
 }
 
