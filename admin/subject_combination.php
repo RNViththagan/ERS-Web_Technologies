@@ -60,9 +60,8 @@ while ($sub = $subjects->fetch_assoc()) {
 
 $subarr .= "];";
 ?>
-<h1>Generate Combinations</h1>
-
-<h2>Combination Table</h2>
+<link rel="stylesheet" href="../assets/css/gen_combinations.css">
+<h1 class="sub_comb">Subject Combinations</h1>
 <table border="1">
     <tr>
         <th>Combination ID</th>
@@ -81,38 +80,47 @@ $subarr .= "];";
     ?>
 </table>
 
-
-<form action="" method="post" id="combinationForm">
-    <label for="subjectCount">Number of Subjects in Combination:</label>
-    <input type="number" id="subjectCount" name="subjectCount" min="1" value="1" max="4">
-    <button id="generateButton" type="button">Generate</button>
-
-    <div id="dropdownContainer">
-        <!-- Dropdowns will be generated here -->
+<div class="form-container">
+    <h2 class="text-center text-primary">Add New Combination</h2>
+    <div class="msg">
+        <?php
+        if (isset($successMsg)) {
+            echo "<p class='success-msg'>$successMsg</p>";
+        } elseif (isset($errorMsg)) {
+            echo "<p class='error-msg'>$errorMsg</p>";
+        }
+        ?>
     </div>
-    <input type="submit" name="sub_comb" value="Add Combination">
-</form>
+    <form action="" method="post" id="combinationForm">
+        <div class="text-input">
+            <i class="fa-solid fa-clipboard-list-check text-primary">No of Subjects</i>
+            <div></div>
+            <input type="number" id="subjectCount" name="subjectCount" min="1" value="1" max="4"
+                   placeholder="Number of Subjects" class="w-full outline-none">
+            <button type="button" id="generateButton" class="btn btn-primary mt-3">Generate</button>
+        </div>
 
-<?php
-if (isset($successMsg)) {
-    echo "<p style='color: green;'>$successMsg</p>";
-} elseif (isset($errorMsg)) {
-    echo "<p style='color: red;'>$errorMsg</p>";
-}
-?>
-
+        <div id="dropdownContainer" class="mt-2">
+            <!-- Dropdowns will be generated here -->
+        </div>
+        <div id="addCombinationBtnContainer" class="mt-3" style="display: none;">
+            <input type="submit" name="sub_comb" value="Add Combination" class="btn btn-primary">
+        </div>
+    </form>
+</div>
 <script>
-    if ( window.history.replaceState ) {
-        window.history.replaceState( null, null, window.location.href );
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
     }
 </script>
 
 <script>
-        <?php echo $subarr."\n"?>
+    <?php echo $subarr . "\n"?>
     const subjectCountInput = document.getElementById('subjectCount');
     const generateButton = document.getElementById('generateButton');
     const combinationForm = document.getElementById('combinationForm');
     const dropdownContainer = document.getElementById('dropdownContainer');
+    const addCombinationBtnContainer = document.getElementById('addCombinationBtnContainer');
     let generatedSubjects = 0; // Track the number of generated subjects
     let maxSubjects = subjectCountInput.getAttribute('max');
     generateButton.addEventListener('click', generateDropdowns);
@@ -147,6 +155,8 @@ if (isset($successMsg)) {
             div.appendChild(label);
             div.appendChild(dropdown);
             dropdownContainer.appendChild(div);
+            // Show the "Add Combination" button after generating dropdowns
+            addCombinationBtnContainer.style.display = 'block';
         }
     }
 
