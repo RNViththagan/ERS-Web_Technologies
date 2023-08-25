@@ -1,4 +1,12 @@
-<!DOCTYPE html>
+<?php
+ob_start();
+require_once($_SERVER['DOCUMENT_ROOT'].'/config/userDataController.php');
+
+if (!isset($_SESSION['code-verified'])) {
+  header("location: ../index.php");
+}
+
+?><!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -28,16 +36,32 @@
         <h3 class="text-lg underline font-semibold text-gray-900 mb-3">
           Reset Password
         </h3>
+        <!-- error msgs -->
+        <?php if (isset($errors['error'])) { ?>
+            <div class="error-text"><?php echo $errors['error']; ?></div>
+        <?php } ?>
+
         <form
           action=""
           method="post"
           class="flex flex-col items-center justify-around">
-          <div class="text-input">
+
+          <!-- error msg -->
+          <?php if (isset($errors['password'])) { ?>
+            <p class='error-text'><?php echo $errors['password']; ?></p>
+          <?php } ?>
+          <!-- password input -->
+          <div class="<?php echo (isset($errors['password']) ? "error-input" : "")?> text-input">
             <i class="fa-solid fa-lock"></i>
             <div></div>
             <input type="password" name="password" placeholder="Password" />
           </div>
-          <div class="text-input">
+          <!-- error msg -->
+          <?php if (isset($errors['cpassword'])) { ?>
+            <p class='error-text'><?php echo $errors['cpassword']; ?></p>
+          <?php } ?>
+          <!-- confirm pw input -->
+          <div class="<?php echo (isset($errors['cpassword']) ? "error-input" : "")?> text-input">
             <i class="fa-solid fa-lock"></i>
             <div></div>
             <input
@@ -45,6 +69,7 @@
               name="cpassword"
               placeholder="Confirm Password" />
           </div>
+          
           <input
             type="submit"
             name="reset-pw-btn"

@@ -6,7 +6,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != "Admin_Master") {
 }
 
 
-include("../connect.php");
+include("../config/connect.php");
 if (isset($_POST['submit'])) {
     $email = strtolower($_POST['email']);
 

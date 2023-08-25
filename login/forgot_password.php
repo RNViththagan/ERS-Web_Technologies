@@ -1,3 +1,8 @@
+<?php require_once($_SERVER['DOCUMENT_ROOT'].'/config/userDataController.php');
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -28,15 +33,22 @@
         <h3 class="text-lg underline font-semibold text-gray-900 mb-3">
           Forgot Password
         </h3>
+
+        <?php if (isset($errors['error'])) { ?>
+            <div class="error-text"><?php echo $errors['error']; ?></div>
+        <?php } ?>
+
         <form
-          action=""
+          action="forgot_password.php"
           method="post"
           class="flex flex-col items-center justify-around">
+          
           <div class="text-input">
             <i class="fa-solid fa-user"></i>
             <div></div>
             <input type="text" name="username" placeholder="UserName" />
           </div>
+          
           <div class="text-input">
             <i class="fa-solid fa-at"></i>
             <div></div>
@@ -44,7 +56,7 @@
           </div>
           <input
             type="submit"
-            name="forgot-pw-btn"
+            name="forgot-pw-submit-btn"
             value="Submit"
             class="btn text-white bg-[var(--primary)] mt-5" />
         </form>

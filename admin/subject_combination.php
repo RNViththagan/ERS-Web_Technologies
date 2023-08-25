@@ -1,5 +1,5 @@
 <?php
-require_once("../connect.php");
+require_once("../config/connect.php");
 $errorMsg = "";
 
 // Handling form submission

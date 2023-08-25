@@ -17,6 +17,7 @@
   border-radius: 15px;
   box-shadow: 5px 5px 35px rgba(0, 0, 0, 0.4);
   padding: 40px 5px;
+  height: auto;
 }
 .btn {
   border-radius: 9999px;
@@ -43,6 +44,28 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.error-text {
+  color: red;
+  text-align: center;
+  font-size: small;
+}
+.error-input {
+  border: 1px solid red !important;
+}
+.error-input i {
+  color: red !important;
+}
+.error-input div {
+  background-color: red !important;
+}
+.error-input input::placeholder {
+  color: red;
+}
+.wrong-otp input {
+  border: 1px solid red !important;
+  background-color: rgb(255, 199, 199);
 }
 
 .text-input {
@@ -77,6 +100,8 @@
   border-radius: 5px;
   outline: none;
 }
-/* .otp-input-box:focus {
-  outline: 1px solid blue;
-} */
+.active-resend {
+  color: #5465ff !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
