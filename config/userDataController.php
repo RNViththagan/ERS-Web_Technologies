@@ -145,7 +145,7 @@ if (isset($_POST['verify-otp'])) {
         $update_status = "UPDATE student_check SET verificationCode = $code, status = '$status', verificationStatus = '$verificationStatus' WHERE regNo = '$username' and email = '$email'";
         $update_res = mysqli_query($con, $update_status);
         if ($update_res) {
-            header('location: ../login.phpp');
+            header('location: ../login.php');
             exit();
         } else {
             $errors['otp-error'] = "Something went wrong!";

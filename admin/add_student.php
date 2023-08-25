@@ -30,6 +30,8 @@ if (isset($_POST['submit'])) {
                 $msg[0] = "error!";
                 $msg[1] = "warning";
             } else {
+                $query = "INSERT INTO student (regNo) values('$regno')";
+                mysqli_query($con, $query);
                 $msg[0] = "Successfully added!";
                 $msg[1] = "done";
             }
