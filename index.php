@@ -14,7 +14,7 @@ elseif (isset($_SESSION['role'])) {
     }
 }
 
-include("connect.php");
+include("config/connect.php");
 ?>
     <!doctype html>
     <html lang="en">
