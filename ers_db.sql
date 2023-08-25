@@ -34,7 +34,7 @@ CREATE TABLE `admin` (
   `email` varchar(100) NOT NULL,
   `password` varchar(155) NOT NULL,
   `role` varchar(50) NOT NULL DEFAULT 'Student',
-  `status` varchar(100) NOT NULL DEFAULT 'Active',
+  `status` varchar(100) NOT NULL DEFAULT 'active',
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -109,16 +109,16 @@ DROP TABLE IF EXISTS `student`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `student` (
   `regNo` varchar(12) NOT NULL,
-  `indexNumber` varchar(10) NOT NULL,
-  `title` varchar(5) NOT NULL,
-  `nameWithIniial` varchar(60) NOT NULL,
-  `fullName` varchar(150) NOT NULL,
-  `district` varchar(30) NOT NULL,
-  `mobileNo` varchar(11) NOT NULL,
-  `landlineNo` varchar(11) NOT NULL,
-  `homeAddress` varchar(300) NOT NULL,
-  `addressInJaffna` varchar(300) NOT NULL,
-  `profile_img` varchar(255) NOT NULL,
+  `indexNumber` varchar(10) DEFAULT NULL,
+  `title` varchar(5) DEFAULT NULL,
+  `nameWithIniial` varchar(60) DEFAULT NULL,
+  `fullName` varchar(150) DEFAULT NULL,
+  `district` varchar(30) DEFAULT NULL,
+  `mobileNo` varchar(11) DEFAULT NULL,
+  `landlineNo` varchar(11) DEFAULT NULL,
+  `homeAddress` varchar(300) DEFAULT NULL,
+  `addressInJaffna` varchar(300) DEFAULT NULL,
+  `profile_img` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`regNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -129,6 +129,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
+INSERT INTO `student` VALUES ('2020/CSC/007',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('2020/CSC/028',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('2020/CSC/046',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('2020/CSC/051',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL),('2020/CSC/074',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,12 +143,10 @@ DROP TABLE IF EXISTS `student_check`;
 CREATE TABLE `student_check` (
   `regNo` varchar(12) NOT NULL,
   `email` varchar(80) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'unregisterd',
-  `verificationCode` int(6) NOT NULL,
-  `verificationStatus` varchar(15) NOT NULL DEFAULT 'not_verified',
-  PRIMARY KEY (`regNo`),
-  UNIQUE KEY `email` (`email`)
+  `verificationCode` int(11) DEFAULT NULL,
+  `verificationStatus` varchar(15) NOT NULL DEFAULT 'not_verified'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -157,7 +156,7 @@ CREATE TABLE `student_check` (
 
 LOCK TABLES `student_check` WRITE;
 /*!40000 ALTER TABLE `student_check` DISABLE KEYS */;
-INSERT INTO `student_check` VALUES ('2020/CSC/051','viththagan1999@gmail.com','$2y$10$r2yaIo09V86NfT8kvmmX3ehl.BHs/ru9u.iFmysz8k0YtKHOSYP1S','active',330432,'verified');
+INSERT INTO `student_check` VALUES ('2020/CSC/007','cnilwakka@gmail.com',NULL,'unregisterd',NULL,'not_verified'),('2020/CSC/028','lahiruishan400@gmail.com',NULL,'unregisterd',NULL,'not_verified'),('2020/CSC/046','audeshitha@gmail.com',NULL,'unregisterd',NULL,'not_verified'),('2020/CSC/051','viththagan1999@gmail.com','$2y$10$UheeVt7LhSXc6zO6NT5R2Oaa.gzgxcAK8G/M71M7zPMJrHrbN8IaC','active',0,'verified'),('2020/CSC/074','saaru27kesan@gmail.com','$2y$10$7VyessXmkub2uhLKG5NezulQNzjdJQVWoEv7G8ivHJA4DMUtZ/3De','active',0,'verified');
 /*!40000 ALTER TABLE `student_check` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -193,4 +192,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-08-26  0:17:23
+-- Dump completed on 2023-08-26  1:15:16
