@@ -237,6 +237,7 @@ if (isset($_POST['login-btn'])) {
                         } else {
                             $_SESSION['userid'] = $username;
                             $_SESSION['role'] = $fetch['role'];
+                            $_SESSION['us_name'] = $fetch['name'];
                             header("location:admin_select.php");
                             exit();
                         }
