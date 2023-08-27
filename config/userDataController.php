@@ -266,56 +266,78 @@ if (isset($_POST['forgot-pw-submit-btn'])) {
         $field = "email";
         $role = "admin";
 
+    }else{
+        // Check the name validation
+        $regNoPattern1 = '/^\d{4}[A-Za-z]{2,3}\/?\d{3}$/';
+        $regNoPattern2 = '/^\d{4}\/[A-Za-z]+\/\d{3}$/';
+        if (preg_match($regNoPattern1, $username)) {
+            $year = substr($username, 0, 4);
+            // Determine the position of the department code and the number
+            if (ctype_alpha($username[4]) && ctype_alpha($username[5]) && ctype_alpha($username[6])) {
+                $department = substr($username, 4, 3);
+                $number = substr($username, 7);
+            } else {
+                $department = substr($username, 4, 2);
+                $number = substr($username, 6);
+            }
+
+            $username = $year ."/".$department ."/".$number;
+        }
+
+        if (!preg_match($regNoPattern2, $username)) {
+            $errors['error'] = "Invalid Registration No (XXXX/XXX/XXX)";
+        }
     }
+    if (count($errors) === 0) {
+        $check_email = "SELECT * FROM $table WHERE $field = '$username' AND email = '$email'";
+        $run_sql = mysqli_query($con, $check_email);
 
-    $check_email = "SELECT * FROM $table WHERE $field = '$username' AND email = '$email'";
-    $run_sql = mysqli_query($con, $check_email);
+        if (mysqli_num_rows($run_sql) > 0) {
+            // Initialize PHPMailer
+            $mail = new PHPMailer(true);
 
-    if (mysqli_num_rows($run_sql) > 0) {
-        // Initialize PHPMailer
-        $mail = new PHPMailer(true);
+            $code = rand(999999, 111111);
+            $insert_code = "UPDATE $table SET verificationCode = $code WHERE $field = '$username' AND email = '$email'";
+            $run_query = mysqli_query($con, $insert_code);
 
-        $code = rand(999999, 111111);
-        $insert_code = "UPDATE $table SET verificationCode = $code WHERE $field = '$username' AND email = '$email'";
-        $run_query = mysqli_query($con, $insert_code);
+            if ($run_query) {
+                $subject = "ERS Registration - Email Verification Code";
+                $message = "Your verification code for the exam registration system is $code. This code will expire in 3 minutes";
+                $sender_name = "Exam Registration System | Faculty of Science";
+                $sender_mail = "ers.fos.csc@gmail.com";
 
-        if ($run_query) {
-            $subject = "ERS Registration - Email Verification Code";
-            $message = "Your verification code for the exam registration system is $code. This code will expire in 3 minutes";
-            $sender_name = "Exam Registration System | Faculty of Science";
-            $sender_mail = "ers.fos.csc@gmail.com";
+                try {
+                    // SMTP configuration
+                    $mail->isSMTP();
+                    $mail->Host = 'smtp.gmail.com';
+                    $mail->SMTPAuth = true;
+                    $mail->Username = 'ers.fos.csc@gmail.com';
+                    $mail->Password = 'izvixydstkhxvpsf';
+                    $mail->SMTPSecure = 'tls'; // Use TLS
+                    $mail->Port = 587;
 
-            try {
-                // SMTP configuration
-                $mail->isSMTP();
-                $mail->Host = 'smtp.gmail.com';
-                $mail->SMTPAuth = true;
-                $mail->Username = 'ers.fos.csc@gmail.com';
-                $mail->Password = 'izvixydstkhxvpsf';
-                $mail->SMTPSecure = 'tls'; // Use TLS
-                $mail->Port = 587;
+                    // Recipients and content
+                    $mail->setFrom($sender_mail, $sender_name);
+                    $mail->addAddress($email, $username);
+                    $mail->Subject = $subject;
+                    $mail->Body = $message;
 
-                // Recipients and content
-                $mail->setFrom($sender_mail, $sender_name);
-                $mail->addAddress($email, $username);
-                $mail->Subject = $subject;
-                $mail->Body = $message;
-
-                // Send email
-                $mail->send();
-                $info = "We've sent a verification code to your email - $email";
-                $_SESSION['fp-email'] = $email;
-                $_SESSION['fp-username'] = $username;
-                $_SESSION['code-sent'] = true;
-                header('location: user_verification.php');
-            } catch (Exception $e) {
-                $errors['error'] = "Failed while sending code!";
+                    // Send email
+                    $mail->send();
+                    $info = "We've sent a verification code to your email - $email";
+                    $_SESSION['fp-email'] = $email;
+                    $_SESSION['fp-username'] = $username;
+                    $_SESSION['code-sent'] = true;
+                    header('location: user_verification.php');
+                } catch (Exception $e) {
+                    $errors['error'] = "Failed while sending code!";
+                }
+            } else {
+                $errors['error'] = "Something went wrong!";
             }
         } else {
-            $errors['error'] = "Something went wrong!";
+            $errors['error'] = "This username or email does not exist!";
         }
-    } else {
-        $errors['error'] = "This username or email does not exist!";
     }
 }
 
