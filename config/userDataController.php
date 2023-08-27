@@ -25,8 +25,8 @@ if (isset($_POST['reg-btn'])) {
     $password = mysqli_real_escape_string($con, $_POST['password']);
     $cpassword = mysqli_real_escape_string($con, $_POST['cpassword']);
 
-    $regNoPattern1 = '/^\d{4}[A-Z]{2,3}\/?\d{3}$/';
-    $regNoPattern2 = '/^\d{4}\/[A-Z]+\/\d{3}$/';
+    $regNoPattern1 = '/^\d{4}[A-Za-z]{2,3}\/?\d{3}$/';
+    $regNoPattern2 = '/^\d{4}\/[A-Za-z]+\/\d{3}$/';
     if (preg_match($regNoPattern1, $username)) {
         $year = substr($username, 0, 4);
         // Determine the position of the department code and the number
@@ -184,8 +184,8 @@ if (isset($_POST['login-btn'])) {
 
     } else {
         // Check the name validation
-        $regNoPattern1 = '/^\d{4}[A-Z]{2,3}\/?\d{3}$/';
-        $regNoPattern2 = '/^\d{4}\/[A-Z]+\/\d{3}$/';
+        $regNoPattern1 = '/^\d{4}[A-Za-z]{2,3}\/?\d{3}$/';
+        $regNoPattern2 = '/^\d{4}\/[A-Za-z]+\/\d{3}$/';
         if (preg_match($regNoPattern1, $username)) {
             $year = substr($username, 0, 4);
             // Determine the position of the department code and the number
@@ -230,7 +230,7 @@ if (isset($_POST['login-btn'])) {
                                 header('location: ../register/reg_verification.php');
                             } else {
                                 $_SESSION = array();
-                                $_SESSION['userid'] = $username;
+                                $_SESSION['userid'] = strtoupper($username);
                                 header('location: index.php');
                                 exit();
                             }
