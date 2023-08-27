@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 27, 2023 at 10:32 PM
+-- Generation Time: Aug 27, 2023 at 10:45 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -130,8 +130,8 @@ CREATE TABLE `exam_reg` (
   `academic_year` varchar(10) NOT NULL,
   `semester` enum('1','2') NOT NULL,
   `status` enum('draft','registration','closed') DEFAULT 'draft',
-  `closing_date` date NOT NULL DEFAULT current_timestamp(),
-  `date_created` date DEFAULT current_timestamp()
+  `closing_date` date NOT NULL DEFAULT '2020-01-01',
+  `date_created` date DEFAULT '2020-01-01'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
