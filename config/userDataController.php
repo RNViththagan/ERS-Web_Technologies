@@ -25,9 +25,24 @@ if (isset($_POST['reg-btn'])) {
     $password = mysqli_real_escape_string($con, $_POST['password']);
     $cpassword = mysqli_real_escape_string($con, $_POST['cpassword']);
 
-    $regNoPattern = '/^\d{4}\/[A-Z]+\/\d{3}$/';
+    $regNoPattern1 = '/^\d{4}[A-Z]{2,3}\/?\d{3}$/';
+    $regNoPattern2 = '/^\d{4}\/[A-Z]+\/\d{3}$/';
+    if (preg_match($regNoPattern1, $username)) {
+        $year = substr($username, 0, 4);
+        // Determine the position of the department code and the number
+        if (ctype_alpha($username[4]) && ctype_alpha($username[5]) && ctype_alpha($username[6])) {
+            $department = substr($username, 4, 3);
+            $number = substr($username, 7);
+        } else {
+            $department = substr($username, 4, 2);
+            $number = substr($username, 6);
+        }
+
+        $username = $year ."/".$department ."/".$number;
+    }
+
     // Check the name validation
-    if (!preg_match($regNoPattern, $username)) {
+    if (!preg_match($regNoPattern2, $username)) {
         $errors['username'] = "Invalid Registration No (XXXX/XXX/XXX)";
     } // Check the E-mail validation
     elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -169,8 +184,23 @@ if (isset($_POST['login-btn'])) {
 
     } else {
         // Check the name validation
-        $regNoPattern = '/^\d{4}\/[A-Z]+\/\d{3}$/';
-        if (!preg_match($regNoPattern, $username)) {
+        $regNoPattern1 = '/^\d{4}[A-Z]{2,3}\/?\d{3}$/';
+        $regNoPattern2 = '/^\d{4}\/[A-Z]+\/\d{3}$/';
+        if (preg_match($regNoPattern1, $username)) {
+            $year = substr($username, 0, 4);
+            // Determine the position of the department code and the number
+            if (ctype_alpha($username[4]) && ctype_alpha($username[5]) && ctype_alpha($username[6])) {
+                $department = substr($username, 4, 3);
+                $number = substr($username, 7);
+            } else {
+                $department = substr($username, 4, 2);
+                $number = substr($username, 6);
+            }
+
+            $username = $year ."/".$department ."/".$number;
+        }
+
+        if (!preg_match($regNoPattern2, $username)) {
             $errors['username'] = "Invalid Registration No (XXXX/XXX/XXX)";
         }
 
