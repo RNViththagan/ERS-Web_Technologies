@@ -1,6 +1,6 @@
 <?php
 ob_start();
-require_once($_SERVER['DOCUMENT_ROOT'].'/config/userDataController.php');
+require_once('../config/userDataController.php');
 
 if (!isset($_SESSION['reg-code-sent'])) {
     header("location: ../index.php");
@@ -9,7 +9,7 @@ if (!isset($_SESSION['reg-code-sent'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,30 +25,34 @@ if (!isset($_SESSION['reg-code-sent'])) {
             crossorigin="anonymous"></script>
 </head>
 
-<body class="w-full h-full">
+<body class="h-screen w-full lg:relative">
 <div class="login-bg flex items-center justify-center"></div>
-<div class="card h-[475px] w-10/12 absolute-center">
+<div class="card h-[495px] w-10/12 lg:w-7/12 absolute-center lg:h-[500px] lg:p-0 z-0">
     <!-- Mobile n tab view design -->
-    <div class="lg:hidden flex flex-col items-center">
+    <div class="lg:h-full flex lg:grid flex-col z-10 lg:grid-cols-2 items-center lg:justify-items-center">
         <img
                 src="../assets/img/logo/ERS_logo.gif"
                 alt="ERS_logo"
-                class="w-28 align-middle" />
-        <h2 class="mt-3 mb-5 text-lg">Exam Registration System</h2>
-        <h3 class="text-lg underline font-semibold text-gray-900 mb-3">
+                class="w-28 align-middle lg:col-start-1 lg:self-end " />
+        <h2 class="my-5 text-lg font-[var(--title)] lg:my-0 lg:col-start-1 lg:text-xl">Exam Registration System</h2>
+        <img
+            src="../assets/img/undraw_code_typing.svg"
+            alt="vector img"
+            class="hidden w-60 lg:block lg:col-start-1 " />
+        <h3 class="text-lg underline font-semibold text-gray-900 mb-3 lg:text-2xl lg:mb-0 lg:col-start-2 lg:row-start-1 lg:self-end">
             Verification Code
         </h3>
 
 
         <?php if (isset($errors['otp-error'])) { ?>
-            <div class="error-text"><?php echo $errors['otp-error']; ?></div>
+            <div class="error-text lg:col-start-2 lg:row-start-2 lg:self-end"><?php echo $errors['otp-error']; ?></div>
         <?php } elseif (isset($errors['wrong-otp'])) { ?>
-            <div class="error-text"><?php echo $errors['wrong-otp']; ?></div>
+            <div class="error-text lg:col-start-2 lg:row-start-2 lg:self-end"><?php echo $errors['wrong-otp']; ?></div>
         <?php } elseif (isset($_SESSION['info'])) { ?>
             <div class="text-sm w-[90%] text-justify mb-5"><?php echo $_SESSION['info']; ?>. Check your E-mail. We've sent you a verification code to your email.
                 Verification code will be expire within 3 minutes.</div>
         <?php } else { ?>
-            <p class="text-sm w-[90%] text-justify mb-1">
+            <p class="text-sm w-[90%] text-justify mb-4 lg:col-start-2 lg:row-start-2 lg:self-end">
                 Check your E-mail. We've sent you a verification code to your email.
                 Verification code will be expire within 3 minutes.
             </p>
@@ -57,9 +61,9 @@ if (!isset($_SESSION['reg-code-sent'])) {
         <form
                 action="reg_verification.php"
                 method="post"
-                class="flex flex-col items-center justify-around"
+                class="flex flex-col items-center justify-around lg:col-start-2 lg:row-span-2 lg:self-start lg:w-full"
                 id="reg-otp-form">
-            <div class="text-xs mb-2 font-normal">Time left - <span id="timer" class="font-semibold"></span></div>
+            
             <div class="otp-inputs w-64 flex items-center justify-around <?php echo (isset($errors['wrong-otp']) ? "wrong-otp" : "")?>">
                 <input
                         class="otp-input-box"
@@ -92,6 +96,7 @@ if (!isset($_SESSION['reg-code-sent'])) {
                         name="number6"
                         disabled />
             </div>
+            <div class="text-xs mt-5 font-normal">Time left - <span id="timer" class="font-semibold"></span></div>
             <input
                     type="submit"
                     name="verify-otp"
@@ -100,14 +105,15 @@ if (!isset($_SESSION['reg-code-sent'])) {
                     disabled />
         </form>
         <div class="text-center mt-7 ">
-            <p class="text-xs">Didn't Receive the OTP?</p>
+            <p class="text-xs lg:text-base">Didn't Receive the OTP?</p>
             <a
                     href="../config/userDataController.php?reg-code-resend=true"
-                    class="text-xs text-[var(--primary)] underline cursor"
+                    class="text-xs text-[var(--primary)] underline cursor lg:text-base"
             >Resend</a
             >
         </div>
     </div>
+    <div class="-z-10 lg:absolute lg:inset-2/4 lg:-translate-x-full lg:-translate-y-1/2 lg:w-1/2 lg:h-full lg:bg-[#bfd7ff] lg:rounded-2xl"></div>
 </div>
 
 <script src="../assets/js/script.js"></script>
