@@ -1,5 +1,7 @@
 <?php
-if(!isset($_SESSION)){session_start();}
+if (!isset($_SESSION)) {
+    session_start();
+}
 if (!isset($_SESSION['role']) || $_SESSION['role'] != "Admin_Master") {
     header("location:../login.php");
     exit();
@@ -10,26 +12,41 @@ include("../config/connect.php");
 if (isset($_POST['submit'])) {
     $email = strtolower($_POST['email']);
     $name = $_POST['name'];
+    $password = $_POST["password"];
+    // Check the Password validation
+    if (strlen($_POST["password"]) <= '8') {
+        $errors['password'] = "Your Password Must Contain At Least 8 Characters!";
+    } elseif (!preg_match("#[0-9]+#", $password)) {
+        $errors['password'] = "Your Password Must Contain At Least 1 Number!";
+    } elseif (!preg_match("#[A-Z]+#", $password)) {
+        $errors['password'] = "Your Password Must Contain At Least 1 Capital Letter!";
+    } elseif (!preg_match("#[a-z]+#", $password)) {
+        $errors['password'] = "Your Password Must Contain At Least 1 Lowercase Letter!";
+    } elseif (!preg_match("/[\'^£$%&*()}{@#~?><>,|=_+¬-]/", $password)) {
+        $errors['password'] = "Your Password Must Contain At Least 1 Special Character !";
+    }
+    if (count($errors) === 0) {
 
-    $query = "SELECT * from admin where email='$email'";
+        $query = "SELECT * from admin where email='$email'";
 
-    if (mysqli_num_rows(mysqli_query($con, $query))) {
+        if (mysqli_num_rows(mysqli_query($con, $query))) {
 
-        $msg[0] = "username or email already taken!";
-        $msg[1] = "warning";
-    } else {
-
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        $role = $_POST['role'];
-
-        $query = "INSERT INTO admin (email,password,role,name) values('$email','$password','$role','$name')";
-        if (!mysqli_query($con, $query)) {
-
-            $msg[0] = "error!";
+            $msg[0] = "username or email already taken!";
             $msg[1] = "warning";
         } else {
-            $msg[0] = "Successfully added!";
-            $msg[1] = "done";
+
+            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            $role = $_POST['role'];
+
+            $query = "INSERT INTO admin (email,password,role,name) values('$email','$password','$role','$name')";
+            if (!mysqli_query($con, $query)) {
+
+                $msg[0] = "error!";
+                $msg[1] = "warning";
+            } else {
+                $msg[0] = "Successfully added!";
+                $msg[1] = "done";
+            }
         }
     }
 
@@ -65,6 +82,12 @@ if (isset($_POST['submit'])) {
             echo "<b class='" . $msg[1] . "'>" . $msg[0] . "</b>";
         }
         ?>
+        <?php
+        if (isset($errors['password'])) {
+            echo "<b>" . $errors['password'] . "</b>";
+        }
+        ?>
+
         <div class="formcomp">
             <label for="name">Name: </label>
             <input type="text" name="name" required>
