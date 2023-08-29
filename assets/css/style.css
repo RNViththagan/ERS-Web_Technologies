@@ -19,7 +19,7 @@
   background-color: white;
   border: none;
   border-radius: 15px;
-  box-shadow: 5px 5px 35px rgba(0, 0, 0, 0.4);
+  box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.3);
   padding: 40px 5px;
   height: auto;
 }
@@ -28,7 +28,21 @@
   padding: 0.5rem 1.5rem;
   font-weight: 500;
   cursor: pointer;
+  text-align: center;
   transition: 0.4s all ease;
+}
+.fill-btn {
+  background-color: var(--primary);
+  color: white;
+}
+.outline-btn {
+  background-color: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+.outline-btn:hover {
+  background-color: var(--primary);
+  color: white;
 }
 
 .login-bg {
@@ -110,4 +124,25 @@
   color: var(--primary) !important;
   opacity: 1 !important;
   pointer-events: auto !important;
+}
+
+.line {
+  background-color: #d4d4d4;
+}
+
+#student .detail-row {
+  width: 90%;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  /* margin: 20px auto; */
+}
+#student .detail-row h5 {
+  font-weight: 400;
+}
+#student .detail-row .inputs {
+  font-size: 0.9rem;
+  border: 1px solid #acacac;
+  border-radius: 20px;
+  padding: 7.5px 20px;
+  width: 100%;
 }

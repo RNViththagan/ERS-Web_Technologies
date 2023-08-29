@@ -1,4 +1,11 @@
-<?php require_once('config/userDataController.php'); ?>
+<?php
+ob_start();
+session_start();
+if (isset($_SESSION['userid'])) {
+    header("location:index.php");
+    exit();
+}
+require_once('config/userDataController.php'); ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -67,13 +74,18 @@
                     class="btn lg:mt-5 text-white bg-[var(--primary)]" />
         </form>
         <div class="text-center mt-7 lg:col-start-1 lg:mt-0 ">
-            <p>Already have an account?</p>
+            <p>Don't have an account?</p>
             <a href="register" class="text-[var(--primary)] underline"
             >Sign-Up</a
             >
         </div>
     </div>
     <div class="-z-10 lg:absolute lg:inset-2/4 lg:-translate-x-full lg:-translate-y-1/2 lg:w-1/2 lg:h-full lg:bg-[#bfd7ff] lg:rounded-2xl"></div>
+    <script>
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    </script>
 </div>
 </body>
 </html>

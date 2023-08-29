@@ -59,12 +59,12 @@ if (!isset($_SESSION['reg-code-sent'])) {
         <?php } ?>
 
         <form
-                action="reg_verification.php"
-                method="post"
-                class="flex flex-col items-center justify-around lg:col-start-2 lg:row-span-2 lg:self-start lg:w-full"
-                id="reg-otp-form">
+            action="reg_verification.php"
+            method="post"
+            class="flex flex-col items-center justify-around lg:col-start-2 lg:row-span-2 lg:self-start lg:w-full"
+            id="reg-otp-form">
 
-            <div class="otp-inputs w-64 flex items-center justify-around <?php echo (isset($errors['wrong-otp']) ? "wrong-otp" : "")?>">
+            <div id="otp-inputs" class="w-64 flex items-center justify-around <?php echo (isset($errors['wrong-otp']) ? "wrong-otp" : "")?>">
                 <input
                         class="otp-input-box"
                         type="number"
@@ -102,6 +102,7 @@ if (!isset($_SESSION['reg-code-sent'])) {
                     name="verify-otp"
                     value="Verify"
                     class="otp-btn btn text-white bg-[var(--primary)] disabled:bg-[#788BFF] mt-5"
+                    id="otp-submit-btn"
                     disabled />
         </form>
         <div class="text-center mt-7 ">
