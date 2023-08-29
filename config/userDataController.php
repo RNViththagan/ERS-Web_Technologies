@@ -68,7 +68,7 @@ if (isset($_POST['reg-btn'])) {
         $email_check = "SELECT * FROM student_check WHERE regNo = '$username' && email = '$email'";
         $email_check_res = mysqli_query($con, $email_check);
         if (mysqli_num_rows($email_check_res) === 0) {
-            $errors['username'] = "Sorry, Your registration number does not exist!";
+            $errors['username'] = "Sorry, Your registration number does not exist! Please contact the admin panel.";
         } else {
             $fetch_email_check_res = mysqli_fetch_assoc($email_check_res);
             $fetch_user_status = $fetch_email_check_res['status'];
@@ -95,7 +95,7 @@ if (isset($_POST['reg-btn'])) {
 
         // Mail the OTP code
         if ($data_check) {
-            $subject = "ERS Registration - Email Verification Code";
+            $subject = "ERS - Email Verification Code";
             $message = "Your verification code for the exam registration system is $code. This code will expire in 3 minutes";
             $sender_name = "Exam Registration System | Faculty of Science";
             $sender_mail = "ers.fos.csc@gmail.com";
@@ -342,6 +342,55 @@ if (isset($_POST['forgot-pw-submit-btn'])) {
     }
 }
 
+//if user click verification code submit button
+if (isset($_POST['verify-pw-otp'])) {
+    $email = $_SESSION['fp-email'];
+    $username = $_SESSION['fp-username'];
+
+    $number1 = mysqli_real_escape_string($con, $_POST['number1']);
+    $number2 = mysqli_real_escape_string($con, $_POST['number2']);
+    $number3 = mysqli_real_escape_string($con, $_POST['number3']);
+    $number4 = mysqli_real_escape_string($con, $_POST['number4']);
+    $number5 = mysqli_real_escape_string($con, $_POST['number5']);
+    $number6 = mysqli_real_escape_string($con, $_POST['number6']);
+
+    $enteredOTP = $number1 * 100000 + $number2 * 10000 + $number3 * 1000 + $number4 * 100 + $number5 * 10 + $number6;
+    $table = "student_check";
+    $field = "regNo";
+    $role = "student";
+    if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
+        $table = "admin";
+        $field = "email";
+        $role = "admin";
+
+    }
+    $pull_code_query = "SELECT * FROM $table WHERE $field = '$username' AND email = '$email'";
+    $pull_code_res = mysqli_query($con, $pull_code_query);
+    $fetch_verification_code = mysqli_fetch_assoc($pull_code_res);
+    $verification_code = $fetch_verification_code['verificationCode'];
+
+    if ($enteredOTP == $verification_code) {
+        // Updating the user table status
+        $code = 0;
+        $verificationStatus = 'verified';
+        $update_otp = "UPDATE $table SET verificationCode = $code, verificationStatus = '$verificationStatus' WHERE $field = '$username' and email = '$email'";
+        $update_res = mysqli_query($con, $update_otp);
+        unset($_SESSION['code-sent']);
+        if ($update_res) {
+            $_SESSION['fp-email'] = $email;
+            $_SESSION['fp-username'] = $username;
+            $_SESSION['code-verified'] = true;
+            header('location: reset_password.php');
+            exit();
+        } else {
+            $errors['otp-error'] = "Something went wrong!";
+        }
+    } else {
+        $errors['wrong-otp'] = "You've entered incorrect code!";
+    }
+}
+
+
 if (isset($_GET['reg-code-resend'])) {
     // Initialize PHPMailer
     $mail = new PHPMailer(true);
@@ -442,53 +491,6 @@ if (isset($_GET['pw-code-resend'])) {
     }
 }
 
-//if user click verification code submit button
-if (isset($_POST['verify-pw-otp'])) {
-    $email = $_SESSION['fp-email'];
-    $username = $_SESSION['fp-username'];
-
-    $number1 = mysqli_real_escape_string($con, $_POST['number1']);
-    $number2 = mysqli_real_escape_string($con, $_POST['number2']);
-    $number3 = mysqli_real_escape_string($con, $_POST['number3']);
-    $number4 = mysqli_real_escape_string($con, $_POST['number4']);
-    $number5 = mysqli_real_escape_string($con, $_POST['number5']);
-    $number6 = mysqli_real_escape_string($con, $_POST['number6']);
-
-    $enteredOTP = $number1 * 100000 + $number2 * 10000 + $number3 * 1000 + $number4 * 100 + $number5 * 10 + $number6;
-    $table = "student_check";
-    $field = "regNo";
-    $role = "student";
-    if (filter_var($username, FILTER_VALIDATE_EMAIL)) {
-        $table = "admin";
-        $field = "email";
-        $role = "admin";
-
-    }
-    $pull_code_query = "SELECT * FROM $table WHERE $field = '$username' AND email = '$email'";
-    $pull_code_res = mysqli_query($con, $pull_code_query);
-    $fetch_verification_code = mysqli_fetch_assoc($pull_code_res);
-    $verification_code = $fetch_verification_code['verificationCode'];
-
-    if ($enteredOTP == $verification_code) {
-        // Updating the user table status 
-        $code = 0;
-        $verificationStatus = 'verified';
-        $update_otp = "UPDATE $table SET verificationCode = $code, verificationStatus = '$verificationStatus' WHERE $field = '$username' and email = '$email'";
-        $update_res = mysqli_query($con, $update_otp);
-        unset($_SESSION['code-sent']);
-        if ($update_res) {
-            $_SESSION['fp-email'] = $email;
-            $_SESSION['fp-username'] = $username;
-            $_SESSION['code-verified'] = true;
-            header('location: reset_password.php');
-            exit();
-        } else {
-            $errors['otp-error'] = "Something went wrong!";
-        }
-    } else {
-        $errors['wrong-otp'] = "You've entered incorrect code!";
-    }
-}
 
 //if user click change password button
 if (isset($_POST['reset-pw-btn'])) {

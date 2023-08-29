@@ -1,14 +1,18 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Geologica:wght@100;200;400;500;600;700;800;900&family=Kanit:wght@400;500;600;700;800&display=swap");
 
 :root {
   --primary: #5465ff;
+  --secondary: #bfd7ff;
+  --error: #ff5733;
+  --title: "Kanit";
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
+  font-family: "Geologica", serif;
+  font-weight: 200;
 }
 
 .card {
@@ -21,17 +25,15 @@
 }
 .btn {
   border-radius: 9999px;
-  border-width: 2px;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
+  padding: 0.5rem 1.5rem;
   font-weight: 500;
+  cursor: pointer;
+  transition: 0.4s all ease;
 }
 
 .login-bg {
   height: 100vh;
-  background-image: url("../img/login_bg.png");
+  background-image: url("../img/login_bg.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -47,24 +49,24 @@
 }
 
 .error-text {
-  color: red;
+  color: var(--error);
   text-align: center;
   font-size: small;
 }
 .error-input {
-  border: 1px solid red !important;
+  border: 1px solid var(--error) !important;
 }
 .error-input i {
-  color: red !important;
+  color: var(--error) !important;
 }
 .error-input div {
-  background-color: red !important;
+  background-color: var(--error) !important;
 }
 .error-input input::placeholder {
-  color: red;
+  color: var(--error);
 }
 .wrong-otp input {
-  border: 1px solid red !important;
+  border: 1px solid var(--error) !important;
   background-color: rgb(255, 199, 199);
 }
 
@@ -77,7 +79,7 @@
   border: 1px solid #acacac;
   border-radius: 999px;
   padding: 5px 15px;
-  margin: 5px auto;
+  margin: 5px 0;
 }
 .text-input i {
   color: var(--primary);
@@ -100,8 +102,12 @@
   border-radius: 5px;
   outline: none;
 }
+.otp-input-box::-webkit-outer-spin-button,
+.otp-input-box::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
 .active-resend {
-  color: #5465ff !important;
+  color: var(--primary) !important;
   opacity: 1 !important;
   pointer-events: auto !important;
 }
