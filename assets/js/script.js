@@ -1,5 +1,5 @@
 // ----------------------------- OTP Verification input managing ----------------------------------
-const otp_inputs = document.getElementById("otp-inputs");
+const otp_inputs = document.getElementById("reg-otp-form");
 const inputs = otp_inputs.querySelectorAll("input[type='number']");
 const button = otp_inputs.querySelector("input[type='submit']");
 
