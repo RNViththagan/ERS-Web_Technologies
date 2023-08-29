@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 28, 2023 at 07:25 PM
+-- Generation Time: Aug 29, 2023 at 10:01 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ers_db`
+-- Database: `ers_fos_db`
 --
 
 -- --------------------------------------------------------
@@ -44,6 +44,30 @@ INSERT INTO `admin` (`email`, `password`, `name`, `role`, `status`) VALUES
 ('stud_admin1@nexus.com', '$2y$10$IUzrF9GhBdTzDXXbmxA19.XZuxKo9le3hETfrRsqKG35goK4w1npS', 'stud1', 'Admin_Student', 'active'),
 ('subj_admin1@nexus.com', '$2y$10$6IniUusMCkDLxZFhTVWyL.Nk0BBkFuzzLUzSCdFOqy32NexOPRNvi', 'subj1', 'Admin_Subject', 'active'),
 ('viththagan@nexus.com', '$2y$10$HrF7DQS3U0xzZ5Xaom37LO4EAWXBK9zhhPBOsD.YqeIMvE4.kHgyG', 'viththagan', 'Admin_Subject', 'active');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `admin_details`
+--
+
+CREATE TABLE `admin_details` (
+  `email` varchar(100) NOT NULL,
+  `fullName` varchar(255) DEFAULT NULL,
+  `department` varchar(100) DEFAULT NULL,
+  `mobileNo` int(10) DEFAULT NULL,
+  `profile_img` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin_details`
+--
+
+INSERT INTO `admin_details` (`email`, `fullName`, `department`, `mobileNo`, `profile_img`) VALUES
+('admin_master@nexus.com', NULL, NULL, NULL, NULL),
+('stud_admin1@nexus.com', NULL, NULL, NULL, NULL),
+('subj_admin1@nexus.com', NULL, NULL, NULL, NULL),
+('viththagan@nexus.com', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -161,7 +185,7 @@ CREATE TABLE `reg_units` (
 CREATE TABLE `student` (
   `regNo` varchar(12) NOT NULL,
   `title` varchar(5) DEFAULT NULL,
-  `nameWithIniial` varchar(60) DEFAULT NULL,
+  `nameWithInitial` varchar(60) DEFAULT NULL,
   `fullName` varchar(150) DEFAULT NULL,
   `district` varchar(30) DEFAULT NULL,
   `mobileNo` varchar(11) DEFAULT NULL,
@@ -175,7 +199,7 @@ CREATE TABLE `student` (
 -- Dumping data for table `student`
 --
 
-INSERT INTO `student` (`regNo`, `title`, `nameWithIniial`, `fullName`, `district`, `mobileNo`, `landlineNo`, `homeAddress`, `addressInJaffna`, `profile_img`) VALUES
+INSERT INTO `student` (`regNo`, `title`, `nameWithInitial`, `fullName`, `district`, `mobileNo`, `landlineNo`, `homeAddress`, `addressInJaffna`, `profile_img`) VALUES
 ('2020/CSC/007', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/028', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/046', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -291,6 +315,12 @@ ALTER TABLE `admin`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Indexes for table `admin_details`
+--
+ALTER TABLE `admin_details`
+  ADD PRIMARY KEY (`email`);
+
+--
 -- Indexes for table `combination`
 --
 ALTER TABLE `combination`
@@ -392,6 +422,12 @@ ALTER TABLE `unit_sub_exam`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `admin_details`
+--
+ALTER TABLE `admin_details`
+  ADD CONSTRAINT `admin_details_ibfk_1` FOREIGN KEY (`email`) REFERENCES `admin` (`email`);
 
 --
 -- Constraints for table `combination_subjects`
