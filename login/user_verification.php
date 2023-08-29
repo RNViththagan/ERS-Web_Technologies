@@ -10,7 +10,7 @@ if (!isset($_SESSION['code-sent'])) {
 
 
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -100,7 +100,6 @@ if (!isset($_SESSION['code-sent'])) {
                     name="verify-pw-otp"
                     value="Verify"
                     class="otp-btn btn text-white bg-[var(--primary)] disabled:bg-[#788BFF] mt-5"
-                    id="otp-submit-btn"
                     disabled />
             <div class="text-center mt-7 ">
                 <p class="text-xs lg:text-base">Didn't Receive the OTP?</p>
@@ -115,7 +114,6 @@ if (!isset($_SESSION['code-sent'])) {
             <a href="../login.php" class="text-[var(--primary)] underline"
             >Go Back</a>
         </div>
-        
     </div>
     <div class="-z-10 lg:absolute lg:inset-2/4 lg:-translate-x-full lg:-translate-y-1/2 lg:w-1/2 lg:h-full lg:bg-[#bfd7ff] lg:rounded-2xl"></div>
 </div>

@@ -370,7 +370,7 @@ if (isset($_POST['verify-pw-otp'])) {
     $verification_code = $fetch_verification_code['verificationCode'];
 
     if ($enteredOTP == $verification_code) {
-        // Updating the user table status 
+        // Updating the user table status
         $code = 0;
         $verificationStatus = 'verified';
         $update_otp = "UPDATE $table SET verificationCode = $code, verificationStatus = '$verificationStatus' WHERE $field = '$username' and email = '$email'";
