@@ -1,7 +1,7 @@
 // ----------------------------- OTP Verification input managing ----------------------------------
-const otp_inputs = document.getElementById("otp-inputs");
-const inputs = otp_inputs.querySelectorAll("input[type='number']");
-const button = otp_inputs.querySelector("input[type='submit']");
+const reg_otp_form = document.getElementById("reg-otp-form");
+const inputs = reg_otp_form.querySelectorAll("input[type='number']");
+const button = reg_otp_form.querySelector("input[type='submit']");
 
 // console.log(inputs, button);
 // iterate over all inputs
@@ -11,8 +11,8 @@ inputs.forEach((input, index1) => {
     // This code gets the next sibling element of the current input element and stores it in the nextInput variable
     // This code gets the previous sibling element of the current input element and stores it in the prevInput variable
     const currentInput = input,
-      nextInput = input.nextElementSibling,
-      prevInput = input.previousElementSibling;
+        nextInput = input.nextElementSibling,
+        prevInput = input.previousElementSibling;
 
     // if the value has more than one character then clear it
     if (currentInput.value.length > 1) {
@@ -22,9 +22,9 @@ inputs.forEach((input, index1) => {
     // if the next input is disabled and the current value is not empty
     //  enable the next input and focus on it
     if (
-      nextInput &&
-      nextInput.hasAttribute("disabled") &&
-      currentInput.value !== ""
+        nextInput &&
+        nextInput.hasAttribute("disabled") &&
+        currentInput.value !== ""
     ) {
       nextInput.removeAttribute("disabled");
       nextInput.focus();

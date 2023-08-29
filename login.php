@@ -17,45 +17,41 @@
             crossorigin="anonymous"></script>
 </head>
 
-<body class="h-screen w-full lg:relative">
+<body class="w-full h-full">
 <div class="login-bg flex items-center justify-center"></div>
-<div class="card h-[495px] w-10/12 lg:w-7/12 absolute-center lg:h-[450px] lg:p-0 z-0">
+<div class="card h-[495px] w-10/12 absolute-center">
     <!-- Mobile n tab view design -->
-    <div class="lg:h-full flex lg:grid flex-col z-10 lg:grid-cols-2 items-center lg:justify-items-center">
+    <div class="lg:hidden flex flex-col items-center">
         <img
                 src="assets/img/logo/ERS_logo.gif"
                 alt="ERS_logo"
-                class="w-28 align-middle lg:col-start-1 lg:self-end " />
-        <h2 class="my-5 text-lg font-[var(--title)] lg:my-0 lg:col-start-1 ">Exam Registration System</h2>
-        <img
-            src="assets/img/undraw_login.svg"
-            alt="vector img"
-            class="hidden w-60 lg:block lg:col-start-1 " />
-        <h3 class="text-lg underline font-semibold text-gray-900 mb-3 lg:text-2xl lg:mb-0 lg:col-start-2 lg:row-start-1 lg:self-end">
+                class="w-28 align-middle" />
+        <h2 class="my-5 text-lg">Exam Registration System</h2>
+        <h3 class="text-lg underline font-semibold text-gray-900 mb-3">
             Sign-In
         </h3>
         <?php if (isset($errors['login-error'])) { ?>
-            <div class="error-text lg:col-start-2 lg:row-start-2 lg:self-end"><?php echo $errors['login-error']; ?></div>
+            <div class="error-text"><?php echo $errors['login-error']; ?></div>
         <?php } ?>
         <?php if (isset($errors['username'])) { ?>
-            <p class='error-text lg:col-start-2 lg:row-start-2 lg:self-end'><?php echo $errors['username']; ?></p>
+            <p class='error-text'><?php echo $errors['username']; ?></p>
         <?php } ?>
         <form
                 action="login.php"
                 method="post"
-                class="flex flex-col items-center justify-around lg:col-start-2 lg:row-span-2 lg:self-start lg:w-full">
+                class="flex flex-col items-center justify-around">
 
 
-            <div class="text-input <?php echo (isset($errors['login-error']) || isset($errors['username']) ? "error-input" : "")?> lg:w-9/12">
+            <div class="text-input <?php echo (isset($errors['login-error']) || isset($errors['username']) ? "error-input" : "")?>">
                 <i class="fa-solid fa-user"></i>
                 <div></div>
-                <input type="text" name="username" placeholder="UserName" class="lg:w-full" />
+                <input type="text" name="username" placeholder="UserName" />
             </div>
 
-            <div class="text-input <?php echo (isset($errors['login-error']) ? "error-input" : "")?> lg:w-9/12">
+            <div class="text-input <?php echo (isset($errors['login-error']) ? "error-input" : "")?>">
                 <i class="fa-solid fa-lock"></i>
                 <div></div>
-                <input type="password" name="password" placeholder="Password" class="lg:w-full" />
+                <input type="password" name="password" placeholder="Password" />
             </div>
             <a href="login/forgot_password.php" class="text-[var(--primary)] underline text-center my-3"
             >Forgot Password?</a
@@ -64,16 +60,15 @@
                     type="submit"
                     name="login-btn"
                     value="Sign-In"
-                    class="btn lg:mt-5 text-white bg-[var(--primary)]" />
+                    class="btn text-white bg-[var(--primary)]" />
         </form>
-        <div class="text-center mt-7 lg:col-start-1 lg:mt-0 ">
+        <div class="text-center mt-7">
             <p>Already have an account?</p>
             <a href="register" class="text-[var(--primary)] underline"
             >Sign-Up</a
             >
         </div>
     </div>
-    <div class="-z-10 lg:absolute lg:inset-2/4 lg:-translate-x-full lg:-translate-y-1/2 lg:w-1/2 lg:h-full lg:bg-[#bfd7ff] lg:rounded-2xl"></div>
 </div>
 </body>
 </html>
