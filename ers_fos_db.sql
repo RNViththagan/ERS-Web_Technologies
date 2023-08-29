@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2023 at 10:01 AM
+-- Generation Time: Aug 29, 2023 at 09:45 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -52,6 +52,7 @@ INSERT INTO `admin` (`email`, `password`, `name`, `role`, `status`) VALUES
 --
 
 CREATE TABLE `admin_details` (
+  `adminId` int(11) NOT NULL,
   `email` varchar(100) NOT NULL,
   `fullName` varchar(255) DEFAULT NULL,
   `department` varchar(100) DEFAULT NULL,
@@ -63,11 +64,11 @@ CREATE TABLE `admin_details` (
 -- Dumping data for table `admin_details`
 --
 
-INSERT INTO `admin_details` (`email`, `fullName`, `department`, `mobileNo`, `profile_img`) VALUES
-('admin_master@nexus.com', NULL, NULL, NULL, NULL),
-('stud_admin1@nexus.com', NULL, NULL, NULL, NULL),
-('subj_admin1@nexus.com', NULL, NULL, NULL, NULL),
-('viththagan@nexus.com', NULL, NULL, NULL, NULL);
+INSERT INTO `admin_details` (`adminId`, `email`, `fullName`, `department`, `mobileNo`, `profile_img`) VALUES
+(1, 'admin_master@nexus.com', NULL, NULL, NULL, NULL),
+(2, 'stud_admin1@nexus.com', NULL, NULL, NULL, NULL),
+(3, 'subj_admin1@nexus.com', NULL, NULL, NULL, NULL),
+(4, 'viththagan@nexus.com', NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -204,7 +205,7 @@ INSERT INTO `student` (`regNo`, `title`, `nameWithInitial`, `fullName`, `distric
 ('2020/CSC/010', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/028', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/046', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('2020/CSC/051', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/CSC/051', 'Mr', 'R.N.Viththagan', 'Roy Nesarajah Viththagan', 'Jaffna', '0123456789', '0123456789', 'Jaffna', 'Jaffna', '2020CSC051.jpg'),
 ('2020/CSC/057', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/074', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
@@ -228,13 +229,13 @@ CREATE TABLE `student_check` (
 --
 
 INSERT INTO `student_check` (`regNo`, `email`, `password`, `status`, `verificationCode`, `verificationStatus`) VALUES
-('2020/CSC/007', 'cnilwakka@gmail.com', NULL, 'unregisterd', NULL, 'not_verified'),
+('2020/CSC/007', 'cnilwakka@gmail.com', '$2y$10$f64XVozpm4azju5H1fdZKe1QFSLr/U2QWLwojsETCK12/IHniPI9W', 'active', 0, 'verified'),
 ('2020/CSC/010', 'dharshikagnanaseelan4@gmail.com', '$2y$10$ewPtbft5YqpV6qkGcZjSL.s/hwCgiQjnYLOUjNRisKD9DLP7pHLhe', 'active', 0, 'verified'),
 ('2020/CSC/028', 'lahiruishan400@gmail.com', NULL, 'unregisterd', NULL, 'not_verified'),
 ('2020/CSC/046', 'audeshitha@gmail.com', NULL, 'unregisterd', NULL, 'not_verified'),
 ('2020/CSC/051', 'viththagan1999@gmail.com', '$2y$10$UheeVt7LhSXc6zO6NT5R2Oaa.gzgxcAK8G/M71M7zPMJrHrbN8IaC', 'active', 0, 'verified'),
 ('2020/CSC/057', 'sivavithu15@live.com', NULL, 'unregisterd', NULL, 'not_verified'),
-('2020/CSC/074', 'saaru27kesan@gmail.com', '$2y$10$yu718FeUm4GbR0ntAmDj/uka6IBL5aLLOyNe.0CyF4y.2cCHl5nEG', 'active', 156015, 'verified');
+('2020/CSC/074', 'saaru27kesan@gmail.com', '$2y$10$7VyessXmkub2uhLKG5NezulQNzjdJQVWoEv7G8ivHJA4DMUtZ/3De', 'active', 0, 'verified');
 
 -- --------------------------------------------------------
 
@@ -249,7 +250,8 @@ CREATE TABLE `stud_exam_reg` (
   `indexNo` varchar(10) NOT NULL,
   `level` int(11) NOT NULL,
   `combId` int(11) NOT NULL,
-  `type` enum('proper','repeat') NOT NULL
+  `type` enum('proper','repeat') NOT NULL,
+  `reg_date` date DEFAULT curdate()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -320,7 +322,8 @@ ALTER TABLE `admin`
 -- Indexes for table `admin_details`
 --
 ALTER TABLE `admin_details`
-  ADD PRIMARY KEY (`email`);
+  ADD PRIMARY KEY (`adminId`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `combination`
@@ -398,6 +401,12 @@ ALTER TABLE `unit_sub_exam`
 --
 
 --
+-- AUTO_INCREMENT for table `admin_details`
+--
+ALTER TABLE `admin_details`
+  MODIFY `adminId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `combination`
 --
 ALTER TABLE `combination`
@@ -408,6 +417,12 @@ ALTER TABLE `combination`
 --
 ALTER TABLE `exam_reg`
   MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `stud_exam_reg`
+--
+ALTER TABLE `stud_exam_reg`
+  MODIFY `regId` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `unit`
