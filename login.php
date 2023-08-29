@@ -1,4 +1,11 @@
-<?php require_once('config/userDataController.php'); ?>
+<?php
+ob_start();
+session_start();
+if (isset($_SESSION['userid'])) {
+    header("location:index.php");
+    exit();
+}
+require_once('config/userDataController.php'); ?>
 
 <!DOCTYPE html>
 <html lang="en">
