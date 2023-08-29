@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2023 at 09:45 PM
+-- Generation Time: Aug 29, 2023 at 10:04 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -233,7 +233,7 @@ INSERT INTO `student_check` (`regNo`, `email`, `password`, `status`, `verificati
 ('2020/CSC/010', 'dharshikagnanaseelan4@gmail.com', '$2y$10$ewPtbft5YqpV6qkGcZjSL.s/hwCgiQjnYLOUjNRisKD9DLP7pHLhe', 'active', 0, 'verified'),
 ('2020/CSC/028', 'lahiruishan400@gmail.com', NULL, 'unregisterd', NULL, 'not_verified'),
 ('2020/CSC/046', 'audeshitha@gmail.com', NULL, 'unregisterd', NULL, 'not_verified'),
-('2020/CSC/051', 'viththagan1999@gmail.com', '$2y$10$UheeVt7LhSXc6zO6NT5R2Oaa.gzgxcAK8G/M71M7zPMJrHrbN8IaC', 'active', 0, 'verified'),
+('2020/CSC/051', 'viththagan1999@gmail.com', '$2y$10$UheeVt7LhSXc6zO6NT5R2Oaa.gzgxcAK8G/M71M7zPMJrHrbN8IaC', 'active', 890434, 'verified'),
 ('2020/CSC/057', 'sivavithu15@live.com', NULL, 'unregisterd', NULL, 'not_verified'),
 ('2020/CSC/074', 'saaru27kesan@gmail.com', '$2y$10$7VyessXmkub2uhLKG5NezulQNzjdJQVWoEv7G8ivHJA4DMUtZ/3De', 'active', 0, 'verified');
 
@@ -251,7 +251,7 @@ CREATE TABLE `stud_exam_reg` (
   `level` int(11) NOT NULL,
   `combId` int(11) NOT NULL,
   `type` enum('proper','repeat') NOT NULL,
-  `reg_date` date DEFAULT curdate()
+  `reg_date` DATE DEFAULT '2020-01-01'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
