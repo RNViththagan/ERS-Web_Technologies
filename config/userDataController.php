@@ -1,11 +1,7 @@
 <?php
 ob_start();
-session_start();
-if (isset($_SESSION['userid'])) {
-    if (isset($_SESSION['role']))
-        header("location:../admin_select.php");
-    else
-        header("location:../index.php");
+if (!isset($_SESSION)) {
+    session_start();
 }
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -231,7 +227,7 @@ if (isset($_POST['login-btn'])) {
                             } else {
                                 $_SESSION = array();
                                 $_SESSION['userid'] = strtoupper($username);
-                                header('location: index.php');
+                                header('location: student/');
                                 exit();
                             }
                         } else {
@@ -246,7 +242,7 @@ if (isset($_POST['login-btn'])) {
                     $errors['login-error'] = "Incorrect email or password!";
                 }
             } else {
-                $errors['login-error'] = "It's look like you didn't register yet! Click the bottom link to signup.";
+                $errors['login-error'] = "UserName not found!";
             }
         } else {
             $errors['login-error'] = "Your details have not been updated yet! Please contact the admin.";
