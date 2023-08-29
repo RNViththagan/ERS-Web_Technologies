@@ -201,6 +201,7 @@ CREATE TABLE `student` (
 
 INSERT INTO `student` (`regNo`, `title`, `nameWithInitial`, `fullName`, `district`, `mobileNo`, `landlineNo`, `homeAddress`, `addressInJaffna`, `profile_img`) VALUES
 ('2020/CSC/007', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/CSC/010', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/028', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/046', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/051', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -228,11 +229,12 @@ CREATE TABLE `student_check` (
 
 INSERT INTO `student_check` (`regNo`, `email`, `password`, `status`, `verificationCode`, `verificationStatus`) VALUES
 ('2020/CSC/007', 'cnilwakka@gmail.com', NULL, 'unregisterd', NULL, 'not_verified'),
+('2020/CSC/010', 'dharshikagnanaseelan4@gmail.com', '$2y$10$ewPtbft5YqpV6qkGcZjSL.s/hwCgiQjnYLOUjNRisKD9DLP7pHLhe', 'active', 0, 'verified'),
 ('2020/CSC/028', 'lahiruishan400@gmail.com', NULL, 'unregisterd', NULL, 'not_verified'),
 ('2020/CSC/046', 'audeshitha@gmail.com', NULL, 'unregisterd', NULL, 'not_verified'),
 ('2020/CSC/051', 'viththagan1999@gmail.com', '$2y$10$UheeVt7LhSXc6zO6NT5R2Oaa.gzgxcAK8G/M71M7zPMJrHrbN8IaC', 'active', 0, 'verified'),
 ('2020/CSC/057', 'sivavithu15@live.com', NULL, 'unregisterd', NULL, 'not_verified'),
-('2020/CSC/074', 'saaru27kesan@gmail.com', '$2y$10$7VyessXmkub2uhLKG5NezulQNzjdJQVWoEv7G8ivHJA4DMUtZ/3De', 'active', 0, 'verified');
+('2020/CSC/074', 'saaru27kesan@gmail.com', '$2y$10$yu718FeUm4GbR0ntAmDj/uka6IBL5aLLOyNe.0CyF4y.2cCHl5nEG', 'active', 156015, 'verified');
 
 -- --------------------------------------------------------
 
