@@ -8,7 +8,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != "Admin_Master") {
     exit();
 }
 include("../config/connect.php");
-require_once ("adminName.php");
+require_once("adminName.php");
 ?>
 
 
@@ -31,19 +31,31 @@ require_once ("adminName.php");
 <body>
 
 <div class="hero">
-    <?php require_once ("navbar.php")?>
+    <?php
+    $rpath = "";
+    require_once("navbar.php")
+    ?>
 </div>
 
 <div class="card">
     <?php
+    print_r($_POST);
+    echo "<br>";
+    print_r($_GET);
     if (isset($_GET['page'])) {
-        if ($_GET['page'] === "addAdmin") {
-            include("add_admin.php");
-        }else if ($_GET['page'] === "pwdChg") {
+        if ($_GET['page'] === "listAdmins") {
+            if(isset($_POST['adminId']))
+                include("viewAdmin.php");
+            else if(isset($_POST['editAdminId']))
+                include("editAdmin.php");
+            else
+                include("list_admins.php");
+        } else if ($_GET['page'] === "pwdChg") {
             include("../login/pwd_change_admin.php");
-        }
-        else
-            include("subj_admin_dashboard.php");
+        }else if ($_GET['page'] === "addAdmin") {
+                include("add_admin.php");
+        } else
+            include("admin_dashboard.php");
     } else
         include("admin_dashboard.php");
 
@@ -57,7 +69,11 @@ require_once ("adminName.php");
         subMenu.classList.toggle("open-menu");
     }
 </script>
-
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
 
 </body>
 </html>
