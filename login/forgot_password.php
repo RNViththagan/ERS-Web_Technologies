@@ -64,7 +64,7 @@ require_once('../config/userDataController.php');
                   <div></div>
                   <input type="email" name="email" placeholder="E-mail" class="lg:w-full" />
               </div>
-              
+
               <input
                 type="submit"
                 name="forgot-pw-submit-btn"
@@ -81,6 +81,3 @@ require_once('../config/userDataController.php');
     </div>
   </body>
 </html>
-
-
-
