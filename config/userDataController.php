@@ -242,7 +242,7 @@ if (isset($_POST['login-btn'])) {
                     $errors['login-error'] = "Incorrect email or password!";
                 }
             } else {
-                $errors['login-error'] = "UserName not found!";
+                $errors['login-error'] = "It's look like you didn't register yet! Click the bottom link to signup.";
             }
         } else {
             $errors['login-error'] = "Your details have not been updated yet! Please contact the admin.";
