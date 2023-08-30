@@ -55,13 +55,12 @@ if (isset($_POST["submit"]))  {
     }
 
     $sql = "UPDATE student SET title = '$title', fullName = '$fname', nameWithInitial = '$nameWithInitial', district = '$userDistrict', mobileNo = '$mobileNo', landlineNo = '$landlineNo', homeAddress = '$home_address',addressInJaffna = '$jaffna_address', profile_img = '$imageName' WHERE regNo = '$regNo'";
-    echo $sql;
-
     if ($con->query($sql) === FALSE) {
         $errors['update-error'] = "Error updating record: " . $con->error;
     }
     else{
         header("Location: index.php");
+        exit;
     }
 
 }
