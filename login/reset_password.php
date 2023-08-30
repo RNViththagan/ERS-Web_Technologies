@@ -1,11 +1,5 @@
 <?php
 ob_start();
-if (isset($_SESSION['userid'])) {
-    if (isset($_SESSION['role']))
-        header("location:../admin_select.php");
-    else
-        header("location:../");
-}
 require_once('../config/userDataController.php');
 
 if (!isset($_SESSION['code-verified'])) {
