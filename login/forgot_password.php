@@ -1,6 +1,13 @@
-<?php require_once('../config/userDataController.php');
-
-
+<?php
+ob_start();
+session_start();
+if (isset($_SESSION['userid'])) {
+    if (isset($_SESSION['role']))
+        header("location:../admin_select.php");
+    else
+        header("location:../");
+}
+require_once('../config/userDataController.php');
 ?>
 
 <!DOCTYPE html>

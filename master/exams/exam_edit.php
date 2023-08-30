@@ -129,7 +129,7 @@ else{
         <option value="closed" <?php if($edit and $status =="closed") echo "selected"?>>closed</option>
     </select><br>
     closing date:
-    <input name="close_date" type="date" min="<?php echo date('Y-m-d'); ?>" <?php if($edit) echo "value='$closing_date'"?> required><br>
+    <input name="close_date" type="date" min="<?php echo ($edit)?"$closing_date":date('Y-m-d'); ?>" <?php if($edit) echo "value='$closing_date'"?> required><br>
 
     <input type="submit" name="<?php echo ($edit)? 'ed_exm':'add_exm';?>" value="<?php echo ($edit)? 'Save':'add_exm';?>" required>
 </form>
