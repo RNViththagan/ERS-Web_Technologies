@@ -67,7 +67,7 @@ if (!isset($_SESSION['code-sent'])) {
                 method="post"
                 class="flex flex-col items-center justify-around lg:col-start-2 lg:row-span-2 lg:self-start lg:w-full"
                 id="reg-otp-form">
-
+          
             <div id="otp-inputs" class="w-64 flex items-center justify-around <?php echo (isset($errors['wrong-otp']) ? "wrong-otp" : "")?>">
                 <input
                         class="otp-input-box"
@@ -121,7 +121,6 @@ if (!isset($_SESSION['code-sent'])) {
             <a href="../login.php" class="text-[var(--primary)] underline"
             >Go Back</a>
         </div>
-
     </div>
     <div class="-z-10 lg:absolute lg:inset-2/4 lg:-translate-x-full lg:-translate-y-1/2 lg:w-1/2 lg:h-full lg:bg-[#bfd7ff] lg:rounded-2xl"></div>
 </div>
