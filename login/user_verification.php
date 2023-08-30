@@ -1,5 +1,11 @@
 <?php
 ob_start();
+if (isset($_SESSION['userid'])) {
+    if (isset($_SESSION['role']))
+        header("location:../admin_select.php");
+    else
+        header("location:../");
+}
 require_once('../config/userDataController.php');
 
 if (!isset($_SESSION['code-sent'])) {
@@ -61,7 +67,7 @@ if (!isset($_SESSION['code-sent'])) {
                 method="post"
                 class="flex flex-col items-center justify-around lg:col-start-2 lg:row-span-2 lg:self-start lg:w-full"
                 id="reg-otp-form">
-            
+          
             <div id="otp-inputs" class="w-64 flex items-center justify-around <?php echo (isset($errors['wrong-otp']) ? "wrong-otp" : "")?>">
                 <input
                         class="otp-input-box"
@@ -100,6 +106,7 @@ if (!isset($_SESSION['code-sent'])) {
                     name="verify-pw-otp"
                     value="Verify"
                     class="otp-btn btn text-white bg-[var(--primary)] disabled:bg-[#788BFF] mt-5"
+                    id="otp-submit-btn"
                     disabled />
             <div class="text-center mt-7 ">
                 <p class="text-xs lg:text-base">Didn't Receive the OTP?</p>
