@@ -57,7 +57,7 @@
                   <div></div>
                   <input type="email" name="email" placeholder="E-mail" class="lg:w-full" />
               </div>
-              
+
               <input
                 type="submit"
                 name="forgot-pw-submit-btn"
@@ -74,6 +74,3 @@
     </div>
   </body>
 </html>
-
-
-

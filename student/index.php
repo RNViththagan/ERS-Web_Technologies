@@ -1,7 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['userid'])) {
-    header("location:../login.php");
+    header("location:../index.php");
     exit();
 }
 elseif (isset($_SESSION['role'])) {
@@ -42,8 +42,8 @@ if (isset($_POST["submit"]))  {
     $home_address= $_POST["home_address"];
     $jaffna_address= $_POST["jaffna_address"];
 
-    if(isset($_FILES["fileImg"]["name"])){
-		
+    $imageName = $profile_img;
+    if(isset($_FILES["fileImg"]["name"]) and $_FILES["fileImg"]["name"] != Null){
         $src = $_FILES["fileImg"]["tmp_name"];
         $imageName = uniqid() . $_FILES["fileImg"]["name"];
     

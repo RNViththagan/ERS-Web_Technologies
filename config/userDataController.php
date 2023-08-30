@@ -11,8 +11,8 @@ if (isset($_SESSION['userid'])) {
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require($_SERVER['DOCUMENT_ROOT'] . '/ERS-Web_Technologies/vendor/autoload.php'); // Include PHPMailer autoloader
-require($_SERVER['DOCUMENT_ROOT'] . '/ERS-Web_Technologies/config/connect.php');
+require($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php'); // Include PHPMailer autoloader
+require($_SERVER['DOCUMENT_ROOT'] . '/config/connect.php');
 
 $success = array();
 $errors = array();
@@ -246,7 +246,7 @@ if (isset($_POST['login-btn'])) {
                     $errors['login-error'] = "Incorrect email or password!";
                 }
             } else {
-                $errors['login-error'] = "UserName not found!";
+                $errors['login-error'] = "It's look like you didn't register yet! Click the bottom link to signup.";
             }
         } else {
             $errors['login-error'] = "Your details have not been updated yet! Please contact the admin.";
