@@ -63,6 +63,7 @@ if (!isset($_SESSION['reg-code-sent'])) {
             method="post"
             class="flex flex-col items-center justify-around lg:col-start-2 lg:row-span-2 lg:self-start lg:w-full"
             id="reg-otp-form">
+            
             <div id="otp-inputs" class="w-64 flex items-center justify-around <?php echo (isset($errors['wrong-otp']) ? "wrong-otp" : "")?>">
 
                 <input

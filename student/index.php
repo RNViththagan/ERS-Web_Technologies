@@ -1,8 +1,7 @@
 <?php
 session_start();
 if (!isset($_SESSION['userid'])) {
-    header("location:../index.php");
-
+    header("location:../login.php");
     exit();
 }
 elseif (isset($_SESSION['role'])) {
@@ -35,7 +34,6 @@ $jaffna_address = isset($user["addressInJaffna"]) ? $user["addressInJaffna"] : "
 $profile_img = isset($user['profile_img']) ? $user['profile_img'] : "blankProfile.png";
 
 if (isset($_POST["submit"]))  {
-    $title= $_POST["title"];
     $fname= $_POST["fname"];
     $nameWithInitial= $_POST["nameWithInitial"];
     $userDistrict= $_POST["userDistrict"];
@@ -44,23 +42,22 @@ if (isset($_POST["submit"]))  {
     $home_address= $_POST["home_address"];
     $jaffna_address= $_POST["jaffna_address"];
 
-    $imageName = $profile_img;
-    if(isset($_FILES["fileImg"]["name"]) and $_FILES["fileImg"]["name"] != Null){
+    if(isset($_FILES["fileImg"]["name"])){
+		
         $src = $_FILES["fileImg"]["tmp_name"];
-        $path = $_FILES['fileImg']['name'];
-        $ext = pathinfo($path, PATHINFO_EXTENSION);
-        $imageName = str_replace("/","",$regNo).".".$ext;
+        $imageName = uniqid() . $_FILES["fileImg"]["name"];
+    
         $target = "../assets/uploads/" . $imageName;
+    
         move_uploaded_file($src, $target);
+    } else {
+        $imageName = $profile_img;
     }
 
-    $sql = "UPDATE student SET title = '$title', fullName = '$fname', nameWithInitial = '$nameWithInitial', district = '$userDistrict', mobileNo = '$mobileNo', landlineNo = '$landlineNo', homeAddress = '$home_address',addressInJaffna = '$jaffna_address', profile_img = '$imageName' WHERE regNo = '$regNo'";
+    $sql = "UPDATE student SET fullName = '$fname', nameWithInitial = '$nameWithInitial', district = '$userDistrict', mobileNo = '$mobileNo', landlineNo = '$landlineNo', homeAddress = '$home_address',addressInJaffna = '$jaffna_address', profile_img = '$imageName' WHERE regNo = '$regNo'";
+
     if ($con->query($sql) === FALSE) {
         $errors['update-error'] = "Error updating record: " . $con->error;
-    }
-    else{
-        header("Location: index.php");
-        exit;
     }
 
 }
@@ -75,12 +72,8 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
     <meta charset="UTF-8">
     <meta name="viewport"
             content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link
-            rel="shortcut icon"
-            href="../assets/img/logo/ERS_logo_icon.ico"
-            type="image/x-icon" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ERS | Student</title>
+    <title>ERS | Dashboard</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script
