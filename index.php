@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 if (!isset($_SESSION['userid'])) {
     header("location:login.php");
@@ -13,26 +14,8 @@ elseif (isset($_SESSION['role'])) {
         exit;
     }
 }
+else{
+    header("Location:student");
+    exit;
+}
 
-include("connect.php");
-?>
-    <!doctype html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport"
-              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Dashboard</title>
-    </head>
-    <body>
-      Welcome Student <br><?php echo $_SESSION['userid'] ?><br>
-
-    <a href="logout.php"> logout</a>
-
-    </body>
-    </html>
-<?php
-
-
-?>

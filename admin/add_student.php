@@ -1,35 +1,40 @@
 <?php
-session_start();
-
+ob_start();
 if (!isset($_SESSION['role'])) {
-
     header("location:../login.php");
     exit();
 }
 
 
-include("../connect.php");
+include("../config/connect.php");
 if (isset($_POST['submit'])) {
     $email = strtolower($_POST['email']);
     $regno = strtoupper($_POST['regno']);
 
-
-    $query = "SELECT * from student where reg_no='$regno' or email='$email'";
-
-    if (mysqli_num_rows(mysqli_query($con, $query))) {
-
-        $msg[0] = "registration no or email already added!";
+    // Check the name validation
+    $regNoPattern = '/^\d{4}\/[A-Z]+\/\d{3}$/';
+    if (!preg_match($regNoPattern, $regno)) {
+        $msg[0] = "Invalid Registration No (XXXX/XXX/XXX)";
         $msg[1] = "warning";
     } else {
+        $query = "SELECT * from student_check where regNo ='$regno' or email ='$email'";
 
-        $query = "INSERT INTO student (reg_no,email) values('$regno','$email')";
-        if (!mysqli_query($con, $query)) {
+        if (mysqli_num_rows(mysqli_query($con, $query))) {
 
-            $msg[0] = "error!";
+            $msg[0] = "registration no or email already added!";
             $msg[1] = "warning";
         } else {
-            $msg[0] = "Successfully added!";
-            $msg[1] = "done";
+            $query = "INSERT INTO student_check (regNo,email) values('$regno','$email')";
+            if (!mysqli_query($con, $query)) {
+
+                $msg[0] = "error!";
+                $msg[1] = "warning";
+            } else {
+                $query = "INSERT INTO student (regNo) values('$regno')";
+                mysqli_query($con, $query);
+                $msg[0] = "Successfully added!";
+                $msg[1] = "done";
+            }
         }
     }
 
@@ -45,20 +50,8 @@ if (isset($_POST['submit'])) {
     }
 </script>
 
-
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Registration</title>
-    <link rel="stylesheet" href="../css/main.css">
-</head>
-
-<body>
-<h1 class="titlehead">Add admin</h1>
+<link rel="stylesheet" href="../assets/css/main.css">
+<h1 class="titlehead">Add Student</h1>
 <div class="container">
     <form action="" method="post">
         <?php
@@ -78,8 +71,7 @@ if (isset($_POST['submit'])) {
             <input type="submit" name="submit" value="Register">
         </div>
     </form>
-    <a href="index.php"><button>Dashboard</button></a>
+    <a href="index.php">
+        <button>Dashboard</button>
+    </a>
 </div>
-</body>
-
-</html>
