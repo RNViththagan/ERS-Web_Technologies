@@ -25,6 +25,7 @@ if (isset($_POST['filter'])) {
         if ($filterOp != "")
             $filterOp .= " And ";
         $filterOp .= " student.regNo LIKE '%$dept%'";
+
     }
     if ($status != "none") {
         if ($filterOp != "")

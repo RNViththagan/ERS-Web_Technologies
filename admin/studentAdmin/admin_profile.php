@@ -1,5 +1,5 @@
 <?php
-include("connect.php");
+include("../../config/connect.php");
 
 
     $query = "SELECT * FROM admin_details WHERE email = 'stud_admin1@nexus.com'";
