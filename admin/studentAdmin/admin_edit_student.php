@@ -71,6 +71,7 @@ if (isset($_POST['save'])) {
     <title>Dashboard</title>
 
     <link rel="stylesheet" type="text/css" href="../../assets/css/style_admin_student.css">
+
 </head>
 
 <body>
