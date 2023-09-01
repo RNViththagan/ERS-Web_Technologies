@@ -26,63 +26,66 @@ require_once("../config/adminName.php");
 </head>
 <body>
 
-    <div class="hero">
-        <?php
-        $rpath = "";
-        require_once("navbar.php")
-        ?>
+<div class="hero">
+    <?php
+    $rpath = "";
+    require_once("navbar.php")
+    ?>
 
-    </div>
+</div>
 
-    <div class = "card">
-        <?php
-        print_r($_POST);
-        echo "<br>";
-        print_r($_GET);
-        if ($_SESSION['role'] == "Admin_Student") {
-            if(isset($_GET['page'])){
-                if($_GET['page'] === "stud"){
-                    include("studentAdmin/admin_student.php");
-                }
-                else if($_GET['page'] === "viewStud"){
-                    if(isset($_POST['regNo']))
-                        include("studentAdmin/admin_detail_student.php");
-                    else
-                        header("Location:index.php?page=stud");
-                }
-                else if($_GET['page'] === "editStud"){
-                    if(isset($_POST['regNo']))
-                        include("studentAdmin/admin_edit_student.php");
-                    else
-                        header("Location:index.php?page=stud");
-                }
+<div class = "card">
+    <?php
+    //print_r($_POST);
+    echo "<br>";
+    //print_r($_GET);
+    if ($_SESSION['role'] == "Admin_Student") {
+        if(isset($_GET['page'])){
+            if($_GET['page'] === "stud"){
+                include("studentAdmin/admin_student.php");
+            }
+            else if($_GET['page'] === "viewStud"){
+                if(isset($_POST['regNo']))
+                    include("studentAdmin/admin_detail_student.php");
                 else
-                    include("studentAdmin/stud_admin_dashboard.php");
+                    header("Location:index.php?page=stud");
+            }
+            else if($_GET['page'] === "editStud"){
+                if(isset($_POST['regNo']))
+                    include("studentAdmin/admin_edit_student.php");
+                else
+                    header("Location:index.php?page=stud");
+            }
+            else if($_GET['page'] === "addStud"){
+                include("studentAdmin/add_student.php");
             }
             else
                 include("studentAdmin/stud_admin_dashboard.php");
-        }elseif ($_SESSION['role'] == "Admin_Subject")
-            if(isset($_GET['page'])){
-                if($_GET['page'] === "subComb"){
-                    include("subjectAdmin/subject_combination.php");
-                }
-                else
-                    include("subjectAdmin/subj_admin_dashboard.php");
+        }
+        else
+            include("studentAdmin/stud_admin_dashboard.php");
+    }elseif ($_SESSION['role'] == "Admin_Subject")
+        if(isset($_GET['page'])){
+            if($_GET['page'] === "subComb"){
+                include("subjectAdmin/subject_combination.php");
             }
             else
                 include("subjectAdmin/subj_admin_dashboard.php");
-        ?>
-    </div>
-
-    <script>
-        let subMenu = document.getElementById("subMenu");
-
-        function toggleMenu(){
-            subMenu.classList.toggle("open-menu");
         }
-    </script>
+        else
+            include("subjectAdmin/subj_admin_dashboard.php");
+    ?>
+</div>
 
-    
+<script>
+    let subMenu = document.getElementById("subMenu");
+
+    function toggleMenu(){
+        subMenu.classList.toggle("open-menu");
+    }
+</script>
+
+
 
 
 </body>

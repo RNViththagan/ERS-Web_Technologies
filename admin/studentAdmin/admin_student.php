@@ -59,7 +59,7 @@ $stdlist = mysqli_query($con, $sql);
     <button type="submit" name="search">Search</button>
 </form>
 
-<a href="add_student.php">
+<a href="index.php?page=addStud">
     <button id="add"> Add</button>
 </a>
 
@@ -223,5 +223,10 @@ if ($next_page <= $total_pages) {
         document.body.appendChild(myform);
         console.log(myform);
         myform.submit()
+    }
+</script>
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
     }
 </script>
