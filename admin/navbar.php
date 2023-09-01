@@ -26,9 +26,9 @@
                 <!-- <span>></span> -->
             </a>
             <?php if ($_SESSION['role'] == "Admin_Student") {?>
-                <a href="index.php?page=addstd" class="sub-menu-link">
+                <a href="index.php?page=stud" class="sub-menu-link">
                     <img src="../assets/img/panels/student.png">
-                    <p>Student</p>
+                    <p>Students</p>
                     <!-- <span>></span> -->
                 </a>
             <?php } ?>
