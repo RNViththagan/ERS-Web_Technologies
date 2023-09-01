@@ -22,7 +22,7 @@ if (isset($_POST['regNo'])) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dashboard</title>
 
-    <link rel="stylesheet" type="text/css" href="style_admin_student.css">
+    <link rel="stylesheet" type="text/css" href="../../assets/css/style_admin_student.css">
 </head>
 
 <body>

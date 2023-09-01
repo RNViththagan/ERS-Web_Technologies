@@ -20,7 +20,8 @@ include("connect.php");
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dashboard</title>
 
-    <link rel = "stylesheet" type = "text/css" href = "profile.css">
+    <link rel = "stylesheet" type = "text/css" href = "../../assets/css/profile.css">
+
 </head>
 <body>
 
