@@ -8,7 +8,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != "Admin_Master") {
 }
 
 include("../../config/connect.php");
-require_once("../adminName.php");
+require_once("../../config/adminName.php");
 ?>
 <!doctype html>
 <html lang="en">
