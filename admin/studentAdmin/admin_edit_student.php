@@ -1,5 +1,5 @@
 <?php
-include("connect.php");
+include("../../config/connect.php");
 
 if (isset($_POST['regNo'])) {
     $regNo = $_POST['regNo'];
@@ -132,8 +132,8 @@ if (isset($_POST['save'])) {
                     <td>
                         <select for = "status" name="status" >
                             <option value="unregistered" <?php echo ("unregistered" == $row['status']) ? "selected" : "";?>>unregistered</option>
-                            <option>active</option>
-                            <option>inactive</option>
+                            <option value="active" <?php echo ("active" == $row['status']) ? "selected" : "";?>>active</option>
+                            <option value="inactive" <?php echo ("inactive" == $row['status']) ? "selected" : "";?>>inactive</option>
                         </select>
                     </td>
                 </tr> 

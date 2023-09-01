@@ -1,8 +1,8 @@
 <?php
-include("connect.php");
+include("../../config/connect.php");
 
 if (isset($_POST['email'])) {
-    $regNo = $_POST['email'];
+    $email = $_POST['email'];
     $query = "SELECT * FROM admin_details WHERE email = 'stud_admin1@nexus.com'";
     $result = mysqli_query($con, $query);
     $row = mysqli_fetch_assoc($result);
@@ -24,7 +24,21 @@ if (isset($_POST['save'])) {
 
     if ($result) {
         mysqli_close($con);
-        header("location: admin_profile.php?email=$email");
+        echo '<body></body><script>
+        function view(email) {
+            var myform = document.createElement("form");
+            myform.action = "admin_profile.php";
+            myform.method = "post";
+            var inp = document.createElement("input");
+            inp.name = "email";
+            inp.value = email;
+            inp.type = "hidden";
+            myform.appendChild(inp);
+            document.body.appendChild(myform);
+            console.log(myform);
+            myform.submit()
+        }
+    view("'.$email.'");</script>';
     } else {
         echo "Connection Failed : " . mysqli_connect_error();
     }
@@ -110,7 +124,7 @@ if (isset($_POST['save'])) {
                         <tr>
                             <td>Email:</td>
                             <td>
-                                <input type = "text" value = "<?php echo $row['email']; ?>"/>
+                                <input type = "text" value = "<?php echo $row['email']; ?>" disabled/>
                                 <input type = "hidden" name = "email" value="<?php echo $row['email']; ?>"/> 
                             </td>
                         </tr>
@@ -133,8 +147,25 @@ if (isset($_POST['save'])) {
                     <input type="reset" value="Reset">
 
                 </form>
+                <button onclick="discard('<?php echo $row['email']; ?>')">Discard</button>
         
             </div>
+
+            <script>
+                function discard(email) {
+                    var myform = document.createElement("form");
+                    myform.action = "admin_profile.php";
+                    myform.method = "post";
+                    var inp = document.createElement('input');
+                    inp.name = "email";
+                    inp.value = email;
+                    inp.type = "hidden";
+                    myform.appendChild(inp);
+                    document.body.appendChild(myform);
+                    console.log(myform);
+                    myform.submit()
+                }
+            </script>
 
         </div>
 

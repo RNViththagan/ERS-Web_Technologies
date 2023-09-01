@@ -1,6 +1,6 @@
 <?php
 
-    include("connect.php");
+    include("../../config/connect.php");
     
     $current_page = isset($_GET['page']) ? intval($_GET['page']) : 1;
     $records_per_page = 5;
