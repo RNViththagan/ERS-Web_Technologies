@@ -50,7 +50,7 @@ if (isset($_POST['submit'])) {
     }
 </script>
 
-<link rel="stylesheet" href="../assets/css/main.css">
+<link rel="stylesheet" href="../../assets/css/main.css">
 <h1 class="titlehead">Add Student</h1>
 <div class="container">
     <form action="" method="post">
@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
             <input type="submit" name="submit" value="Register">
         </div>
     </form>
-    <a href="index.php">
+    <a href="../index.php">
         <button>Dashboard</button>
     </a>
 </div>
