@@ -18,36 +18,6 @@ elseif (isset($_SESSION['role'])) {
 include("../config/connect.php");
 $errors = array();
 $regNo = $_SESSION['userid'];
-
-if (isset($_POST["submit"]))  {
-    $fname= $_POST["fname"];
-    $nameWithInitial= $_POST["nameWithInitial"];
-    $userDistrict= $_POST["userDistrict"];
-    $mobileNo= $_POST["mobileNo"];
-    $landlineNo= $_POST["landlineNo"];
-    $home_address= $_POST["home_address"];
-    $jaffna_address= $_POST["jaffna_address"];
-
-    $imageName = $profile_img;
-    if(isset($_FILES["fileImg"]["name"]) and $_FILES["fileImg"]["name"] != Null){
-        $src = $_FILES["fileImg"]["tmp_name"];
-        $imageName = uniqid() . $_FILES["fileImg"]["name"];
-    
-        $target = "../assets/uploads/" . $imageName;
-    
-        move_uploaded_file($src, $target);
-    } else {
-        $imageName = $profile_img;
-    }
-
-    $sql = "UPDATE student SET fullName = '$fname', nameWithInitial = '$nameWithInitial', district = '$userDistrict', mobileNo = '$mobileNo', landlineNo = '$landlineNo', homeAddress = '$home_address',addressInJaffna = '$jaffna_address', profile_img = '$imageName' WHERE regNo = '$regNo'";
-
-    if ($con->query($sql) === FALSE) {
-        $errors['update-error'] = "Error updating record: " . $con->error;
-    }
-
-}
-
 $selectSQL = "SELECT * FROM student WHERE regNo = '$regNo';";
 $selectQuery = mysqli_query($con, $selectSQL);
 $user = mysqli_fetch_assoc($selectQuery);
@@ -64,6 +34,42 @@ $home_address = isset($user["homeAddress"]) ? $user["homeAddress"] : "";
 $jaffna_address = isset($user["addressInJaffna"]) ? $user["addressInJaffna"] : "";
 $profile_img = isset($user['profile_img']) ? $user['profile_img'] : "blankProfile.png";
 
+if (isset($_POST["submit"]))  {
+    $title= $_POST["title"];
+    $fname= $_POST["fname"];
+    $nameWithInitial= $_POST["nameWithInitial"];
+    $userDistrict= $_POST["userDistrict"];
+    $mobileNo= $_POST["mobileNo"];
+    $landlineNo= $_POST["landlineNo"];
+    $home_address= $_POST["home_address"];
+    $jaffna_address= $_POST["jaffna_address"];
+
+
+    $imageName = $profile_img;
+    if(isset($_FILES["fileImg"]["name"]) and $_FILES["fileImg"]["name"] != Null){
+        if($profile_img!="blankProfile.png"){
+            echo unlink("../assets/uploads/".$profile_img);
+        }
+        $src = $_FILES["fileImg"]["tmp_name"];
+        $path = $_FILES['fileImg']['name'];
+        $ext = pathinfo($path, PATHINFO_EXTENSION);
+        $imageName = str_replace("/","",$regNo).".".$ext;
+        $target = "../assets/uploads/" . $imageName;
+        move_uploaded_file($src, $target);
+    }
+
+    $sql = "UPDATE student SET title = '$title', fullName = '$fname', nameWithInitial = '$nameWithInitial', district = '$userDistrict', mobileNo = '$mobileNo', landlineNo = '$landlineNo', homeAddress = '$home_address',addressInJaffna = '$jaffna_address', profile_img = '$imageName' WHERE regNo = '$regNo'";
+    if ($con->query($sql) === FALSE) {
+        $errors['update-error'] = "Error updating record: " . $con->error;
+    }
+    else{
+        header("Location: index.php");
+        exit;
+    }
+
+}
+
+
 $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', 'Badulla', 'Batticaloa', 'Gampaha', 'Hambantota', 'Jaffna', 'Kalutara', 'Kegalle', 'Kilinochchi', 'Kurunegala', 'Mannar', 'Matale', 'Matara', 'Moneragala', 'Mullativu', 'Nuwara Eliya', 'Polonnaruwa', 'Puttalam', 'Ratnapura', 'Trincomalee', 'Vavuniya'];
 
 ?>
@@ -78,7 +84,7 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
         rel="shortcut icon"
         href="../assets/img/logo/ERS_logo_icon.ico"
         type="image/x-icon" />
-    <title>ERS | Dashboard</title>
+    <title>ERS | Student</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script
