@@ -17,6 +17,36 @@ elseif (isset($_SESSION['role'])) {
 include("../config/connect.php");
 $errors = array();
 $regNo = $_SESSION['userid'];
+
+if (isset($_POST["submit"]))  {
+    $fname= $_POST["fname"];
+    $nameWithInitial= $_POST["nameWithInitial"];
+    $userDistrict= $_POST["userDistrict"];
+    $mobileNo= $_POST["mobileNo"];
+    $landlineNo= $_POST["landlineNo"];
+    $home_address= $_POST["home_address"];
+    $jaffna_address= $_POST["jaffna_address"];
+
+    $imageName = $profile_img;
+    if(isset($_FILES["fileImg"]["name"]) and $_FILES["fileImg"]["name"] != Null){
+        $src = $_FILES["fileImg"]["tmp_name"];
+        $imageName = uniqid() . $_FILES["fileImg"]["name"];
+    
+        $target = "../assets/uploads/" . $imageName;
+    
+        move_uploaded_file($src, $target);
+    } else {
+        $imageName = $profile_img;
+    }
+
+    $sql = "UPDATE student SET fullName = '$fname', nameWithInitial = '$nameWithInitial', district = '$userDistrict', mobileNo = '$mobileNo', landlineNo = '$landlineNo', homeAddress = '$home_address',addressInJaffna = '$jaffna_address', profile_img = '$imageName' WHERE regNo = '$regNo'";
+
+    if ($con->query($sql) === FALSE) {
+        $errors['update-error'] = "Error updating record: " . $con->error;
+    }
+
+}
+
 $selectSQL = "SELECT * FROM student WHERE regNo = '$regNo';";
 $selectQuery = mysqli_query($con, $selectSQL);
 $user = mysqli_fetch_assoc($selectQuery);
@@ -33,42 +63,6 @@ $home_address = isset($user["homeAddress"]) ? $user["homeAddress"] : "";
 $jaffna_address = isset($user["addressInJaffna"]) ? $user["addressInJaffna"] : "";
 $profile_img = isset($user['profile_img']) ? $user['profile_img'] : "blankProfile.png";
 
-if (isset($_POST["submit"]))  {
-    $title= $_POST["title"];
-    $fname= $_POST["fname"];
-    $nameWithInitial= $_POST["nameWithInitial"];
-    $userDistrict= $_POST["userDistrict"];
-    $mobileNo= $_POST["mobileNo"];
-    $landlineNo= $_POST["landlineNo"];
-    $home_address= $_POST["home_address"];
-    $jaffna_address= $_POST["jaffna_address"];
-
-
-    $imageName = $profile_img;
-    if(isset($_FILES["fileImg"]["name"]) and $_FILES["fileImg"]["name"] != Null){
-        if($profile_img!="blankProfile.png"){
-            echo unlink("../assets/uploads/".$profile_img);
-        }
-        $src = $_FILES["fileImg"]["tmp_name"];
-        $path = $_FILES['fileImg']['name'];
-        $ext = pathinfo($path, PATHINFO_EXTENSION);
-        $imageName = str_replace("/","",$regNo).".".$ext;
-        $target = "../assets/uploads/" . $imageName;
-        move_uploaded_file($src, $target);
-    }
-
-    $sql = "UPDATE student SET title = '$title', fullName = '$fname', nameWithInitial = '$nameWithInitial', district = '$userDistrict', mobileNo = '$mobileNo', landlineNo = '$landlineNo', homeAddress = '$home_address',addressInJaffna = '$jaffna_address', profile_img = '$imageName' WHERE regNo = '$regNo'";
-    if ($con->query($sql) === FALSE) {
-        $errors['update-error'] = "Error updating record: " . $con->error;
-    }
-    else{
-        header("Location: index.php");
-        exit;
-    }
-
-}
-
-
 $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', 'Badulla', 'Batticaloa', 'Gampaha', 'Hambantota', 'Jaffna', 'Kalutara', 'Kegalle', 'Kilinochchi', 'Kurunegala', 'Mannar', 'Matale', 'Matara', 'Moneragala', 'Mullativu', 'Nuwara Eliya', 'Polonnaruwa', 'Puttalam', 'Ratnapura', 'Trincomalee', 'Vavuniya'];
 
 ?>
@@ -78,12 +72,12 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
     <meta charset="UTF-8">
     <meta name="viewport"
             content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link
-            rel="shortcut icon"
-            href="../assets/img/logo/ERS_logo_icon.ico"
-            type="image/x-icon" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ERS | Student</title>
+    <link
+        rel="shortcut icon"
+        href="../assets/img/logo/ERS_logo_icon.ico"
+        type="image/x-icon" />
+    <title>ERS | Dashboard</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script
@@ -91,8 +85,52 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
     crossorigin="anonymous"></script>
 </head>
 <body class=" bg-gray-50" id="student">
-    <?php include("navBar.php"); ?>
+    <nav class="w-full h-[15vh] min-h-fit drop-shadow-md bg-white fixed top-0 left-0">
+        <div class="w-10/12 h-full m-auto flex items-center justify-between">
+            <a href="index.php">
+                <img src="../assets/img/logo/ERS_logo.gif" alt="logo" class="w-28 align-middle">
+            </a>    
+            <ul class="flex items-center justify-around gap-10">
+                <li><a href="exam_reg.php" class="hidden btn outline-btn md:block">Exam Registration</a></li>
+
+                <?php if (!isset($profile_img)) { ?>
+                    <li onclick="openMenu()" class="py-2 px-3 bg-[var(--primary)] rounded-full drop-shadow-md cursor-pointer lh:relative"><i class="fa-solid fa-user text-2xl text-[#dfeaff]"></i></li>
+                <?php } else { ?>
+                    <img onclick="openMenu()" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full drop-shadow-md cursor-pointer ring-4" src="../assets/uploads/<?php echo $profile_img; ?>" alt="user img">
+                <?php } ?>
+                
+            </ul>
+                       
+        </div>
+        <div class="hidden top-[14.8vh] right-0 h-56 w-full bg-white -translate-y-full z-20 transition-transform lg:top-[16vh] lg:drop-shadow-2xl lg:right-24 lg:w-56 lg:translate-x-full lg:h-72 lg:rounded-tl-3xl lg:rounded-br-3xl lg:text-gray-800" id="user-menu">
+            <ul class="w-11/12 h-full m-auto flex flex-col items-center justify-around text-center">
+                <li class="mt-3 "><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="exam_reg.php">Exam Registration</a></li>
+                <div class="h-px w-3/4 bg-gray-300"></div>
+                <li class=""><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="index.php">Dashboard</a></li>
+                <div class="h-px w-3/4 bg-gray-300"></div>
+                <li class=""><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="../contact.html">Contact</a></li>
+                <div class="h-px w-3/4 bg-gray-300"></div>
+                <li class="mb-3 "><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="../logout.php">Logout</a></li>
+            </ul>   
+        </div>   
+    </nav>
+
     
+    <?php if (isset($_GET['error'])) { ?>
+        <div class="exam-false fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
+            <form class="card h-40 w-1/2 flex flex-col items-center justify-around gap-7" action="index.php" method="POST">
+                <p class="text-center"><?php echo $_GET['error'] ?></p>
+                <input class="btn fill-btn" type="submit" value="OK" name="ok">
+            </form>
+        </div>
+    <?php } elseif (isset($_GET['success'])) { ?>
+        <div class="exam-false fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
+            <form class="card h-40 w-1/2 flex flex-col items-center justify-around gap-7" action="index.php" method="POST">
+                <p class="text-center text-green-700"><?php echo $_GET['success'] ?></p>
+                <input class="btn fill-btn !bg-green-700" type="submit" value="OK" name="ok">
+            </form>
+        </div>
+    <?php } ?>
     <div class="body-sec my-[20vh]">
         <div class="container m-auto">
             <div class="card w-11/12 m-auto grid grid-rows-[30%_70%] lg:grid-cols-[30%_1%_69%] ">
@@ -113,29 +151,29 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                 <div class ="student-details mt-5 lg:w-10/12 lg:mt-0 lg:h-fit text-sm lg:text-base">
                     <?php if (isset($_GET['update'])) { ?>
                         <div class="mt-4 w-full h-full flex flex-col items-center justify-around lg:mt-0 lg:h-[750px]">
-                            <div class="detail-row">
+                            <div class="detail-row ">
                                 <label class="hidden lg:block" for="title">Title: <span class="text-red-500">*</span></label>
-                                <input class="inputs w-full lg:w-1/2" type="text" id="title" name="title" value="<?php echo $title; ?>" required >
+                                <input class="inputs  w-full lg:w-1/2" type="text" id="title" name="title" value="<?php echo $title; ?>" required >
                             </div>
 
                             <div class="detail-row">
                                 <label class="hidden lg:block" for="fname">Full Name: <span class="text-red-500">*</span></label>
-                                <input class="inputs w-full lg:w-1/2" type="text" id="fname" name="fname" value="<?php echo $fullName; ?>" required >
+                                <input class="inputs  w-full lg:w-1/2" type="text" id="fname" name="fname" value="<?php echo $fullName; ?>" required >
                             </div>
 
                             <div class="detail-row">
                                 <label class="hidden lg:block" for="nameWithInitial">Name With Initials: <span class="text-red-500">*</span></label>
-                                <input class="inputs w-full lg:w-1/2" type="text" id="nameWithInitial" name="nameWithInitial" value="<?php echo $nameWithInitial; ?>" required>
+                                <input class="inputs  w-full lg:w-1/2" type="text" id="nameWithInitial" name="nameWithInitial" value="<?php echo $nameWithInitial; ?>" required>
                             </div>
 
                             <div class="detail-row">
                                 <label class="hidden lg:block" for="regNo">Registration Number:</label>
-                                <input class="inputs w-full lg:w-1/2" type="text" id="regNo" name="regNo" value="<?php echo $regNo; ?>" required disabled>
+                                <input class="inputs  w-full lg:w-1/2" type="text" id="regNo" name="regNo" value="<?php echo $regNo; ?>" required disabled>
                             </div>
 
                             <div class="detail-row">
                                 <label class="hidden lg:block" for="district">District: <span class="text-red-500">*</span></label>
-                                <select class="inputs" name="userDistrict" id="district"  required>
+                                <select class="inputs " name="userDistrict" id="district"  required>
                                     <?php foreach ($districts as $district) {?>
                                         <option value="<?php echo $district;?>" <?php if ($district == $userDistrict) { echo "selected"; }?>><?php echo $district;?></option>
                                     <?php }?>
@@ -144,22 +182,22 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
 
                             <div class="detail-row">
                                 <label class="hidden lg:block" for="mobileNo">Mobile: <span class="text-red-500">*</span></label>
-                                <input class="inputs w-full lg:w-1/2" type="tel" id="mobileNo" name="mobileNo" value="<?php echo $mobileNo; ?>" required>
+                                <input class="inputs  w-full lg:w-1/2" type="tel" id="mobileNo" name="mobileNo" value="<?php echo $mobileNo; ?>" required>
                             </div>
 
                             <div class="detail-row">
                                 <label class="hidden lg:block" for="landlineNo">Landline: <span class="text-red-500">*</span></label>
-                                <input class="inputs w-full lg:w-1/2" type="text" id="landlineNo" name="landlineNo" value="<?php echo $landlineNo; ?>" required>
+                                <input class="inputs  w-full lg:w-1/2" type="text" id="landlineNo" name="landlineNo" value="<?php echo $landlineNo; ?>" required>
                             </div>
 
                             <div class="detail-row">
                                 <label class="hidden lg:block" for="home_address">Home Address: <span class="text-red-500">*</span></label>
-                                <textarea class="inputs" id="home_address" name="home_address" rows="3" required><?php echo $home_address; ?></textarea>
+                                <textarea class="inputs " id="home_address" name="home_address" rows="3" required><?php echo $home_address; ?></textarea>
                             </div>
                                             
                             <div class="detail-row">
                                 <label class="hidden lg:block" for="home_address">Current Address: <span class="text-red-500">*</span></label>
-                                <textarea class="inputs" id="jaffna_address" name="jaffna_address" rows="3" required><?php echo $jaffna_address; ?></textarea>
+                                <textarea class="inputs " id="jaffna_address" name="jaffna_address" rows="3" required><?php echo $jaffna_address; ?></textarea>
                             </div>
                                     
                             <input class="inputs w-full lg:w-1/2 btn fill-btn" type="submit"  name ="submit" value="Update" class="btn fill-btn">
@@ -259,3 +297,14 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
 
 </body>
 </html>
+
+<script>
+    const userMenu = document.getElementById('user-menu');
+
+    function openMenu() {
+        userMenu.classList.toggle('hidden');
+        userMenu.classList.toggle('absolute');
+        userMenu.classList.toggle('-translate-y-full');
+        userMenu.classList.toggle('lg:translate-x-full');
+    }
+</script>
