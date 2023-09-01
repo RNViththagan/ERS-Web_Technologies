@@ -47,7 +47,6 @@ if (isset($_POST['save'])) {
     <title>Dashboard</title>
 
     <link rel = "stylesheet" type = "text/css" href = "../../assets/css/profile.css">
-
 </head>
 <body>
 
