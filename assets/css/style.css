@@ -24,6 +24,7 @@
   height: auto;
 }
 .btn {
+  border: none;
   border-radius: 9999px;
   padding: 0.5rem 1.5rem;
   font-weight: 500;
@@ -32,13 +33,13 @@
   transition: 0.4s all ease;
 }
 .fill-btn {
-  background-color: var(--primary);
+  background-color: var(--primary) !important;
   color: white;
 }
 .outline-btn {
   background-color: transparent;
   color: var(--primary);
-  border: 2px solid var(--primary);
+  border: 2px solid var(--primary) !important;
 }
 .outline-btn:hover {
   background-color: var(--primary);
@@ -140,6 +141,23 @@
   font-weight: 400;
 }
 #student .detail-row .inputs {
+  font-size: 0.9rem;
+  border: 1px solid #acacac;
+  border-radius: 20px;
+  padding: 7.5px 20px;
+  width: 100%;
+}
+
+#exam .detail-row {
+  width: 90%;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  /* margin: 20px auto; */
+}
+#exam .detail-row h5 {
+  font-weight: 400;
+}
+#exam .detail-row .inputs {
   font-size: 0.9rem;
   border: 1px solid #acacac;
   border-radius: 20px;
