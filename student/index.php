@@ -46,6 +46,9 @@ if (isset($_POST["submit"]))  {
 
     $imageName = $profile_img;
     if(isset($_FILES["fileImg"]["name"]) and $_FILES["fileImg"]["name"] != Null){
+        if($profile_img!="blankProfile.png"){
+            echo unlink("../assets/uploads/".$profile_img);
+        }
         $src = $_FILES["fileImg"]["tmp_name"];
         $path = $_FILES['fileImg']['name'];
         $ext = pathinfo($path, PATHINFO_EXTENSION);
