@@ -66,7 +66,7 @@ if (isset($_POST['regNo'])) {
 
     <div class="card">
         <a href="admin_student.php"><button>Back</button></a>
-        <h1>Student Profile Setting</h1>
+        <h1>Manage Student Profile</h1>
 
         <table>
             <tr>
