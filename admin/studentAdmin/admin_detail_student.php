@@ -12,7 +12,7 @@ if (isset($_POST['regNo'])) {
 <link rel="stylesheet" type="text/css" href="../../assets/css/style_admin_student.css">
 
         <a href="index.php?page=stud"><button>Back</button></a>
-        <h1>Manage Student Profile</h1>
+        <h1>View Student Profile</h1>
 
         <table>
             <tr>

@@ -14,6 +14,7 @@
     }
 </script>
 <?php
+$msg=array();
 if (isset($_POST['regNo'])) {
     $regNo = $_POST['regNo'];
     $query = "SELECT * FROM student INNER JOIN student_check ON student.regNo = student_check.regNo WHERE student.regNo = '" . $regNo . "'";
@@ -25,36 +26,60 @@ if (isset($_POST['regNo'])) {
 if (isset($_POST['save'])) {
     $newRegNo = $_POST["newRegNo"];
     $regNo = $_POST["regNo"];
-    $status = $_POST['status'];
-    $email = $_POST["email"];
-    $fullName = $_POST["fullName"];
-    $nameWithInitial = $_POST["nameWithInitial"];
-    $district = $_POST["district"];
-    $mobileNo = $_POST["mobileNo"];
-    $landlineNo = $_POST["landlineNo"];
-    $homeAddress = $_POST["homeAddress"];
-    $addressInJaffna = $_POST["addressInJaffna"];
+    if($newRegNo != $regNo) {
+        $test_new_regNo = $query = "SELECT * FROM student_check WHERE regNo = '" . $newRegNo . "'";
+        $check_res = mysqli_query($con, $test_new_regNo);
+        if ($check_res->num_rows !=0) {
+            $msg['error'] = "Registration No already exists!";
+        }
+    }
+    if(count($msg) == 0) {
+        $status = $_POST['status'];
+        $email = $_POST["email"];
+        $fullName = $_POST["fullName"];
+        $nameWithInitial = $_POST["nameWithInitial"];
+        $district = $_POST["district"];
+        $mobileNo = $_POST["mobileNo"];
+        $landlineNo = $_POST["landlineNo"];
+        $homeAddress = $_POST["homeAddress"];
+        $addressInJaffna = $_POST["addressInJaffna"];
 
-    $query = "UPDATE student INNER JOIN student_check ON student.regNo = student_check.regNo SET student_check.regNo = '$newRegNo', student_check.email = '$email', student_check.status = '$status', student.fullName = '$fullName', student.nameWithInitial = '$nameWithInitial', student.district = '$district', student.mobileNo = '$mobileNo', student.landlineNo = '$landlineNo', student.homeAddress = '$homeAddress', student.addressInJaffna = '$addressInJaffna' WHERE student.regNo = '" . $regNo . "'";
-    $result = mysqli_query($con, $query);
+        $query = "UPDATE student INNER JOIN student_check ON student.regNo = student_check.regNo SET student_check.regNo = '$newRegNo', student_check.email = '$email', student_check.status = '$status', student.fullName = '$fullName', student.nameWithInitial = '$nameWithInitial', student.district = '$district', student.mobileNo = '$mobileNo', student.landlineNo = '$landlineNo', student.homeAddress = '$homeAddress', student.addressInJaffna = '$addressInJaffna' WHERE student.regNo = '" . $regNo . "'";
+        $result = mysqli_query($con, $query);
 
-    if ($result) {
-        mysqli_close($con);
-        echo '<script>        
+        if ($result) {
+            mysqli_close($con);
+            echo '<script>        
     view("' . $newRegNo . '");</script>';
 
-    } else {
-        echo "Connection Failed : " . mysqli_connect_error();
+        } else {
+            echo "Connection Failed : " . mysqli_connect_error();
+        }
     }
 }
 
 ?>
 
+<style>
+    .msg {
+        margin-top: 10px;
+        padding: 10px;
+        border-radius: 3px;
+    }
+
+    .error-msg {
+        background-color: #ffdddd;
+        color: #ff0000;
+    }
+</style>
+
 <link rel="stylesheet" type="text/css" href="../../assets/css/style_admin_student.css">
 
 
-<h1>Student Profile Setting</h1>
-
+<h1>Edit student Profile</h1>
+<?php if (isset($msg['error'])) : ?>
+    <div class="msg error-msg"><?php echo $msg['error']; ?></div>
+<?php endif; ?>
 <form method="post" action="">
     <table>
         <tr>

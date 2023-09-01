@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
             <input type="submit" name="submit" value="Register">
         </div>
     </form>
-    <a href="../index.php">
-        <button>Dashboard</button>
+    <a href="index.php?page=stud">
+        <button>Back</button>
     </a>
 </div>
