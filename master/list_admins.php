@@ -12,12 +12,11 @@ $records_per_page = 10;
 $offset = ($current_page - 1) * $records_per_page;
 $limit = " LIMIT $offset, $records_per_page";
 
-$sql = "SELECT * FROM student";
 if (isset($_POST['filter'])) {
 
     $role = $_POST['role'];
     $dept = (isset($_POST['dept']))?$_POST['dept']:"none";
-    $status =(isset($_POST['status']))?$_POST['dept']:"none";
+    $status =(isset($_POST['status']))?$_POST['status']:"none";
     if ($role != "none")
         $filterOp .= " role LIKE '$role%'";
     if ($dept != "none") {
@@ -47,7 +46,7 @@ $adminlist = mysqli_query($con, $get_admins);
 <link rel="stylesheet" type="text/css" href="../assets/css/style_admin_student.css">
 <h1>Admin Management</h1>
 
-<form action="" method="post">
+<form  id="searchform" action="index.php?page=listAdmins" method="post">
     <input type="text" name="search_key" value="<?php echo (isset($search_key)) ? $search_key : "" ?>" required>
     <button type="submit" name="search">Search</button>
 </form>
@@ -57,7 +56,7 @@ $adminlist = mysqli_query($con, $get_admins);
 </a>
 
 <div class="filter">
-    <form method="post" action="">
+    <form id="filterform" method="post" action="index.php?page=listAdmins">
 
         <label for="role">Role</label>
         <select name="role" id="role">
@@ -165,7 +164,7 @@ $next_page = $current_page + 1;
 
 echo "<br>";
 if ($prev_page > 0) {
-    echo "<a href='?page=listAdmins&no=$prev_page'><button>Previous</button></a> ";
+    echo "<button  onclick='pagechange($prev_page)'>Previous</button>";
 }
 
 
@@ -175,7 +174,7 @@ $total_records = $count_result->num_rows;
 $total_pages = ceil($total_records / $records_per_page);
 
 if ($next_page <= $total_pages) {
-    echo "<a href='?page=listAdmins&no=$next_page'><button>Next</button></a>";
+    echo "<button onclick='pagechange($next_page)'>Next</button>";
 }
 ?>
 
@@ -194,6 +193,33 @@ if ($next_page <= $total_pages) {
         console.log(myform);
         myform.submit()
     }
+    formid ="";
+    var subName = document.createElement('input');
+
+    <?php
+    if (isset($_POST['filter'])) {
+        echo "formid = 'filterform';\n";
+        echo "subName.name = 'filter';";
+    }
+    else if (isset($_POST['search']))
+        echo "formid = 'searchform' \nsubName.name = 'search';";
+    ?>
+
+
+    const parentElement = document.getElementById(formid);
+    function pagechange(no) {
+        var myform = document.createElement("form");
+        myform.action = "?page=listAdmins&no="+no;
+        myform.method = "post";
+        if(formid!="") {
+            const childElements = parentElement.children;
+            for (const child of childElements) {
+                myform.appendChild(child.cloneNode(true));
+            }
+            myform.appendChild(subName);
+        }
+        document.body.appendChild(myform);
+        console.log(myform);
+        myform.submit()
+    }
 </script>
-
-

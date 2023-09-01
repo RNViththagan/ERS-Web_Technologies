@@ -1,5 +1,7 @@
 <?php
-include("../../config/connect.php");
+ob_start();
+include("connect.php");
+
 
 if (isset($_POST['email'])) {
     $email = $_POST['email'];
