@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 require_once("../config/connect.php");
 if (!isset($_SESSION['role']) || $_SESSION['role'] == "Admin_Master") {
@@ -35,10 +36,25 @@ require_once("../config/adminName.php");
 
     <div class = "card">
         <?php
+        print_r($_POST);
+        echo "<br>";
+        print_r($_GET);
         if ($_SESSION['role'] == "Admin_Student") {
             if(isset($_GET['page'])){
-                if($_GET['page'] === "addstd"){
-                    include("studentAdmin/add_student.php");
+                if($_GET['page'] === "stud"){
+                    include("studentAdmin/admin_student.php");
+                }
+                else if($_GET['page'] === "viewStud"){
+                    if(isset($_POST['regNo']))
+                        include("studentAdmin/admin_detail_student.php");
+                    else
+                        header("Location:index.php?page=stud");
+                }
+                else if($_GET['page'] === "editStud"){
+                    if(isset($_POST['regNo']))
+                        include("studentAdmin/admin_edit_student.php");
+                    else
+                        header("Location:index.php?page=stud");
                 }
                 else
                     include("studentAdmin/stud_admin_dashboard.php");
@@ -65,6 +81,7 @@ require_once("../config/adminName.php");
             subMenu.classList.toggle("open-menu");
         }
     </script>
+
     
 
 
