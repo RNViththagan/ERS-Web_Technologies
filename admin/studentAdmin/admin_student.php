@@ -1,104 +1,110 @@
 <?php
-$get_admins = "SELECT admin.email,`admin`.name,`admin`.`role`, `admin_details`.department, admin.status 
-FROM `admin` 
-    LEFT JOIN `admin_details` ON `admin_details`.`email` = `admin`.`email`";
 
-
-$role = "";
-$status = "";
-$filterOp = "";
 $current_page = isset($_GET['no']) ? intval($_GET['no']) : 1;
 $records_per_page = 10;
 $offset = ($current_page - 1) * $records_per_page;
+
+
+$sql = "SELECT * FROM student INNER JOIN student_check ON student.regNo = student_check.regNo";
 $limit = " LIMIT $offset, $records_per_page";
 
-if (isset($_POST['filter'])) {
 
-    $role = $_POST['role'];
+$year = "";
+$dept = "";
+$status = "";
+$student_regNo = "";
+$filterOp = "";
+
+if (isset($_POST['filter'])) {
+    $year = $_POST['year'];
     $dept = (isset($_POST['dept']))?$_POST['dept']:"none";
-    $status =(isset($_POST['status']))?$_POST['status']:"none";
-    if ($role != "none")
-        $filterOp .= " role LIKE '$role%'";
+    $status = (isset($_POST['status']))?$_POST['status']:"none";
+    if ($year != "none")
+        $filterOp .= " student.regNo LIKE '$year%'";
     if ($dept != "none") {
-        if ($filterOp != "") $filterOp .= " And ";
-        $filterOp .= " department LIKE '%$dept%'";
+        if ($filterOp != "")
+            $filterOp .= " And ";
+        $filterOp .= " student.regNo LIKE '%$dept%'";
     }
     if ($status != "none") {
-        if ($filterOp != "") $filterOp .= " And ";
-        $filterOp .= " status = '$status'";
+        if ($filterOp != "")
+            $filterOp .= " And ";
+        $filterOp .= " student_check.status = '$status'";
     }
 }
-if ($filterOp != "") $get_admins .= " Where " . $filterOp;
+
+if ($filterOp != "") {
+    $sql .= " Where " . $filterOp;
+}
 
 $searchOp = "";
 if (isset($_POST['search'])) {
-    $search_key = $_POST['search_key'];
-    $searchOp = " admin.email like '%$search_key%' or name like '%$search_key%'";
+    $searchkey = $_POST['searchkey'];
+    $searchOp = " student.regNo LIKE '%$searchkey%' or student.nameWithInitial LIKE '%$searchkey%'";
     if ($searchOp != "") {
-        $get_admins .= " Where " . $searchOp;
+        $sql .= " Where " . $searchOp;
     }
 }
-$forcount =$get_admins;
-$get_admins .= $limit;
-$adminlist = mysqli_query($con, $get_admins);
+
+$forcount = $sql;
+$sql .= $limit;
+$stdlist = mysqli_query($con, $sql);
 
 ?>
-<link rel="stylesheet" type="text/css" href="../assets/css/style_admin_student.css">
-<h1>Admin Management</h1>
+<link rel="stylesheet" type="text/css" href="../../assets/css/style_admin_student.css">
+<h1>Student Management</h1>
 
-<form  id="searchform" action="index.php?page=listAdmins" method="post">
-    <input type="text" name="search_key" value="<?php echo (isset($search_key)) ? $search_key : "" ?>" required>
+<form  id="searchform"  action="index.php?page=stud" method="post">
+    <input type="text" name="searchkey" value="<?php echo (isset($searchkey)) ? $searchkey : "" ?>" required>
     <button type="submit" name="search">Search</button>
 </form>
 
-<a href="index.php?page=addAdmin">
+<a href="index.php?page=addStud">
     <button id="add"> Add</button>
 </a>
 
 <div class="filter">
-    <form id="filterform" method="post" action="index.php?page=listAdmins">
+    <form id="filterform" method="post" action="index.php?page=stud">
 
-        <label for="role">Role</label>
-        <select name="role" id="role">
+        <label for="year">Year</label>
+        <select name="year" id="year">
             <option value="none"></option>
             <?php
-            // Fetch distinct roles from the database
-            $distinctYear = "SELECT DISTINCT role FROM admin";
+            // Fetch distinct exam names from the database
+            $distinctYear = "SELECT DISTINCT SUBSTRING(regNo, 1, 4) AS starting_year FROM student";
             $result = $con->query($distinctYear);
 
             if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    echo "<option value='" . $row["role"] . "' ";
-                    echo ($role == $row["role"]) ? "selected" : "";
-                    echo ">" . $row["role"] . "</option>";
+                    echo "<option value='" . $row["starting_year"] . "' ";
+                    echo ($year == $row["starting_year"]) ? "selected" : "";
+                    echo ">" . $row["starting_year"] . "</option>";
                 }
             }
             ?>
         </select>
         <?php
-        // Fetch distinct departments from the database
-        $distinctDept = "SELECT DISTINCT department FROM admin_details";
+        // Fetch distinct exam names from the database
+        $distinctDept = "SELECT DISTINCT SUBSTRING(SUBSTRING_INDEX(regNo, '/', 2), 6) AS code FROM student";
         $result = $con->query($distinctDept);
-        if ($result->num_rows > 1) {?>
-        <label for="dept">Dept</label>
-        <select for="dept" name="dept">
-            <option value="none"></option>
-            <?php
+        if ($result->num_rows > 1) { ?>
+            <label for="dept">Dept</label>
+            <select for="dept" name="dept">
+                <option value="none"></option>
+                <?php
                 while ($row = $result->fetch_assoc()) {
-                    if ($row["department"] == "") continue;
-                    echo "<option value='" . $row["department"] . "' ";
-                    echo ($dept == $row["department"]) ? "selected" : "";
-                    echo ">" . $row["department"] . "</option>";
+                    echo "<option value='" . $row["code"] . "' ";
+                    echo ($dept == $row["code"]) ? "selected" : "";
+                    echo ">" . $row["code"] . "</option>";
                 }
                 ?>
-
-        </select>
+            </select>
             <?php
         }
         ?>
         <?php
-        // Fetch distinct status from the database
-        $distinctStatus = "SELECT DISTINCT status FROM admin";
+        // Fetch distinct exam names from the database
+        $distinctStatus = "SELECT DISTINCT status FROM student_check";
         $result = $con->query($distinctStatus);
 
         if ($result->num_rows > 1) { ?>
@@ -116,43 +122,39 @@ $adminlist = mysqli_query($con, $get_admins);
             <?php
         }
         ?>
-
         <button type="submit" name="filter" value="Filter">Filter</button>
 
     </form>
-    <a href="index.php?page=listAdmins">
+    <a href="index.php?page=stud">
         <button id="add"> Reset</button>
     </a>
 
 </div>
 <table>
     <tr>
-        <th>Email</th>
+        <th>Reg No</th>
         <th>Name</th>
-        <th>Role</th>
-        <th>Department</th>
         <th>Status</th>
         <th>Action</th>
     </tr>
     <?php
-    if (mysqli_num_rows($adminlist) > 0) {
-        while ($row = mysqli_fetch_assoc($adminlist)) {
-            ?>
-            <tr>
-                <td><?php echo $row['email']; ?></td>
-                <td><?php echo $row['name']; ?></td>
-                <td><?php echo $row['role']; ?></td>
-                <td><?php echo $row['department']; ?></td>
-                <td><?php echo $row['status']; ?></td>
-                <td>
-                    <button onclick="view('<?php echo $row['email']; ?>')">View</button>
-                </td>
-            </tr>
-            <?php
-        }
+    if (mysqli_num_rows($stdlist) > 0) {
+    while ($row = mysqli_fetch_assoc($stdlist)) {
+        ?>
+        <tr>
+            <td><?php echo $row['regNo']; ?></td>
+            <td><?php echo ($row['title'] != "") ? $row['title'] . ". " : "";
+                echo $row['nameWithInitial']; ?></td>
+            <td><?php echo $row['status']; ?></td>
+            <td>
+                <button onclick="view('<?php echo $row['regNo']; ?>')">View</button>
+            </td>
+        </tr>
+        <?php
+    }
     } else {
         echo "<tr>
-                 <td colspan='6'>No record found</td>
+                 <td colspan='4'>No record found</td>
               </tr>
                                     ";
     }
@@ -180,13 +182,13 @@ if ($next_page <= $total_pages) {
 
 
 <script>
-    function view(adminId) {
+    function view(regNo) {
         var myform = document.createElement("form");
-        myform.action = "";
+        myform.action = "index.php?page=viewStud";
         myform.method = "post";
         var inp = document.createElement('input');
-        inp.name = "adminId";
-        inp.value = adminId;
+        inp.name = "regNo";
+        inp.value = regNo;
         inp.type = "hidden";
         myform.appendChild(inp);
         document.body.appendChild(myform);
@@ -204,12 +206,12 @@ if ($next_page <= $total_pages) {
     else if (isset($_POST['search']))
         echo "formid = 'searchform' \nsubName.name = 'search';";
     ?>
-
+    
 
     const parentElement = document.getElementById(formid);
     function pagechange(no) {
         var myform = document.createElement("form");
-        myform.action = "?page=listAdmins&no="+no;
+        myform.action = "index.php?page=stud&no="+no;
         myform.method = "post";
         if(formid!="") {
             const childElements = parentElement.children;
@@ -221,5 +223,10 @@ if ($next_page <= $total_pages) {
         document.body.appendChild(myform);
         console.log(myform);
         myform.submit()
+    }
+</script>
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
     }
 </script>
