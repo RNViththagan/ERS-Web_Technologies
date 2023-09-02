@@ -1,11 +1,12 @@
 <?php
 $get_admins = "SELECT admin.email,`admin`.name,`admin`.`role`, `admin_details`.department, admin.status 
 FROM `admin` 
-    LEFT JOIN `admin_details` ON `admin_details`.`email` = `admin`.`email`";
+    LEFT JOIN `admin_details` ON `admin_details`.`email` = `admin`.`email` WHERE admin.email != '".$_SESSION['userid']."'";
 
 
 $role = "";
 $status = "";
+$dept = "";
 $filterOp = "";
 $current_page = isset($_GET['no']) ? intval($_GET['no']) : 1;
 $records_per_page = 10;
@@ -28,14 +29,14 @@ if (isset($_POST['filter'])) {
         $filterOp .= " status = '$status'";
     }
 }
-if ($filterOp != "") $get_admins .= " Where " . $filterOp;
+if ($filterOp != "") $get_admins .= " And " . $filterOp;
 
 $searchOp = "";
 if (isset($_POST['search'])) {
     $search_key = $_POST['search_key'];
-    $searchOp = " admin.email like '%$search_key%' or name like '%$search_key%'";
+    $searchOp = " admin.email like '%$search_key%' or name like '%$search_key%' or department like '%$search_key%'";
     if ($searchOp != "") {
-        $get_admins .= " Where " . $searchOp;
+        $get_admins .= " And " . $searchOp;
     }
 }
 $forcount =$get_admins;
@@ -63,7 +64,7 @@ $adminlist = mysqli_query($con, $get_admins);
             <option value="none"></option>
             <?php
             // Fetch distinct roles from the database
-            $distinctYear = "SELECT DISTINCT role FROM admin";
+            $distinctYear = "SELECT DISTINCT role FROM admin WHERE role !='Admin_Master'";
             $result = $con->query($distinctYear);
 
             if ($result->num_rows > 0) {
@@ -182,7 +183,7 @@ if ($next_page <= $total_pages) {
 <script>
     function view(adminId) {
         var myform = document.createElement("form");
-        myform.action = "";
+        myform.action = "index.php?page=viewAdmin";
         myform.method = "post";
         var inp = document.createElement('input');
         inp.name = "adminId";
