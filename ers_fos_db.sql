@@ -219,7 +219,7 @@ CREATE TABLE `student_check` (
   `regNo` varchar(12) NOT NULL,
   `email` varchar(80) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `status` varchar(20) NOT NULL DEFAULT 'unregisterd',
+  `status` varchar(20) NOT NULL DEFAULT 'unregistered',
   `verificationCode` int(11) DEFAULT NULL,
   `verificationStatus` varchar(15) NOT NULL DEFAULT 'not_verified'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -231,8 +231,8 @@ CREATE TABLE `student_check` (
 INSERT INTO `student_check` (`regNo`, `email`, `password`, `status`, `verificationCode`, `verificationStatus`) VALUES
 ('2020/CSC/007', 'cnilwakka@gmail.com', '$2y$10$f64XVozpm4azju5H1fdZKe1QFSLr/U2QWLwojsETCK12/IHniPI9W', 'active', 0, 'verified'),
 ('2020/CSC/010', 'dharshikagnanaseelan4@gmail.com', '$2y$10$ewPtbft5YqpV6qkGcZjSL.s/hwCgiQjnYLOUjNRisKD9DLP7pHLhe', 'active', 0, 'verified'),
-('2020/CSC/028', 'lahiruishan400@gmail.com', NULL, 'unregisterd', NULL, 'not_verified'),
-('2020/CSC/046', 'audeshitha@gmail.com', NULL, 'unregisterd', NULL, 'not_verified'),
+('2020/CSC/028', 'lahiruishan400@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
+('2020/CSC/046', 'audeshitha@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
 ('2020/CSC/051', 'viththagan1999@gmail.com', '$2y$10$43cjXmjEzaBbdy5aNR/LquaQqXrqVU9r/Hj4tcshbN9UUHhNlCzIO', 'active', 0, 'verified'),
 ('2020/CSC/057', 'sivavithu15@live.com', '$2y$10$XhU8xrtIuzrHZXYiNUZbq.yb5zzuJApvAFEt3/TYMVf9QHPJmmgZC', 'active', 0, 'verified'),
 ('2020/CSC/074', 'saaru27kesan@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified');

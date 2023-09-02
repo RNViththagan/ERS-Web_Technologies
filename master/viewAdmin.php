@@ -131,7 +131,7 @@ FROM `admin`
 <script>
     function edit(editAdminId) {
         var myform = document.createElement("form");
-        myform.action = "";
+        myform.action = "index.php?page=editAdmin";
         myform.method = "post";
         var inp = document.createElement('input');
         inp.name = "editAdminId";

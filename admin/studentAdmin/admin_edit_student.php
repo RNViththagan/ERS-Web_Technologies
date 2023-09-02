@@ -15,6 +15,7 @@
 </script>
 <?php
 $msg=array();
+
 if (isset($_POST['regNo'])) {
     $regNo = $_POST['regNo'];
     $query = "SELECT * FROM student INNER JOIN student_check ON student.regNo = student_check.regNo WHERE student.regNo = '" . $regNo . "'";
