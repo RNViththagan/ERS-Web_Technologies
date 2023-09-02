@@ -20,7 +20,7 @@ include("../../config/connect.php");
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dashboard</title>
 
-    <link rel = "stylesheet" type = "text/css" href = "../../assets/css/profile.css">
+    <link rel = "stylesheet" type = "text/css" href = "../assets/css/profile.css">
 </head>
 <body>
 
@@ -44,7 +44,7 @@ include("../../config/connect.php");
                         <img src="../img/panels/profile.png">
                         <p>Profile</p>
                     </a>
-                    <a href="admin_student.php" class="sub-menu-link">
+                    <a href="studentAdmin/admin_student.php" class="sub-menu-link">
                         <img src="../img/panels/student.png">
                         <p>Student</p>
                     </a>
