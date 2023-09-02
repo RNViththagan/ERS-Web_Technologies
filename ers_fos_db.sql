@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2023 at 10:04 PM
+-- Generation Time: Sep 02, 2023 at 04:36 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -40,9 +40,10 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`email`, `password`, `name`, `role`, `status`) VALUES
-('admin_master@nexus.com', '$2y$10$3RXxBIvCklptQmFmbsoBNeiiCIG74twdSSqlRh663cCLkG/1DPJHq', 'master1', 'Admin_Master', 'active'),
-('stud_admin1@nexus.com', '$2y$10$IUzrF9GhBdTzDXXbmxA19.XZuxKo9le3hETfrRsqKG35goK4w1npS', 'stud1', 'Admin_Student', 'active'),
+('admin_master@nexus.com', '$2y$10$3RXxBIvCklptQmFmbsoBNeiiCIG74twdSSqlRh663cCLkG/1DPJHq', 'Master Admin', 'Admin_Master', 'active'),
+('stud_admin1@nexus.com', '$2y$10$IUzrF9GhBdTzDXXbmxA19.XZuxKo9le3hETfrRsqKG35goK4w1npS', 'Student admin 1', 'Admin_Student', 'active'),
 ('subj_admin1@nexus.com', '$2y$10$6IniUusMCkDLxZFhTVWyL.Nk0BBkFuzzLUzSCdFOqy32NexOPRNvi', 'subj1', 'Admin_Subject', 'active'),
+('subj_admin2@nexus.com', '$2y$10$7v728eNqfjD61XwpVjLwvO/o4cNMvUmDW7QeqluimnhJsGNSzaqt.', 'Shankar', 'Admin_Subject', 'active'),
 ('viththagan@nexus.com', '$2y$10$HrF7DQS3U0xzZ5Xaom37LO4EAWXBK9zhhPBOsD.YqeIMvE4.kHgyG', 'viththagan', 'Admin_Subject', 'active');
 
 -- --------------------------------------------------------
@@ -66,9 +67,10 @@ CREATE TABLE `admin_details` (
 
 INSERT INTO `admin_details` (`adminId`, `email`, `fullName`, `department`, `mobileNo`, `profile_img`) VALUES
 (1, 'admin_master@nexus.com', NULL, NULL, NULL, NULL),
-(2, 'stud_admin1@nexus.com', NULL, NULL, NULL, NULL),
-(3, 'subj_admin1@nexus.com', NULL, NULL, NULL, NULL),
-(4, 'viththagan@nexus.com', NULL, NULL, NULL, NULL);
+(2, 'stud_admin1@nexus.com', 'John cena', 'CSC', NULL, NULL),
+(3, 'subj_admin1@nexus.com', NULL, 'physics', NULL, NULL),
+(4, 'viththagan@nexus.com', NULL, NULL, NULL, NULL),
+(5, 'subj_admin2@nexus.com', NULL, 'Bio', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -164,7 +166,8 @@ CREATE TABLE `exam_reg` (
 --
 
 INSERT INTO `exam_reg` (`exam_id`, `academic_year`, `semester`, `status`, `closing_date`, `date_created`) VALUES
-(1, '2020', '1', 'closed', '2023-08-28', '2023-08-28');
+(1, '2020', '1', 'closed', '2023-08-28', '2023-08-28'),
+(2, '2020', '2', 'registration', '2023-09-30', '2023-09-01');
 
 -- --------------------------------------------------------
 
