@@ -40,18 +40,25 @@ require_once("../config/adminName.php");
 
 <div class="card">
     <?php
-    print_r($_POST);
-    echo "<br>";
-    print_r($_GET);
+//    print_r($_POST);
+//    echo "<br>";
+//    print_r($_GET);
     if (isset($_GET['page'])) {
         if ($_GET['page'] === "listAdmins") {
-            if(isset($_POST['adminId']))
+            include("list_admins.php");
+        }
+        else if ($_GET['page'] === "viewAdmin") {
+           if(isset($_POST['adminId']))
                 include("viewAdmin.php");
-            else if(isset($_POST['editAdminId']))
+           else
+               header("Location:index.php?page=listAdmins");
+        }
+        else if ($_GET['page'] === "editAdmin") {
+            if (isset($_POST['editAdminId']))
                 include("editAdmin.php");
             else
-                include("list_admins.php");
-        } else if ($_GET['page'] === "pwdChg") {
+                header("Location:index.php?page=listAdmins");
+        }else if ($_GET['page'] === "pwdChg") {
             include("../login/pwd_change_admin.php");
         }else if ($_GET['page'] === "addAdmin") {
                 include("add_admin.php");
@@ -70,11 +77,7 @@ require_once("../config/adminName.php");
         subMenu.classList.toggle("open-menu");
     }
 </script>
-<script>
-    if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-    }
-</script>
+
 
 </body>
 </html>

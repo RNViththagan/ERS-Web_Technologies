@@ -8,7 +8,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != "Admin_Master") {
 }
 
 
-
+$errors =array();
 if (isset($_POST['submit'])) {
     $email = strtolower($_POST['email']);
     $name = $_POST['name'];
@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
 
         if (mysqli_num_rows(mysqli_query($con, $query))) {
 
-            $msg[0] = "username or email already taken!";
+            $msg[0] = "Email already exists!";
             $msg[1] = "warning";
         } else {
 
@@ -44,6 +44,8 @@ if (isset($_POST['submit'])) {
                 $msg[0] = "error!";
                 $msg[1] = "warning";
             } else {
+                $query = "INSERT INTO admin_details (email) values('$email')";
+                mysqli_query($con, $query);
                 $msg[0] = "Successfully added!";
                 $msg[1] = "done";
             }
@@ -111,6 +113,9 @@ if (isset($_POST['submit'])) {
             <input type="submit" name="submit" value="Register">
         </div>
     </form>
+    <a href="index.php?page=listAdmins">
+        <button>Back</button>
+    </a>
 
 </div>
 </body>

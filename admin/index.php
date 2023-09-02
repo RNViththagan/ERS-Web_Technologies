@@ -37,7 +37,7 @@ require_once("../config/adminName.php");
 <div class = "card">
     <?php
     //print_r($_POST);
-    echo "<br>";
+    //echo "<br>";
     //print_r($_GET);
     if ($_SESSION['role'] == "Admin_Student") {
         if(isset($_GET['page'])){
