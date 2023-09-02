@@ -12,12 +12,7 @@ include("../../config/connect.php");
     if (isset($_POST['submit'])) {
         $subject = strtoupper($_POST['subject']);
 
-        // Check the name validation
-        // $subjectPattern = '/^\d{4}\/[A-Z]+\/\d{3}$/';
-        // if (!preg_match($subjectPattern, $subject)) {
-        //     $msg[0] = "Invalid Subject (XXXX/XXX/XXX)";
-        //     $msg[1] = "warning";
-        // } else {
+
             $query = "SELECT * from subject where subject ='$subject' ";
 
             if (mysqli_num_rows(mysqli_query($con, $query))) {
