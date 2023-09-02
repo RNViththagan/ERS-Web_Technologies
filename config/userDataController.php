@@ -95,6 +95,23 @@ if (isset($_POST['reg-btn'])) {
             $message = "Your verification code for the exam registration system is $code. This code will expire in 3 minutes";
             $sender_name = "Exam Registration System | Faculty of Science";
             $sender_mail = "ers.fos.csc@gmail.com";
+            $htmlBody = '
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>OTP Email</title>
+                </head>
+                <body style="font-family: Arial, sans-serif; background-color: #f0f0f0; text-align: center; padding: 20px;">
+                    <div style="background-color: #ffffff; border-radius: 10px; padding: 20px; max-width: 400px; margin: 0 auto;">
+                        <h2 style="color: #333;">Exam Registration System</h2>
+                        <p>Your verification code for the exam registration system is:</p>
+                        <h1 style="color: #007bff;">'.$code.'</h1>
+                        <p>This code will expire in 3 minutes.</p>
+                    </div>
+                </body>
+                </html>
+                ';
 
             try {
                 // SMTP configuration
@@ -110,7 +127,8 @@ if (isset($_POST['reg-btn'])) {
                 $mail->setFrom($sender_mail, $sender_name);
                 $mail->addAddress($email, $username);
                 $mail->Subject = $subject;
-                $mail->Body = $message;
+                //$mail->Body = $message;
+                $mail->msgHTML($htmlBody);
 
                 // Send email
                 $mail->send();
@@ -299,9 +317,26 @@ if (isset($_POST['forgot-pw-submit-btn'])) {
 
             if ($run_query) {
                 $subject = "ERS Registration - Email Verification Code";
-                $message = "Your verification code for the exam registration system is $code. This code will expire in 3 minutes";
+                //$message = "Your verification code for the exam registration system is $code. This code will expire in 3 minutes";
                 $sender_name = "Exam Registration System | Faculty of Science";
                 $sender_mail = "ers.fos.csc@gmail.com";
+                $htmlBody = '
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>OTP Email</title>
+                </head>
+                <body style="font-family: Arial, sans-serif; background-color: #f0f0f0; text-align: center; padding: 20px;">
+                    <div style="background-color: #ffffff; border-radius: 10px; padding: 20px; max-width: 400px; margin: 0 auto;">
+                        <h2 style="color: #333;">Exam Registration System</h2>
+                        <p>Your verification code for the exam registration system is:</p>
+                        <h1 style="color: #007bff;">'.$code.'</h1>
+                        <p>This code will expire in 3 minutes.</p>
+                    </div>
+                </body>
+                </html>
+                ';
 
                 try {
                     // SMTP configuration
@@ -317,7 +352,8 @@ if (isset($_POST['forgot-pw-submit-btn'])) {
                     $mail->setFrom($sender_mail, $sender_name);
                     $mail->addAddress($email, $username);
                     $mail->Subject = $subject;
-                    $mail->Body = $message;
+                    //$mail->Body = $message;
+                    $mail->msgHTML($htmlBody);
 
                     // Send email
                     $mail->send();
@@ -391,16 +427,33 @@ if (isset($_GET['reg-code-resend'])) {
     // Initialize PHPMailer
     $mail = new PHPMailer(true);
 
-    $email = $_SESSION['email'];
-    $username = $_SESSION['username'];
+    $email = $_SESSION['fp-email'];
+    $username = $_SESSION['fp-username'];
     $code = rand(999999, 111111);
     $insert_code = "UPDATE student_check SET verificationCode = $code WHERE regNo = '$username' and email = '$email'";
     $run_query = mysqli_query($con, $insert_code);
     if ($run_query) {
         $subject = "ERS Registration - Email Verification Code";
-        $message = "Your verification code for the exam registration system is $code. This code will expire in 3 minutes";
+        //$message = "Your verification code for the exam registration system is $code. This code will expire in 3 minutes";
         $sender_name = "Exam Registration System | Faculty of Science";
         $sender_mail = "ers.fos.csc@gmail.com";
+        $htmlBody = '
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>OTP Email</title>
+                </head>
+                <body style="font-family: Arial, sans-serif; background-color: #f0f0f0; text-align: center; padding: 20px;">
+                    <div style="background-color: #ffffff; border-radius: 10px; padding: 20px; max-width: 400px; margin: 0 auto;">
+                        <h2 style="color: #333;">Exam Registration System</h2>
+                        <p>Your verification code for the exam registration system is:</p>
+                        <h1 style="color: #007bff;">'.$code.'</h1>
+                        <p>This code will expire in 3 minutes.</p>
+                    </div>
+                </body>
+                </html>
+                ';
         try {
             // SMTP configuration
             $mail->isSMTP();
@@ -415,13 +468,14 @@ if (isset($_GET['reg-code-resend'])) {
             $mail->setFrom($sender_mail, $sender_name);
             $mail->addAddress($email, $username);
             $mail->Subject = $subject;
-            $mail->Body = $message;
+            //$mail->Body = $message;
+            $mail->msgHTML($htmlBody);
 
             // Send email
             $mail->send();
             $info = "We've sent a verification code to your email - $email";
-            $_SESSION['email'] = $email;
-            $_SESSION['username'] = $username;
+            $_SESSION['fp-email'] = $email;
+            $_SESSION['fp-username'] = $username;
             $_SESSION['code-sent'] = true;
             header('location: ../register/reg_verification.php');
         } catch (Exception $e) {
@@ -453,9 +507,26 @@ if (isset($_GET['pw-code-resend'])) {
     $run_query = mysqli_query($con, $insert_code);
     if ($run_query) {
         $subject = "ERS Registration - Email Verification Code";
-        $message = "Your verification code for the exam registration system is $code. This code will expire in 3 minutes";
+        //$message = "Your verification code for the exam registration system is $code. This code will expire in 3 minutes";
         $sender_name = "Exam Registration System | Faculty of Science";
         $sender_mail = "ers.fos.csc@gmail.com";
+        $htmlBody = '
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <title>OTP Email</title>
+                </head>
+                <body style="font-family: Arial, sans-serif; background-color: #f0f0f0; text-align: center; padding: 20px;">
+                    <div style="background-color: #ffffff; border-radius: 10px; padding: 20px; max-width: 400px; margin: 0 auto;">
+                        <h2 style="color: #333;">Exam Registration System</h2>
+                        <p>Your verification code for the exam registration system is:</p>
+                        <h1 style="color: #007bff;">'.$code.'</h1>
+                        <p>This code will expire in 3 minutes.</p>
+                    </div>
+                </body>
+                </html>
+                ';
         try {
             // SMTP configuration
             $mail->isSMTP();
@@ -470,7 +541,8 @@ if (isset($_GET['pw-code-resend'])) {
             $mail->setFrom($sender_mail, $sender_name);
             $mail->addAddress($email, $username);
             $mail->Subject = $subject;
-            $mail->Body = $message;
+            //$mail->Body = $message;
+            $mail->msgHTML($htmlBody);
 
             // Send email
             $mail->send();
@@ -478,7 +550,7 @@ if (isset($_GET['pw-code-resend'])) {
             $_SESSION['email'] = $email;
             $_SESSION['username'] = $username;
             $_SESSION['code-sent'] = true;
-            header('location: ../login/user_verification.php');
+            header('Location:../login/user_verification.php');
         } catch (Exception $e) {
             $errors['error'] = "Failed while sending code!";
         }
