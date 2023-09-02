@@ -2,8 +2,6 @@
 
 include("../../config/connect.php");
 
-    $sql = "SELECT * FROM subject";
-    $sublist = mysqli_query($con, $sql);
 
 ?>
 
@@ -33,9 +31,10 @@ include("../../config/connect.php");
                 }
             }
         }
+        
+    $sql = "SELECT * FROM subject";
+    $sublist = mysqli_query($con, $sql);
 
-
-    //}
 
 ?>
 
