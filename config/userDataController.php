@@ -7,8 +7,8 @@ if (!isset($_SESSION)) {
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php'); // Include PHPMailer autoloader
-require($_SERVER['DOCUMENT_ROOT'] . '/config/connect.php');
+require('vendor/autoload.php'); // Include PHPMailer autoloader
+require('config/connect.php');
 
 $success = array();
 $errors = array();

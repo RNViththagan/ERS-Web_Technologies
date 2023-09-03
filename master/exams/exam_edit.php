@@ -1,7 +1,7 @@
 <?php
 ob_start();
 if(!isset($_SESSION)){session_start();}
-require_once ($_SERVER['DOCUMENT_ROOT'] . '/config/connect.php');
+require_once ('../../config/connect.php');
 $edit =false;
 if(isset($_POST['exedid'])) {
     $edit =true;
@@ -43,97 +43,43 @@ else{
 ?>
 
 
-    <style>
-
-
-        h1 {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        h2 {
-            margin-top: 20px;
-        }
-
-        form {
-            width: 80%;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        input[type="number"],
-        select,
-        input[type="date"],
-        input[type="submit"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        input[type="submit"] {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
-
-        a {
-            text-decoration: none;
-            display: inline-block;
-            margin-top: 10px;
-        }
-
-        button {
-            padding: 5px 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-    </style>
-
-
-<form action="index.php" method="POST" onsubmit="return validateForm()">
+<form action="index.php" method="POST" onsubmit="return validateForm()" class="w-[500px] mx-auto flex flex-col items-center gap-4">
+    <?php echo ($edit == false) ? "<h1 class='title mb-5'>Add Admin</h1>" : "<h1 class='title mb-5'>Edit Admin</h1>";?>
+    
     <?php if($edit) echo "<input type='hidden' name='exam_id' value='$exam_id'>";?>
 
-    Academic Year: <input type="number" name="academic_year" id="academic_year" min="<?php echo $maxPreviousYear?>" max="2099" step="1" value="<?php echo $year?>" <?php if($edit) echo "disabled"?> required><br>
-    <input type="hidden" id="max_previous_year" value="<?php echo $maxPreviousYear; ?>">
-    Semester:
-    <select name="semester" required <?php if($edit) echo "disabled"?>>
-        <option value="1">1</option>
-        <option value="2" <?php if(($edit and $ed_sem ==2) or ($counyear == 1)) echo "selected"?>>2</option>
-    </select><br>
-    Status:
-    <select name="status" required>
-        <option value="draft">draft</option>
-        <option value="registration" <?php if($edit and $status =="registration") echo "selected"?>>registration</option>
-        <option value="closed" <?php if($edit and $status =="closed") echo "selected"?>>closed</option>
-    </select><br>
-    closing date:
-    <input name="close_date" type="date" min="<?php echo ($edit)?"$closing_date":date('Y-m-d'); ?>" <?php if($edit) echo "value='$closing_date'"?> required><br>
+    <div class="w-full grid grid-cols-3 items-center h-10">
+        <label for="academic_year">Academic Year:</label>
+        <input type="number" name="academic_year" id="academic_year" min="<?php echo $maxPreviousYear?>" max="2099" step="1" value="<?php echo $year?>" <?php if($edit) echo "disabled"?>  class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" required>
+    </div>
 
-    <input type="submit" name="<?php echo ($edit)? 'ed_exm':'add_exm';?>" value="<?php echo ($edit)? 'Save':'add_exm';?>" required>
+    <input type="hidden" id="max_previous_year" value="<?php echo $maxPreviousYear; ?>">
+    
+    <div class="w-full grid grid-cols-3 items-center h-10">
+        <label for="semester">Semester:</label>
+        <select name="semester" required <?php if($edit) echo "disabled"?> id="semester" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500">
+            <option value="1">1</option>
+            <option value="2" <?php if(($edit and $ed_sem ==2) or ($counyear == 1)) echo "selected"?>>2</option>
+        </select>
+    </div>
+    <div class="w-full grid grid-cols-3 items-center h-10">
+        <label for="status">Status:</label>
+        <select name="status" id="status" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" required>
+            <option value="draft">draft</option>
+            <option value="registration" <?php if($edit and $status =="registration") echo "selected"?>>registration</option>
+            <option value="closed" <?php if($edit and $status =="closed") echo "selected"?>>closed</option>
+        </select>
+    </div>
+    <div class="w-full grid grid-cols-3 items-center h-10">
+        <label for="close_date">closing date:</label>
+        <input name="close_date" id="close_date" type="date" min="<?php echo ($edit)?"$closing_date":date('Y-m-d'); ?>" <?php if($edit) echo "value='$closing_date'"?> class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" required>
+    </div>
+
+    <div class="w-full grid grid-cols-3 items-center h-10 gap-5 mt-5 mb-10">
+        <input type="button" value="< Back" onclick="history.back()" class="btn outline-btn">
+        <input type="submit" name="<?php echo ($edit)? 'ed_exm':'add_exm';?>" value="<?php echo ($edit)? 'Save':'add_exm';?>" class="col-span-2 w-full btn fill-btn" required>
+    </div>
 </form>
-<a href="index.php"><button>Exams</button></a>
 
 
 <script>

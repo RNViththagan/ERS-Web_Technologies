@@ -29,7 +29,7 @@ require_once("../config/adminName.php");
 <div class="hero">
     <?php
     $rpath = "";
-    require_once("navbar.php")
+    require_once("navbar.php");
     ?>
 
 </div>
