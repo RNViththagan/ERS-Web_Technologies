@@ -51,7 +51,7 @@ require_once("../../config/adminName.php");
             if ($_GET['page'] == "edit") {
                 include("exam_edit.php");
             }
-    
+
         } else if (isset($_POST['ed_exm'])) {
             $exam_id = $_POST['exam_id'];
             $status = $_POST['status'];
@@ -63,8 +63,8 @@ require_once("../../config/adminName.php");
                 include("exam_edit.php");
             } else
                 include "exam_mgmt.php";
-    
-    
+
+
         } else if (isset($_POST['add_exm'])) {
             $acYear = intval($_POST['academic_year']);
             $semester = intval($_POST['semester']);
@@ -73,7 +73,7 @@ require_once("../../config/adminName.php");
             $cur_date =date("Y-m-d");
             $add_exam = "INSERT INTO `exam_reg` (`academic_year`, `semester`, `status`, `closing_date`, `date_created`) 
                     VALUES ('$acYear', '$semester', 'draft', '$close_date','$cur_date')";
-    
+
             try {
                 $run_sql = mysqli_query($con, $add_exam);
                 include "exam_mgmt.php";
@@ -81,8 +81,8 @@ require_once("../../config/adminName.php");
                 $error['add error']  ="Exam cannot be added!";
                 include("exam_mgmt.php");
             }
-    
-    
+
+
         } else {
             include "exam_mgmt.php";
         }

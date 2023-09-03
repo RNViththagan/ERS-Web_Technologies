@@ -1,7 +1,19 @@
 <?php
-include("../config/connect.php");
+
 $errors = array();
 $userID = $_SESSION['userid'];
+
+$selectSQL = "SELECT admin.name, admin_details.* FROM admin_details INNER JOIN admin ON admin.email= admin_details.email WHERE admin.email = '$userID';";
+$selectQuery = mysqli_query($con, $selectSQL);
+$admin = mysqli_fetch_assoc($selectQuery);
+$adminId = isset($admin["adminId"]) ? $admin["adminId"] : "";
+$title = isset($admin["title"]) ? $admin["title"] : "";
+$name = isset($admin["name"]) ? $admin["name"] : "";
+$fullName = isset($admin["fullName"]) ? $admin["fullName"] : "";
+$email = isset($admin["email"]) ? $admin["email"] : "";
+$department = isset($admin["department"]) ? $admin["department"] : "";
+$mobileNo = isset($admin["mobileNo"]) ? $admin["mobileNo"] : "";
+$profile_img = isset($admin['profile_img']) ? $admin['profile_img'] : "blankProfile.png";
 
 if (isset($_POST["submit"]))  {
     $title= $_POST["title"];
@@ -9,7 +21,6 @@ if (isset($_POST["submit"]))  {
     $fullName= $_POST["fullName"];
     $department= $_POST["department"];
     $mobileNo= $_POST["mobileNo"];
-
     $imageName = $profile_img;
     if(isset($_FILES["fileImg"]["name"]) and $_FILES["fileImg"]["name"] != Null){
         if($profile_img!="blankProfile.png"){
@@ -18,37 +29,27 @@ if (isset($_POST["submit"]))  {
         $src = $_FILES["fileImg"]["tmp_name"];
         $path = $_FILES['fileImg']['name'];
         $ext = pathinfo($path, PATHINFO_EXTENSION);
-        $imageName = str_replace("/","",$regNo).".".$ext;
+        $imageName = str_replace("/","",$adminId).".".$ext;
         $target = "../assets/uploads/" . $imageName;
         move_uploaded_file($src, $target);
     }
 
-    $sql = "UPDATE `admin_details` 
-            SET `fullName`='$fullName',`department`='$department',`mobileNo`='$mobileNo',`title`='$title',`profile_img`='$imageName' 
-            WHERE email = '$userID'";
+
+
+    $sql = "UPDATE admin_details INNER JOIN admin ON admin_details.email = admin.email  
+    SET admin.name = '$name', admin_details.title='$title', admin_details.fullName = '$fullName', admin_details.profile_img='$imageName', admin_details.mobileNo = $mobileNo , admin_details.department = '$department' 
+    WHERE admin.email = '" . $userID . "'";
 
     $insertResult = mysqli_query($con, $sql);
             
     if (!$insertResult) {
         header("location: index.php?error=Something went wrong! $con->error");
     } else {
-        header("Location: index.php?success=Successfully data Updated.");
+        header("Location: index.php?page=profile&success=Successfully data Updated.");
         exit;
     }
 
 }
-
-$selectSQL = "SELECT * FROM admin_details WHERE email = '$userID';";
-$selectQuery = mysqli_query($con, $selectSQL);
-$admin = mysqli_fetch_assoc($selectQuery);
-
-$title = isset($admin["title"]) ? $admin["title"] : "";
-$name = isset($admin["name"]) ? $admin["name"] : "";
-$fullName = isset($admin["fullName"]) ? $admin["fullName"] : "";
-$email = isset($admin["email"]) ? $admin["email"] : "";
-$department = isset($admin["department"]) ? $admin["department"] : "";
-$mobileNo = isset($admin["mobileNo"]) ? $admin["mobileNo"] : "";
-$profile_img = isset($admin['profile_img']) ? $admin['profile_img'] : "blankProfile.png";
 
 ?>
 

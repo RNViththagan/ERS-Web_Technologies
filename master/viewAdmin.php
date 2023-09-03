@@ -13,7 +13,7 @@ FROM `admin`
 
 <div class="w-[500px] mx-auto flex flex-col items-center gap-4">
     <h1 class="title">Admin Profile</h1>
-    
+
     <div class="">
         <div class="w-full grid grid-cols-3 items-center h-10">
             <h4>Name:</h4>
@@ -44,7 +44,7 @@ FROM `admin`
             <p class="text-gray-600"> <?php echo $row['mobileNo']; ?> </p>
         </div>
     </div>
-    
+
     <div class="w-full grid grid-cols-3 items-center h-10 gap-5 mt-5 mb-10">
         <a href="index.php?page=listAdmins" class="btn outline-btn">< Back</a>
         <button onclick="edit('<?php echo $row['email']; ?>')" class="col-span-2 w-full btn fill-btn">Edit</button>

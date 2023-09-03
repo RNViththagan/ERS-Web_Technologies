@@ -44,8 +44,8 @@ else{
 
 
 <form action="index.php" method="POST" onsubmit="return validateForm()" class="w-[500px] mx-auto flex flex-col items-center gap-4">
-    <?php echo ($edit == false) ? "<h1 class='title mb-5'>Add Admin</h1>" : "<h1 class='title mb-5'>Edit Admin</h1>";?>
-    
+    <?php echo ($edit == false) ? "<h1 class='title mb-5'>Add Exam</h1>" : "<h1 class='title mb-5'>Edit Admin</h1>";?>
+
     <?php if($edit) echo "<input type='hidden' name='exam_id' value='$exam_id'>";?>
 
     <div class="w-full grid grid-cols-3 items-center h-10">
@@ -54,12 +54,13 @@ else{
     </div>
 
     <input type="hidden" id="max_previous_year" value="<?php echo $maxPreviousYear; ?>">
-    
+
     <div class="w-full grid grid-cols-3 items-center h-10">
         <label for="semester">Semester:</label>
         <select name="semester" required <?php if($edit) echo "disabled"?> id="semester" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500">
             <option value="1">1</option>
             <option value="2" <?php if(($edit and $ed_sem ==2) or ($counyear == 1)) echo "selected"?>>2</option>
+            <option value="hidden" <?php if($edit and $status =="hidden") echo "selected"?>>Hidden</option>
         </select>
     </div>
     <div class="w-full grid grid-cols-3 items-center h-10">

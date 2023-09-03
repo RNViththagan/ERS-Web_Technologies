@@ -4,7 +4,7 @@
         ORDER BY academic_year DESC, semester DESC LIMIT 5;";
     $res = mysqli_query($con, $get_exams);
 ?>
-</head>
+
 
 
 <?php if (isset($error['add error'])) echo $error['add error']; ?>
@@ -26,7 +26,7 @@
             <th>status</th>
             <th>action</th>
         </tr>
-    
+
         <?php
         if (mysqli_num_rows($res) > 0) {
             while ($fetch = mysqli_fetch_assoc($res)) {
@@ -47,11 +47,13 @@
                       <td colspan='5'>No record found</td>
                   </tr>";
         }
-    
+
         ?>
-    
+
     </table>
 </div>
+
+
 
 
 <script>

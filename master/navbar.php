@@ -77,15 +77,15 @@
     var navBar = document.getElementById("navBar");
     var navBarSibling = document.getElementById("nextSibling");
     var dashLinks = document.querySelectorAll("[id='dashboardLink']");
-    
+
     navBar.classList.toggle("open");
-    
+
     if (navBarSibling) {
       navBarSibling.classList.toggle("remove-ml-300");
     }
 
     if (
-      navBarLogo.src == "http://localhost/ERS-Web_Technologies/assets/img/logo/ERS_logo.gif"
+        navBarLogo.src === "../assets/img/logo/ERS_logo.gif"
     ) {
       setTimeout(function () {
         navBarLogo.setAttribute(
