@@ -1,95 +1,61 @@
 <?php
-$get_exams = "SELECT *
-FROM exam_reg
-ORDER BY academic_year DESC, semester DESC LIMIT 5;";
-$res = mysqli_query($con, $get_exams);
+    $get_exams = "SELECT *
+        FROM exam_reg
+        ORDER BY academic_year DESC, semester DESC LIMIT 5;";
+    $res = mysqli_query($con, $get_exams);
 ?>
-<style>
-    /* Add styles for the "Add" button */
-    .add-button-container {
-        display: flex;
-        justify-content: flex-end;
-        padding: 10px;
-    }
 
-    /* Add styles for the table */
-    table {
-        border-collapse: collapse;
-        width: 80%;
-        max-width: 800px;
-        margin-top: 20px;
-    }
 
-    table, th, td {
-        border: 1px solid black;
-    }
 
-    th, td {
-        padding: 8px;
-        text-align: left;
-    }
-
-    th {
-        background-color: #f2f2f2;
-    }
-
-    /* Add styles for the "Edit" buttons */
-    button {
-        padding: 5px 10px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        cursor: pointer;
-    }
-
-    button:hover {
-        background-color: #0056b3;
-    }
-</style>
-</head>
-
-<div class="add-button-container">
-    <a href="?page=add">
-        <button>add</button>
-    </a>
-</div>
 <?php if (isset($error['add error'])) echo $error['add error']; ?>
 
-<h1>Exams</h1>
-<hr>
-<table border="1">
-    <tr>
-        <th>academic_year</th>
-        <th>semester</th>
-        <th>closing_data</th>
-        <th>status</th>
-        <th>action</th>
-    </tr>
 
-    <?php
-    if (mysqli_num_rows($res) > 0) {
-        while ($fetch = mysqli_fetch_assoc($res)) {
-            ?>
-            <tr>
-                <td><?php echo strtoupper($fetch['academic_year']) ?></td>
-                <td><?php echo strtoupper($fetch['semester']) ?></td>
-                <td><?php echo strtoupper($fetch['closing_date']) ?></td>
-                <td><?php echo strtoupper($fetch['status']) ?></td>
-                <td>
-                    <button onclick="edit(<?php echo $fetch['exam_id'] ?>)">Edit</button>
-                </td>
-            </tr>
-            <?php
+<div class="w-10/12 mx-auto">
+    <div class="w-full flex items-center justify-between">
+        <h1 class="title">Exams</h1>
+        <a href="?page=add">
+            <button class="btn fill-btn">add</button>
+        </a>
+    </div>
+    <hr class="my-5">
+    <table class="w-full text-center">
+        <tr class="h-12 bg-blue-100 font-semibold">
+            <th>academic_year</th>
+            <th>semester</th>
+            <th>closing_data</th>
+            <th>status</th>
+            <th>action</th>
+        </tr>
+
+        <?php
+        if (mysqli_num_rows($res) > 0) {
+            while ($fetch = mysqli_fetch_assoc($res)) {
+                ?>
+                <tr class="h-12 odd:bg-blue-50">
+                    <td><?php echo $fetch['academic_year'] ?></td>
+                    <td><?php echo $fetch['semester'] ?></td>
+                    <td><?php echo $fetch['closing_date'] ?></td>
+                    <td><?php echo $fetch['status'] ?></td>
+                    <td>
+                        <button onclick="edit(<?php echo $fetch['exam_id'] ?>)" class="btn outline-btn !py-1">Edit</button>
+                    </td>
+                </tr>
+                <?php
+            }
+        } else {
+            echo "<tr class='h-12 odd:bg-blue-50'>
+                      <td colspan='5'>No record found</td>
+                  </tr>";
         }
-    } else {
-        echo "<tr >
-                  <td colspan='5'>No record found</td>
-              </tr>";
-    }
 
-    ?>
+        ?>
 
-</table>
+    </table>
+</div>
+
+
+
+
 <script>
     function edit(id) {
         var myform = document.createElement("form");

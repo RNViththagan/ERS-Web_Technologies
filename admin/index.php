@@ -30,7 +30,7 @@ require_once("subjectAdmin/assignUnits/currentExam.php");
 <div class="hero">
     <?php
     $rpath = "";
-    require_once("navbar.php")
+    require_once("navbar.php");
     ?>
 
 </div>
