@@ -180,7 +180,7 @@ if (isset($_POST['unit_subjects'])) {
                     fetchAssignedUnits(); // Add this line
 
                     if (currentUnitDropdowns === 0) {
-                        addUnitDropdown();
+                        addUnitDropdown(null);
                     }
 
                     // Change the button text to "Edit"
@@ -245,44 +245,7 @@ if (isset($_POST['unit_subjects'])) {
             function addAssignedUnitDropdowns(assignedUnits) {
                 for (var i = 0; i < assignedUnits.length; i++) {
                     var unitId = assignedUnits[i].unitId;
-                    var unitCode = assignedUnits[i].unitCode;
-                    var name = assignedUnits[i].name;
-                    var acYearAdded = assignedUnits[i].acYearAdded;
-
-                    // Create a new unit dropdown
-                    var unitDropdown = document.createElement("select");
-                    unitDropdown.name = "unit_subjects[]";
-                    unitDropdown.innerHTML = `
-        <option value="" disabled selected>Select Unit</option>`;
-                    for (var j = 0; j < unitsData.length; j++) {
-                        var selVal = (unitId == unitsData[j].unitId) ? "selected" : "";
-                        unitDropdown.innerHTML += `
-            <option value="${unitsData[j].unitId}" ${selVal}>${unitsData[j].unitCode} ${unitsData[j].name} (${unitsData[j].acYearAdded})</option>`;
-                    }
-
-                    // Create a remove button for this unit
-                    var removeButton = document.createElement("button");
-                    removeButton.className = "remove-unit";
-                    removeButton.type = "button";
-                    removeButton.textContent = "Remove";
-
-                    // Create a div to hold the unit dropdown and remove button
-                    var unitDiv = document.createElement("div");
-                    unitDiv.className = "unit-dropdown";
-                    unitDiv.appendChild(unitDropdown);
-                    unitDiv.appendChild(removeButton);
-
-                    // Add the unit div to the unitAssignment container
-                    unitAssignment.appendChild(unitDiv);
-
-                    // Attach a click event handler to the remove button
-                    removeButton.addEventListener("click", function () {
-                        unitAssignment.removeChild(unitDiv);
-                        currentUnitDropdowns--;
-                    });
-
-                    // Increment the current unit dropdown count
-                    currentUnitDropdowns++;
+                    addUnitDropdown(unitId);
                 }
             }
 
@@ -318,7 +281,7 @@ if (isset($_POST['unit_subjects'])) {
             }
 
             // Function to add a unit dropdown with a remove button
-            function addUnitDropdown() {
+            function addUnitDropdown(unitId) {
                 var unitDropdown = document.createElement("select");
                 unitDropdown.name = "unit_subjects[]";
 
@@ -326,8 +289,9 @@ if (isset($_POST['unit_subjects'])) {
                 unitDropdown.innerHTML = `
         <option value="" disabled selected>Select Unit</option>`;
                 for (var i = 0; i < unitsData.length; i++) {
+                    var selVal = (unitId === unitsData[i].unitId) ? "selected" : "";
                     unitDropdown.innerHTML += `
-            <option value="${unitsData[i].unitId}">${unitsData[i].unitCode} ${unitsData[i].name} (${unitsData[i].acYearAdded})</option>`;
+            <option value="${unitsData[i].unitId}" ${selVal}>${unitsData[i].unitCode} ${unitsData[i].name} (${unitsData[i].acYearAdded})</option>`;
                 }
 
                 var removeButton = document.createElement("button");
@@ -354,12 +318,11 @@ if (isset($_POST['unit_subjects'])) {
             // Function to handle "Add Unit" button click
             function handleAddUnitClick() {
                 if (currentUnitDropdowns < maxUnitDropdowns) {
-                    addUnitDropdown();
+                    addUnitDropdown(null);
                 } else {
                     // You can show a message or disable the button here to indicate the limit
                     alert("You've reached the maximum number of unit dropdowns.");
                 }
-                console.log(maxUnitDropdowns + " " + currentUnitDropdowns);
             }
 
             // Attach click event handler to the "Add Unit" button
