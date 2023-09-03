@@ -8,7 +8,7 @@ $get_name = "
     ON a.email = ad.email
     WHERE ad.email ='".$_SESSION['userid']."'";
 
-$res = mysqli_query($con, $get_name)->fetch_assoc();
+$res = mysqli_fetch_assoc(mysqli_query($con, $get_name));
 $userproftitle = $res['title'];
 $userprofname = $res['name'];
 
