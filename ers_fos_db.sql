@@ -167,7 +167,7 @@ CREATE TABLE `exam_reg` (
 
 INSERT INTO `exam_reg` (`exam_id`, `academic_year`, `semester`, `status`, `closing_date`, `date_created`) VALUES
 (1, '2020', '1', 'hidden', '2023-08-28', '2023-08-28'),
-(2, '2020', '2', 'draft', '2023-09-30', '2023-09-01');
+(2, '2020', '2', 'registration', '2023-09-30', '2023-09-01');
 
 -- --------------------------------------------------------
 
@@ -394,6 +394,8 @@ INSERT INTO `unit_sub_exam` (`exam_unit_id`, `exam_id`, `unitId`, `type`) VALUES
 (8, 2, 2, 'proper'),
 (2, 2, 6, 'proper'),
 (3, 2, 7, 'proper'),
+(13, 2, 13, 'proper'),
+(14, 2, 14, 'proper'),
 (9, 2, 21, 'proper'),
 (10, 2, 29, 'proper');
 
@@ -522,7 +524,7 @@ ALTER TABLE `unit`
 -- AUTO_INCREMENT for table `unit_sub_exam`
 --
 ALTER TABLE `unit_sub_exam`
-  MODIFY `exam_unit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `exam_unit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
