@@ -8,8 +8,8 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != "Admin_Master") {
     header("location:../login.php");
     exit();
 }
-include("../config/connect.php");
-include("../config/adminName.php");
+require_once("../config/connect.php");
+require_once("../config/adminName.php");
 ?>
 
 
