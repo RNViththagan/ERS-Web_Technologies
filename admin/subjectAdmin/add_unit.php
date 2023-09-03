@@ -1,6 +1,6 @@
 <?php
 
-include("../../config/connect.php");
+
 
 
 ?>
@@ -42,13 +42,8 @@ include("../../config/connect.php");
 
 
 
-<!DOCTYPE html>
-    <head>
-        <title></title>
-    </head>
 
-    <body>
-        
+
 
         <h1 class="titlehead">Add Unit</h1>
         <div class="container">
@@ -108,5 +103,4 @@ include("../../config/connect.php");
                 <button>Back</button>
             </a> -->
         </div>
-    </body>
-</html>
+

@@ -1,6 +1,5 @@
 <?php
 
-include("../../config/connect.php");
 
 $current_page = isset($_GET['no']) ? intval($_GET['no']) : 1;
 $records_per_page = 10;
@@ -16,7 +15,8 @@ $unitlist = mysqli_query($con, $sql);
 <link rel="stylesheet" type="text/css" href="../../assets/css/style_admin_student.css">
 <h1>Unit Management</h1>
 
-<a href="add_unit.php">
+
+<a href="index.php?page=addUnit">
     <button id="add"> Add</button>
 </a>
 

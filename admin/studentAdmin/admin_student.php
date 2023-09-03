@@ -84,7 +84,7 @@ $stdlist = mysqli_query($con, $sql);
             ?>
         </select>
         <?php
-        
+
             $distinctDept = "SELECT DISTINCT SUBSTRING(SUBSTRING_INDEX(regNo, '/', 2), 6) AS code FROM student";
             $result = $con->query($distinctDept);
             if ($result->num_rows > 1) { ?>
