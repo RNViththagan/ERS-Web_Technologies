@@ -32,8 +32,9 @@ require_once("../../config/adminName.php");
     src="https://kit.fontawesome.com/5ce4b972fd.js"
     crossorigin="anonymous"></script>
 </head>
-<body>
 
+
+<body  class="bg-gray-200">
 
 <?php
     $rpath = "../";

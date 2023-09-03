@@ -94,6 +94,12 @@ require_once("../config/adminName.php");
     </div>
 </div>
 
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
+
 
 </body>
 </html>

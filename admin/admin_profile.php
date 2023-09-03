@@ -1,11 +1,18 @@
 <?php
-include("../../config/connect.php");
 
+include("../config/connect.php");
 
-    $query = "SELECT * FROM admin_details WHERE email = 'stud_admin1@nexus.com'";
-    $result = mysqli_query($con, $query);
-    $row = mysqli_fetch_assoc($result);
+$query = "SELECT * FROM admin_details WHERE email = 'stud_admin1@nexus.com'";
+$result = mysqli_query($con, $query);
+$admin = mysqli_fetch_assoc($result);
 
+$title = isset($admin["title"]) ? $admin["title"] : "";
+$name = isset($admin["name"]) ? $admin["name"] : "";
+$fullName = isset($admin["fullName"]) ? $admin["fullName"] : "";
+$email = isset($admin["email"]) ? $admin["email"] : "";
+$department = isset($admin["department"]) ? $admin["department"] : "";
+$mobileNo = isset($admin["mobileNo"]) ? $admin["mobileNo"] : "";
+$profile_img = isset($admin['profile_img']) ? $admin['profile_img'] : "blankProfile.png";
 
 ?>
 
@@ -20,7 +27,7 @@ include("../../config/connect.php");
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dashboard</title>
 
-    <link rel = "stylesheet" type = "text/css" href = "../assets/css/profile.css">
+    <link rel = "stylesheet" type = "text/css" href = "../../assets/css/profile.css">
 </head>
 <body>
 
@@ -44,7 +51,7 @@ include("../../config/connect.php");
                         <img src="../img/panels/profile.png">
                         <p>Profile</p>
                     </a>
-                    <a href="studentAdmin/admin_student.php" class="sub-menu-link">
+                    <a href="admin_student.php" class="sub-menu-link">
                         <img src="../img/panels/student.png">
                         <p>Student</p>
                     </a>
@@ -54,76 +61,27 @@ include("../../config/connect.php");
                         <p>Logout</p>
                     </a>
                 </div>
+                <div class="detail-row">
+                    <h5>Full Name:</h5>
+                    <p><?php echo "$fullName"; ?></p>
+                </div>
+                <div class="detail-row">
+                    <h5>Department:</h5>
+                    <p><?php echo $department; ?></p>
+                </div>
+                <div class="detail-row">
+                    <h5>Mobile:</h5>
+                    <p><?php echo $mobileNo; ?></p>
+                </div>
+                
+                <div class="w-full flex items-center justify-around">
+                    <a href="index.php?page=updateProfile" class="btn fill-btn mx-auto mt-5">Update Details</a>
+                    <a href="index.php?page=pwdChg" class="btn fill-btn mx-auto mt-5">Change Password</a>
+                </div>
+                
             </div>
-        </nav>
     </div>
 
-    <div class = "card">
-        <h1>Admin Profile</h1>
-
-        <div class = "profile">
-            <div class = "left">
-                <img id = "user-pic2" src="user.jpg">
-            </div>
-
-            <div class = "right">
-                <table>
-                    <tr>
-                        <td>Full Name:</td>
-                        <td> <?php echo $row['fullName']; ?> </td>
-                    </tr>
-                    <!-- <tr>
-                        <td>Name with Initials:</td>
-                        <td> <?php //echo $row['nameWithInitials']; ?> </td>
-                    </tr> -->
-                    <tr>
-                        <td>Email:</td>
-                        <td> <?php echo $row['email']; ?> </td>
-                    </tr>
-                    <tr>
-                        <td>Mobile No:</td>
-                        <td> <?php echo $row['mobileNo']; ?> </td>
-                    </tr>
-                    <tr>
-                        <td>Department:</td>
-                        <td> <?php echo $row['department']; ?> </td>
-                    </tr>
-                    
-                </table>
-
-                <button onclick="edit('<?php echo $row['email']; ?>')">Edit</button>
-        
-            </div>
-
-        </div>
-    </div>
-
-    <script>
-        function edit(email) {
-            var myform = document.createElement("form");
-            myform.action = "admin_profile_edit.php";
-            myform.method = "post";
-            var inp = document.createElement('input');
-            inp.name = "email";
-            inp.value = email;
-            inp.type = "hidden";
-            myform.appendChild(inp);
-            document.body.appendChild(myform);
-            console.log(myform);
-            myform.submit()
-        }
-    </script>
+</div>
 
 
-   <script>
-        let subMenu = document.getElementById("subMenu");
-
-        function toggleMenu(){
-            subMenu.classList.toggle("open-menu");
-        }
-    </script> 
-    
-
-
-</body>
-</html>
