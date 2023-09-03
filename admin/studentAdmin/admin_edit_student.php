@@ -74,87 +74,90 @@ if (isset($_POST['save'])) {
     }
 </style>
 
-<link rel="stylesheet" type="text/css" href="../../assets/css/style_admin_student.css">
 
+<div class="w-full mx-auto flex flex-col items-center gap-4">
+    <h1 class="title">Edit student Profile</h1>
+    <?php if (isset($msg['error'])) : ?>
+        <div class="msg error-msg"><?php echo $msg['error']; ?></div>
+    <?php endif; ?>
+    <form method="post" action="">
+        <table>
+            <tr>
+                <td>Registration No:</td>
+                <td>
+                    <input type="text" name="newRegNo" value="<?php echo $row['regNo']; ?>"/>
+                    <input type="hidden" name="regNo" value="<?php echo $row['regNo']; ?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Status:</td>
+                <td>
+                    <select for="status" name="status">
+                        <option value="unregistered" <?php echo ("unregistered" == $row['status']) ? "selected" : ""; ?>>unregistered</option>
+                        <option value="active" <?php echo ("active" == $row['status']) ? "selected" : ""; ?>>active</option>
+                        <option value="inactive" <?php echo ("inactive" == $row['status']) ? "selected" : ""; ?>>inactive</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td>
+                    <input type="text" name="email" value="<?php echo $row['email']; ?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Full Name:</td>
+                <td>
+                    <input type="text" name="fullName" value="<?php echo $row['fullName']; ?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Name with Initials:</td>
+                <td>
+                    <input type="text" name="nameWithInitial" value="<?php echo $row['nameWithInitial']; ?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td>District:</td>
+                <td>
+                    <input type="text" name="district" value="<?php echo $row['district']; ?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Mobile No:</td>
+                <td>
+                    <input type="text" name="mobileNo" value="<?php echo $row['mobileNo']; ?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Home Tp No:</td>
+                <td>
+                    <input type="text" name="landlineNo" value="<?php echo $row['landlineNo']; ?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Home Address:</td>
+                <td>
+                    <input type="text" name="homeAddress" value="<?php echo $row['homeAddress']; ?>"/>
+                </td>
+            </tr>
+            <tr>
+                <td>Address in Jaffna:</td>
+                <td>
+                    <input type="text" name="addressInJaffna" value="<?php echo $row['addressInJaffna']; ?>"/>
+                </td>
+            </tr>
+    
+        </table>
+    
+        <div class="w-full grid grid-cols-3 items-center h-10 gap-5 mt-5 mb-10">
+            <button type="submit" name="save" value="Save">Save</button>
+            <button type="reset" name="reset" value="Reset">Reset</button>
+            <button onclick="view('<?php echo $row['regNo']; ?>')">Discard</button>
+        </div>
+    </form>
+</div>
 
-<h1>Edit student Profile</h1>
-<?php if (isset($msg['error'])) : ?>
-    <div class="msg error-msg"><?php echo $msg['error']; ?></div>
-<?php endif; ?>
-<form method="post" action="">
-    <table>
-        <tr>
-            <td>Registration No:</td>
-            <td>
-                <input type="text" name="newRegNo" value="<?php echo $row['regNo']; ?>"/>
-                <input type="hidden" name="regNo" value="<?php echo $row['regNo']; ?>"/>
-            </td>
-        </tr>
-        <tr>
-            <td>Status:</td>
-            <td>
-                <select for="status" name="status">
-                    <option value="unregistered" <?php echo ("unregistered" == $row['status']) ? "selected" : ""; ?>>unregistered</option>
-                    <option value="active" <?php echo ("active" == $row['status']) ? "selected" : ""; ?>>active</option>
-                    <option value="inactive" <?php echo ("inactive" == $row['status']) ? "selected" : ""; ?>>inactive</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Email:</td>
-            <td>
-                <input type="text" name="email" value="<?php echo $row['email']; ?>"/>
-            </td>
-        </tr>
-        <tr>
-            <td>Full Name:</td>
-            <td>
-                <input type="text" name="fullName" value="<?php echo $row['fullName']; ?>"/>
-            </td>
-        </tr>
-        <tr>
-            <td>Name with Initials:</td>
-            <td>
-                <input type="text" name="nameWithInitial" value="<?php echo $row['nameWithInitial']; ?>"/>
-            </td>
-        </tr>
-        <tr>
-            <td>District:</td>
-            <td>
-                <input type="text" name="district" value="<?php echo $row['district']; ?>"/>
-            </td>
-        </tr>
-        <tr>
-            <td>Mobile No:</td>
-            <td>
-                <input type="text" name="mobileNo" value="<?php echo $row['mobileNo']; ?>"/>
-            </td>
-        </tr>
-        <tr>
-            <td>Home Tp No:</td>
-            <td>
-                <input type="text" name="landlineNo" value="<?php echo $row['landlineNo']; ?>"/>
-            </td>
-        </tr>
-        <tr>
-            <td>Home Address:</td>
-            <td>
-                <input type="text" name="homeAddress" value="<?php echo $row['homeAddress']; ?>"/>
-            </td>
-        </tr>
-        <tr>
-            <td>Address in Jaffna:</td>
-            <td>
-                <input type="text" name="addressInJaffna" value="<?php echo $row['addressInJaffna']; ?>"/>
-            </td>
-        </tr>
-
-    </table>
-
-    <button type="submit" name="save" value="Save">Save</button>
-    <button type="reset" name="reset" value="Reset">Reset</button>
-</form>
-<button onclick="view('<?php echo $row['regNo']; ?>')">Discard</button>
 
 
 

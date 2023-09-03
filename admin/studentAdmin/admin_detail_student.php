@@ -9,71 +9,74 @@ if (isset($_POST['regNo'])) {
 ?>
 
 
-<link rel="stylesheet" type="text/css" href="../../assets/css/style_admin_student.css">
+<div class="w-[600px] mx-auto flex flex-col items-center gap-4">
+    <h1 class="title">View Student Profile</h1>
 
-        <a href="index.php?page=stud"><button>Back</button></a>
-        <h1>View Student Profile</h1>
+    <div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <h4>Registration No:</h4>
+            <p class="text-gray-600"> <?php echo $row['regNo']; ?> </p>
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <h4>Status:</h4>
+            <p class="text-gray-600"> <?php echo $row['status']; ?> </p>
+        </div> 
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <h4>Email:</h4>
+            <p class="text-gray-600"> <?php echo $row['email']; ?> </p>
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <h4>Full Name:</h4>
+            <p class="text-gray-600"> <?php echo $row['fullName']; ?> </p>
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <h4>Name with Initials:</h4>
+            <p class="text-gray-600"> <?php echo $row['nameWithInitial']; ?> </p>
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <h4>District:</h4>
+            <p class="text-gray-600"> <?php echo $row['district']; ?> </p>
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <h4>Mobile No:</h4>
+            <p class="text-gray-600"> <?php echo $row['mobileNo']; ?> </p>
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <h4>Home Tp No:</h4>
+            <p class="text-gray-600"> <?php echo $row['landlineNo']; ?> </p>
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <h4>Home Address:</h4>
+            <p class="text-gray-600"> <?php echo $row['homeAddress']; ?> </p>
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <h4>Address in Jaffna:</h4>
+            <p class="text-gray-600"> <?php echo $row['addressInJaffna']; ?> </p>
+        </div>
 
-        <table>
-            <tr>
-                <td>Registration No:</td>
-                <td> <?php echo $row['regNo']; ?> </td>
-            </tr>
-            <tr>
-                <td>Status:</td>
-                <td> <?php echo $row['status']; ?> </td>
-            </tr> 
-            <tr>
-                <td>Email:</td>
-                <td> <?php echo $row['email']; ?> </td>
-            </tr>
-            <tr>
-                <td>Full Name:</td>
-                <td> <?php echo $row['fullName']; ?> </td>
-            </tr>
-            <tr>
-                <td>Name with Initials:</td>
-                <td> <?php echo $row['nameWithInitial']; ?> </td>
-            </tr>
-            <tr>
-                <td>District:</td>
-                <td> <?php echo $row['district']; ?> </td>
-            </tr>
-            <tr>
-                <td>Mobile No:</td>
-                <td> <?php echo $row['mobileNo']; ?> </td>
-            </tr>
-            <tr>
-                <td>Home Tp No:</td>
-                <td> <?php echo $row['landlineNo']; ?> </td>
-            </tr>
-            <tr>
-                <td>Home Address:</td>
-                <td> <?php echo $row['homeAddress']; ?> </td>
-            </tr>
-            <tr>
-                <td>Address in Jaffna:</td>
-                <td> <?php echo $row['addressInJaffna']; ?> </td>
-            </tr>
+    </div>
 
-        </table>
-
-        <button onclick="edit('<?php echo $row['regNo']; ?>')">Edit</button>
+    <div class="w-full grid grid-cols-3 items-center h-10 gap-5 mt-5 mb-10">
+        <a href="index.php?page=stud" class="btn outline-btn">< Back</a>
+        <button onclick="edit('<?php echo $row['regNo']; ?>')" class="col-span-2 w-full btn fill-btn">Edit</button>
+    </div>
+</div>
 
 
-    <script>
-        function edit(regNo) {
-            var myform = document.createElement("form");
-            myform.action = "index.php?page=editStud";
-            myform.method = "post";
-            var inp = document.createElement('input');
-            inp.name = "regNo";
-            inp.value = regNo;
-            inp.type = "hidden";
-            myform.appendChild(inp);
-            document.body.appendChild(myform);
-            console.log(myform);
-            myform.submit()
-        }
-    </script>
+
+<script>
+    function edit(regNo) {
+        var myform = document.createElement("form");
+        myform.action = "index.php?page=editStud";
+        myform.method = "post";
+        var inp = document.createElement('input');
+        inp.name = "regNo";
+        inp.value = regNo;
+        inp.type = "hidden";
+        myform.appendChild(inp);
+        document.body.appendChild(myform);
+        console.log(myform);
+        myform.submit()
+    }
+</script>
 
