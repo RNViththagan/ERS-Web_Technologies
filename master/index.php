@@ -1,4 +1,5 @@
 <?php
+ob_start();
 if (!isset($_SESSION)) {
     session_start();
 }
@@ -34,13 +35,14 @@ require_once("../config/adminName.php");
     src="https://kit.fontawesome.com/5ce4b972fd.js"
     crossorigin="anonymous"></script>
 </head>
+  
 <body class="bg-gray-200">
 
 <?php
     $rpath = "";
     require_once("navbar.php")
 ?>
-
+  
 <?php if (isset($_GET['error'])) { ?>
     <div class="exam-false fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
         <form class="card h-40 w-1/2 flex flex-col items-center justify-around gap-7" action="index.php" method="POST">
@@ -61,46 +63,35 @@ require_once("../config/adminName.php");
 <div id="nextSibling" class="transition-all ml-[300px] h-screen flex items-center justify-center">
     <div class="card">
         <?php
-        // print_r($_POST);
-        // echo "<br>";
-        // print_r($_GET);
-        if (isset($_GET['page'])) {
-            if ($_GET['page'] === "listAdmins") {
-                if(isset($_POST['adminId']))
-                    include("viewAdmin.php");
-                else if(isset($_POST['editAdminId']))
-                    include("editAdmin.php");
-                else
-                    include("list_admins.php");
-            } else if ($_GET['page'] === "profile") {
-                include("profile.php");
-            } else if ($_GET['page'] === "updateProfile") {
-                include("updateProfile.php");
-            } else if ($_GET['page'] === "pwdChg") {
-                include("../login/pwd_change_admin.php");
-            }else if ($_GET['page'] === "addAdmin") {
-                    include("add_admin.php");
-            } else
-                include("admin_dashboard.php");
-        } else
-            include("admin_dashboard.php");
+          if (isset($_GET['page'])) {
+              if ($_GET['page'] === "listAdmins") {
+                  include("list_admins.php");
+              }
+              else if ($_GET['page'] === "viewAdmin") {
+                 if(isset($_POST['adminId']))
+                      include("viewAdmin.php");
+                 else
+                     header("Location:index.php?page=listAdmins");
+              }
+              else if ($_GET['page'] === "editAdmin") {
+                  if (isset($_POST['editAdminId']))
+                      include("editAdmin.php");
+                  else
+                      header("Location:index.php?page=listAdmins");
+              }else if ($_GET['page'] === "pwdChg") {
+                  include("../login/pwd_change_admin.php");
+              }else if ($_GET['page'] === "addAdmin") {
+                  include("add_admin.php");
+              } else if ($_GET['page'] === "profile") {
+                  include("profile.php");
+              } else if ($_GET['page'] === "updateProfile") {
+                  include("updateProfile.php");
+              }  else
+              include("admin_dashboard.php");
 
-        ?>
+          } ?>
     </div>
 </div>
-
-<script>
-    let subMenu = document.getElementById("subMenu");
-
-    function toggleMenu() {
-        subMenu.classList.toggle("open-menu");
-    }
-</script>
-<script>
-    if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-    }
-</script>
 
 
 </body>

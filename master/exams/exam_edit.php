@@ -92,7 +92,8 @@ else{
         var closeDateInput = document.getElementsByName("close_date")[0];
         var closeDate = new Date(closeDateInput.value);
 
-        var today = new Date();
+        var today = closeDate.min;
+        console.log(today);
 
         if (isNaN(academicYear) || academicYear < maxPreviousYear) {
             alert("Please enter a valid academic year greater than or equal to the previous year.");

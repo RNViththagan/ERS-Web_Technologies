@@ -43,7 +43,7 @@
                 <?php
             }
         } else {
-            echo "<tr >
+            echo "<tr class='h-12 odd:bg-blue-50'>
                       <td colspan='5'>No record found</td>
                   </tr>";
         }
@@ -52,8 +52,6 @@
     
     </table>
 </div>
-
-
 
 
 <script>

@@ -111,7 +111,7 @@ if (!isset($_SESSION['code-sent'])) {
             <div class="text-center mt-7 ">
                 <p class="text-xs lg:text-base">Didn't Receive the OTP?</p>
                 <a
-                    href="../config/userDataController.php?reg-code-resend=true"
+                    href="../config/userDataController.php?pw-code-resend=true"
                     class="text-xs text-[var(--primary)] underline cursor lg:text-base"
                 >Resend</a>
             </div>

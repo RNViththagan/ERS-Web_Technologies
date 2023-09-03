@@ -1,11 +1,12 @@
 <?php
 $get_admins = "SELECT admin.email,`admin`.name,`admin`.`role`, `admin_details`.department, admin.status 
 FROM `admin` 
-    LEFT JOIN `admin_details` ON `admin_details`.`email` = `admin`.`email`";
+    LEFT JOIN `admin_details` ON `admin_details`.`email` = `admin`.`email` WHERE admin.email != '".$_SESSION['userid']."'";
 
 
 $role = "";
 $status = "";
+$dept = "";
 $filterOp = "";
 $current_page = isset($_GET['no']) ? intval($_GET['no']) : 1;
 $records_per_page = 10;
@@ -28,14 +29,14 @@ if (isset($_POST['filter'])) {
         $filterOp .= " status = '$status'";
     }
 }
-if ($filterOp != "") $get_admins .= " Where " . $filterOp;
+if ($filterOp != "") $get_admins .= " And " . $filterOp;
 
 $searchOp = "";
 if (isset($_POST['search'])) {
     $search_key = $_POST['search_key'];
-    $searchOp = " admin.email like '%$search_key%' or name like '%$search_key%'";
+    $searchOp = " admin.email like '%$search_key%' or name like '%$search_key%' or department like '%$search_key%'";
     if ($searchOp != "") {
-        $get_admins .= " Where " . $searchOp;
+        $get_admins .= " And " . $searchOp;
     }
 }
 $forcount =$get_admins;
@@ -59,30 +60,32 @@ $adminlist = mysqli_query($con, $get_admins);
     <div class="filter">
         <form id="filterform" method="post" action="index.php?page=listAdmins" class="flex gap-5 items-center">
 
-            <select name="role" id="role" class="p-2 border-2 border-gray-500 rounded-lg outline-none">
-                <option value="none" selected>Select Role</option>
-                <?php
-                // Fetch distinct roles from the database
-                $distinctYear = "SELECT DISTINCT role FROM admin";
-                $result = $con->query($distinctYear);
+          <select name="role" id="role" class="p-2 border-2 border-gray-500 rounded-lg outline-none">
+              <option value="none">Select Role</option>
+              <?php
+              // Fetch distinct roles from the database
+              $distinctYear = "SELECT DISTINCT role FROM admin WHERE role !='Admin_Master'";
+              $result = $con->query($distinctYear);
 
-                if ($result->num_rows > 0) {
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<option value='" . $row["role"] . "' ";
-                        echo ($role == $row["role"]) ? "selected" : "";
-                        echo ">" . $row["role"] . "</option>";
-                    }
-                }
-                ?>
-            </select>
-            <?php
-            // Fetch distinct departments from the database
-            $distinctDept = "SELECT DISTINCT department FROM admin_details";
-            $result = $con->query($distinctDept);
-            if ($result->num_rows > 1) {?>
-            <label for="dept">Dept</label>
-            <select for="dept" name="dept">
-                <option value="none"></option>
+              if ($result->num_rows > 0) {
+                  while ($row = $result->fetch_assoc()) {
+                      echo "<option value='" . $row["role"] . "' ";
+                      echo ($role == $row["role"]) ? "selected" : "";
+                      echo ">" . $row["role"] . "</option>";
+                  }
+              }
+              ?>
+          </select>
+          
+          
+          <?php
+          // Fetch distinct departments from the database
+          $distinctDept = "SELECT DISTINCT department FROM admin_details";
+          $result = $con->query($distinctDept);
+          if ($result->num_rows > 1) {?>
+          
+            <select for="dept" name="dept" class="p-2 border-2 border-gray-500 rounded-lg outline-none">
+                <option value="none">Select Department</option>
                 <?php
                     while ($row = $result->fetch_assoc()) {
                         if ($row["department"] == "") continue;
@@ -90,32 +93,28 @@ $adminlist = mysqli_query($con, $get_admins);
                         echo ($dept == $row["department"]) ? "selected" : "";
                         echo ">" . $row["department"] . "</option>";
                     }
-                    ?>
-
+                ?>
             </select>
-                <?php
-            }
-            ?>
-            <?php
+          <?php } ?>
+          
+          
+          <?php
             // Fetch distinct status from the database
             $distinctStatus = "SELECT DISTINCT status FROM admin";
             $result = $con->query($distinctStatus);
 
             if ($result->num_rows > 1) { ?>
-                <label for="status">Status</label>
-                <select for="status" name="status">
-                    <option value="none"></option>
+                <select for="status" name="status" class="p-2 border-2 border-gray-500 rounded-lg outline-none">
+                    <option value="none">Select Status</option>
                     <?php
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<option value='" . $row["status"] . "' ";
-                        echo ($status == $row["status"]) ? "selected" : "";
-                        echo ">" . $row["status"] . "</option>";
-                    }
+                      while ($row = $result->fetch_assoc()) {
+                          echo "<option value='" . $row["status"] . "' ";
+                          echo ($status == $row["status"]) ? "selected" : "";
+                          echo ">" . $row["status"] . "</option>";
+                      }
                     ?>
                 </select>
-                <?php
-            }
-            ?>
+            <?php } ?>
 
             <div class="flex items-center gap-5">
                 <button type="submit" name="filter" value="Filter" class="btn fill-btn">Filter</button>
@@ -190,7 +189,7 @@ $adminlist = mysqli_query($con, $get_admins);
 <script>
     function view(adminId) {
         var myform = document.createElement("form");
-        myform.action = "";
+        myform.action = "index.php?page=viewAdmin";
         myform.method = "post";
         var inp = document.createElement('input');
         inp.name = "adminId";

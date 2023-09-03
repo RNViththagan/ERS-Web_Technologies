@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2023 at 10:04 PM
+-- Generation Time: Sep 03, 2023 at 04:34 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -40,9 +40,10 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`email`, `password`, `name`, `role`, `status`) VALUES
-('admin_master@nexus.com', '$2y$10$3RXxBIvCklptQmFmbsoBNeiiCIG74twdSSqlRh663cCLkG/1DPJHq', 'master1', 'Admin_Master', 'active'),
-('stud_admin1@nexus.com', '$2y$10$IUzrF9GhBdTzDXXbmxA19.XZuxKo9le3hETfrRsqKG35goK4w1npS', 'stud1', 'Admin_Student', 'active'),
+('admin_master@nexus.com', '$2y$10$3RXxBIvCklptQmFmbsoBNeiiCIG74twdSSqlRh663cCLkG/1DPJHq', 'Master Admin', 'Admin_Master', 'active'),
+('stud_admin1@nexus.com', '$2y$10$IUzrF9GhBdTzDXXbmxA19.XZuxKo9le3hETfrRsqKG35goK4w1npS', 'Student admin 1', 'Admin_Student', 'active'),
 ('subj_admin1@nexus.com', '$2y$10$6IniUusMCkDLxZFhTVWyL.Nk0BBkFuzzLUzSCdFOqy32NexOPRNvi', 'subj1', 'Admin_Subject', 'active'),
+('subj_admin2@nexus.com', '$2y$10$7v728eNqfjD61XwpVjLwvO/o4cNMvUmDW7QeqluimnhJsGNSzaqt.', 'Shankar', 'Admin_Subject', 'active'),
 ('viththagan@nexus.com', '$2y$10$HrF7DQS3U0xzZ5Xaom37LO4EAWXBK9zhhPBOsD.YqeIMvE4.kHgyG', 'viththagan', 'Admin_Subject', 'active');
 
 -- --------------------------------------------------------
@@ -66,9 +67,10 @@ CREATE TABLE `admin_details` (
 
 INSERT INTO `admin_details` (`adminId`, `email`, `fullName`, `department`, `mobileNo`, `profile_img`) VALUES
 (1, 'admin_master@nexus.com', NULL, NULL, NULL, NULL),
-(2, 'stud_admin1@nexus.com', NULL, NULL, NULL, NULL),
-(3, 'subj_admin1@nexus.com', NULL, NULL, NULL, NULL),
-(4, 'viththagan@nexus.com', NULL, NULL, NULL, NULL);
+(2, 'stud_admin1@nexus.com', 'John cena', 'CSC', NULL, NULL),
+(3, 'subj_admin1@nexus.com', NULL, 'physics', NULL, NULL),
+(4, 'viththagan@nexus.com', NULL, NULL, NULL, NULL),
+(5, 'subj_admin2@nexus.com', NULL, 'Bio', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -154,7 +156,7 @@ CREATE TABLE `exam_reg` (
   `exam_id` int(11) NOT NULL,
   `academic_year` varchar(10) NOT NULL,
   `semester` enum('1','2') NOT NULL,
-  `status` enum('draft','registration','closed') DEFAULT 'draft',
+  `status` enum('draft','registration','closed','hidden') DEFAULT 'draft',
   `closing_date` date NOT NULL DEFAULT '2020-01-01',
   `date_created` date DEFAULT '2020-01-01'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -164,7 +166,8 @@ CREATE TABLE `exam_reg` (
 --
 
 INSERT INTO `exam_reg` (`exam_id`, `academic_year`, `semester`, `status`, `closing_date`, `date_created`) VALUES
-(1, '2020', '1', 'closed', '2023-08-28', '2023-08-28');
+(1, '2020', '1', 'hidden', '2023-08-28', '2023-08-28'),
+(2, '2020', '2', 'draft', '2023-09-30', '2023-09-01');
 
 -- --------------------------------------------------------
 
@@ -176,6 +179,15 @@ CREATE TABLE `reg_units` (
   `regId` int(11) NOT NULL,
   `exam_unit_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `reg_units`
+--
+
+INSERT INTO `reg_units` (`regId`, `exam_unit_id`) VALUES
+(9, 2),
+(10, 6),
+(10, 7);
 
 -- --------------------------------------------------------
 
@@ -201,13 +213,24 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`regNo`, `title`, `nameWithInitial`, `fullName`, `district`, `mobileNo`, `landlineNo`, `homeAddress`, `addressInJaffna`, `profile_img`) VALUES
-('2020/CSC/007', 'Mr', 'Chamod Rashmika Bandara Nilwakka', 'C. R. B. Nilwakka', 'Kandy', '0772684933', '0779472689', 'No 4/56, Matale Rd, Wattegama.', 'Duvarakai, vamas lane, palali Rd, kondavil.', '2020CSC007.jpg'),
+('2018/SB/001', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2019/SP/178', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/CSC/007', 'Mr', 'C. R. B. Nilwakka', 'Chamod Rashmika Bandara Nilwakka', 'Kandy', '0772684933', '0779472689', 'No 4/56, Matale Rd, Wattegama.', 'Duvarakai, vamas lane, palali Rd, kondavil.', '2020CSC007.jpg'),
 ('2020/CSC/010', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/CSC/027', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/028', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/046', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('2020/CSC/051', 'Mr', 'R.N.Viththagan', 'Roy Nesarajah Viththagan', 'Jaffna', '0123456789', '0123456789', 'Jaffna', 'Jaffna', '2020CSC051.jpg'),
-('2020/CSC/057', 'Mr', 'S. Vithurshan', 'Sivakumar Vithurshan', 'Jaffna', '0123456789', '0123456789', 'kokuvil', 'kokuvil', '2020CSC057.jpg'),
-('2020/CSC/074', 'Mr', 'P.Saarukesan', 'Premkumar Saarukesan', 'Batticaloa', '0764722514', '0652054047', 'Chenkalady', 'Kandaramadam', '2020CSC074.jpg');
+('2020/CSC/051', 'Mr', 'R.N.Viththagan', 'Roy Nesarajah Viththagan', 'Jaffna', '0771234567', '0123456789', 'Jaffna', 'Jaffna', '2020CSC051.jpg'),
+('2020/CSC/052', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/CSC/055', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/CSC/057', 'Mr', 'S. Vithurshan', 'Sivakumar Vithurshan', 'Jaffna', '0123456789', '0123456789', 'kokuvil', 'kokuvil', NULL),
+('2020/CSC/061', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/CSC/065', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/CSC/066', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/CSC/074', 'Mr', 'P.Saarukesan', 'Premkumar Saarukesan', 'Batticaloa', '0764722514', '0652054047', 'Chenkalady', 'Kandaramadam', NULL),
+('2020/CSC/075', NULL, '', '', '', '', '', '', '', NULL),
+('2020/SP/068', 'Miss', 'J.Jeyatheekshy', 'Jeyatheekshy Jeyarajen', 'Batticaloa', '0760586135', '0760586135', 'No.04, Building Quaters, Navalady Road, Kallady ,Batticaloa', 'Thirunelveli, Jaffna', '2020SP068.jpg'),
+('2020/SP/129', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -219,7 +242,7 @@ CREATE TABLE `student_check` (
   `regNo` varchar(12) NOT NULL,
   `email` varchar(80) NOT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `status` varchar(20) NOT NULL DEFAULT 'unregisterd',
+  `status` varchar(20) NOT NULL DEFAULT 'unregistered',
   `verificationCode` int(11) DEFAULT NULL,
   `verificationStatus` varchar(15) NOT NULL DEFAULT 'not_verified'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -229,13 +252,24 @@ CREATE TABLE `student_check` (
 --
 
 INSERT INTO `student_check` (`regNo`, `email`, `password`, `status`, `verificationCode`, `verificationStatus`) VALUES
+('2018/SB/001', '001sb18@test.com', NULL, 'unregistered', NULL, 'not_verified'),
+('2019/SP/178', '178sp19@test.com', NULL, 'unregistered', NULL, 'not_verified'),
 ('2020/CSC/007', 'cnilwakka@gmail.com', '$2y$10$f64XVozpm4azju5H1fdZKe1QFSLr/U2QWLwojsETCK12/IHniPI9W', 'active', 0, 'verified'),
 ('2020/CSC/010', 'dharshikagnanaseelan4@gmail.com', '$2y$10$ewPtbft5YqpV6qkGcZjSL.s/hwCgiQjnYLOUjNRisKD9DLP7pHLhe', 'active', 0, 'verified'),
-('2020/CSC/028', 'lahiruishan400@gmail.com', NULL, 'unregisterd', NULL, 'not_verified'),
-('2020/CSC/046', 'audeshitha@gmail.com', NULL, 'unregisterd', NULL, 'not_verified'),
+('2020/CSC/027', 'kgobi24lk@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
+('2020/CSC/028', 'lahiruishan400@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
+('2020/CSC/046', 'audeshitha@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
 ('2020/CSC/051', 'viththagan1999@gmail.com', '$2y$10$43cjXmjEzaBbdy5aNR/LquaQqXrqVU9r/Hj4tcshbN9UUHhNlCzIO', 'active', 0, 'verified'),
+('2020/CSC/052', '52csc20@test.com', NULL, 'unregistered', NULL, 'not_verified'),
+('2020/CSC/055', 'sathasivamnerujan35@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
 ('2020/CSC/057', 'sivavithu15@live.com', '$2y$10$XhU8xrtIuzrHZXYiNUZbq.yb5zzuJApvAFEt3/TYMVf9QHPJmmgZC', 'active', 0, 'verified'),
-('2020/CSC/074', 'saaru27kesan@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified');
+('2020/CSC/061', 'vimalanthushani1122@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
+('2020/CSC/065', 'vieronicka27@gmail.com', '$2y$10$NO9stDEgF3lkVlDNTxc4d.BSlqGWzGsU9YvmmN8fWnee56JWy9DGa', 'active', 0, 'verified'),
+('2020/CSC/066', 'v.sayanishan.sv@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
+('2020/CSC/074', 'saaru27kesan@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 175670, 'verified'),
+('2020/CSC/075', 'anathansinega@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
+('2020/SP/068', 'theekshy27@gmail.com', '$2y$10$9IvVe6SXBRE3Pz5qtBvCJ.Evj4fKjN2aJjA4UOPdStrfnNRepRVVq', 'active', 0, 'verified'),
+('2020/SP/129', 'kugatharshan26@gmail.com', NULL, 'unregistered', NULL, 'not_verified');
 
 -- --------------------------------------------------------
 
@@ -253,6 +287,14 @@ CREATE TABLE `stud_exam_reg` (
   `type` enum('proper','repeat') NOT NULL,
   `reg_date` DATE DEFAULT '2020-01-01'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `stud_exam_reg`
+--
+
+INSERT INTO `stud_exam_reg` (`regId`, `exam_id`, `stud_regNo`, `indexNo`, `level`, `combId`, `type`, `reg_date`) VALUES
+(9, 2, '2020/CSC/051', 's11267', 1, 1, 'proper', '2020-01-01'),
+(10, 2, '2020/CSC/051', 's11267', 1, 13, 'proper', '2020-01-01');
 
 -- --------------------------------------------------------
 
@@ -295,6 +337,41 @@ CREATE TABLE `unit` (
   `acYearAdded` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `unit`
+--
+
+INSERT INTO `unit` (`unitId`, `unitCode`, `name`, `subject`, `level`, `acYearAdded`) VALUES
+(1, 'CSC101S3', 'Foundations of Computer Science', 'CSC - Direct Intake', 1, 2017),
+(2, 'CSC102S3', 'Computer Programming I', 'CSC - Direct Intake', 1, 2017),
+(3, 'CSC103S3', 'Introduction to Computer Systems', 'CSC - Direct Intake', 1, 2017),
+(4, 'CSC102G3', 'CSC102G3', 'CSC', 1, 2017),
+(5, 'CSC104G2', 'CSC104G2', 'CSC', 1, 2017),
+(6, 'PMM103G3', 'PMM103G3', 'PMM', 1, 2017),
+(7, 'PMM104G2', 'PMM104G2', 'PMM', 1, 2017),
+(8, 'AMM103G3', 'AMM103G3', 'AMM', 1, 2017),
+(9, 'AMM104G2', 'AMM104G2', 'AMM', 1, 2017),
+(10, 'STA103G3', 'STA103G3', 'STA', 1, 2017),
+(11, 'STA104G2', 'STA104G2', 'STA', 1, 2017),
+(12, 'PHY107G3', 'PHY107G3', 'PHY', 1, 2017),
+(13, 'BOA103G2', 'BOA103G2', 'BOT', 1, 2017),
+(14, 'BOA104G2', 'BOA104G2', 'BOT', 1, 2017),
+(15, 'BOA105G2', 'BOA105G2', 'BOT', 1, 2017),
+(16, 'FIS103G2', 'FIS103G2', 'FSC', 1, 2017),
+(17, 'FIS104G2', 'FIS104G2', 'FSC', 1, 2017),
+(18, 'FIS105G2', 'FIS105G2', 'FSC', 1, 2017),
+(19, 'ZOL104G2', 'ZOL104G2', 'ZOO', 1, 2017),
+(20, 'ZOL105G2', 'ZOL105G2', 'ZOO', 1, 2017),
+(21, 'CSC106S3', 'CSC106S3', 'CSC - Direct Intake', 1, 2017),
+(22, 'CSC108S2', 'CSC108S2', 'CSC - Direct Intake', 1, 2017),
+(23, 'CSC109S2', 'CSC109S2', 'CSC - Direct Intake', 1, 2017),
+(24, 'CSC111S2', 'CSC111S2', 'CSC - Direct Intake', 1, 2017),
+(25, 'CSC112S3', 'CSC112S3', 'CSC - Direct Intake', 1, 2017),
+(26, 'CHE102G2', 'CHE102G2', 'CHE', 1, 2017),
+(27, 'CHE104G3', 'CHE104G3', 'CHE', 1, 2017),
+(28, 'CHE106G1', 'CHE106G1', 'CHE', 1, 2017),
+(29, 'CSC104S2', 'Mathematics for Computing I', 'CSC - Direct Intake', 1, 2017);
+
 -- --------------------------------------------------------
 
 --
@@ -307,6 +384,18 @@ CREATE TABLE `unit_sub_exam` (
   `unitId` int(11) NOT NULL,
   `type` enum('proper','repeat') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `unit_sub_exam`
+--
+
+INSERT INTO `unit_sub_exam` (`exam_unit_id`, `exam_id`, `unitId`, `type`) VALUES
+(7, 2, 1, 'proper'),
+(8, 2, 2, 'proper'),
+(2, 2, 6, 'proper'),
+(3, 2, 7, 'proper'),
+(9, 2, 21, 'proper'),
+(10, 2, 29, 'proper');
 
 --
 -- Indexes for dumped tables
@@ -393,8 +482,7 @@ ALTER TABLE `unit`
 --
 ALTER TABLE `unit_sub_exam`
   ADD PRIMARY KEY (`exam_unit_id`),
-  ADD UNIQUE KEY `exam_id` (`exam_id`,`unitId`,`type`),
-  ADD KEY `unitId` (`unitId`);
+  ADD UNIQUE KEY `exam_id` (`exam_id`,`unitId`,`type`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -404,7 +492,7 @@ ALTER TABLE `unit_sub_exam`
 -- AUTO_INCREMENT for table `admin_details`
 --
 ALTER TABLE `admin_details`
-  MODIFY `adminId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `adminId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `combination`
@@ -416,25 +504,25 @@ ALTER TABLE `combination`
 -- AUTO_INCREMENT for table `exam_reg`
 --
 ALTER TABLE `exam_reg`
-  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `stud_exam_reg`
 --
 ALTER TABLE `stud_exam_reg`
-  MODIFY `regId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `regId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `unit`
 --
 ALTER TABLE `unit`
-  MODIFY `unitId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `unitId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `unit_sub_exam`
 --
 ALTER TABLE `unit_sub_exam`
-  MODIFY `exam_unit_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `exam_unit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
@@ -444,7 +532,7 @@ ALTER TABLE `unit_sub_exam`
 -- Constraints for table `admin_details`
 --
 ALTER TABLE `admin_details`
-  ADD CONSTRAINT `admin_details_ibfk_1` FOREIGN KEY (`email`) REFERENCES `admin` (`email`);
+  ADD CONSTRAINT `admin_details_ibfk_1` FOREIGN KEY (`email`) REFERENCES `admin` (`email`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `combination_subjects`
@@ -457,8 +545,8 @@ ALTER TABLE `combination_subjects`
 -- Constraints for table `reg_units`
 --
 ALTER TABLE `reg_units`
-  ADD CONSTRAINT `reg_units_ibfk_1` FOREIGN KEY (`exam_unit_id`) REFERENCES `unit_sub_exam` (`exam_unit_id`),
-  ADD CONSTRAINT `reg_units_ibfk_2` FOREIGN KEY (`regId`) REFERENCES `stud_exam_reg` (`regId`);
+  ADD CONSTRAINT `reg_units_ibfk_1` FOREIGN KEY (`exam_unit_id`) REFERENCES `unit_sub_exam` (`unitId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reg_units_ibfk_2` FOREIGN KEY (`regId`) REFERENCES `stud_exam_reg` (`regId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `student`
@@ -484,8 +572,8 @@ ALTER TABLE `unit`
 -- Constraints for table `unit_sub_exam`
 --
 ALTER TABLE `unit_sub_exam`
-  ADD CONSTRAINT `unit_sub_exam_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `exam_reg` (`exam_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `unit_sub_exam_ibfk_2` FOREIGN KEY (`unitId`) REFERENCES `unit` (`unitId`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `unit_sub_exam_ibfk_1` FOREIGN KEY (`unitId`) REFERENCES `unit` (`unitId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `unit_sub_exam_ibfk_2` FOREIGN KEY (`exam_id`) REFERENCES `exam_reg` (`exam_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
