@@ -9,7 +9,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != "Admin_Master") {
     exit();
 }
 include("../config/connect.php");
-require_once("../config/adminName.php");
+include("../config/adminName.php");
 ?>
 
 
