@@ -103,5 +103,8 @@ if (isset($_POST['submit'])) {
             <input type="button" value="< Back" onclick="history.back()" class="btn outline-btn">
             <input type="submit" name="submit" value="Register" class="col-span-2 w-full btn fill-btn">
         </div>
+
+
+
     </form>
 </div>

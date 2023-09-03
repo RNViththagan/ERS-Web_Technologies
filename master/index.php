@@ -62,6 +62,9 @@ require_once("../config/adminName.php");
 <div id="nextSibling" class="transition-all ml-[300px] h-screen flex items-center justify-center">
     <div class="card">
         <?php
+        // print_r($_POST);
+        // echo "<br>";
+        // print_r($_GET);
         if (isset($_GET['page'])) {
             if ($_GET['page'] === "listAdmins") {
                 include("list_admins.php");
@@ -85,7 +88,7 @@ require_once("../config/adminName.php");
                 include("../login/pwd_change_admin.php");
             }else if ($_GET['page'] === "addAdmin") {
                     include("add_admin.php");
-            }else
+            } else
                 include("admin_dashboard.php");
         } else
             include("admin_dashboard.php");
@@ -93,7 +96,6 @@ require_once("../config/adminName.php");
         ?>
     </div>
 </div>
-
 
 </body>
 </html>
