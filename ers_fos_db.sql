@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 02, 2023 at 04:36 PM
+-- Generation Time: Sep 03, 2023 at 06:14 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -320,6 +320,14 @@ CREATE TABLE `unit` (
   `acYearAdded` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `unit`
+--
+
+INSERT INTO `unit` (`unitId`, `unitCode`, `name`, `subject`, `level`, `acYearAdded`) VALUES
+(1, 'CSC101S3', 'Foundations of Computer Science', 'CSC - Direct Intake', 1, 2017),
+(2, 'CSC102S3', 'Computer Programming I', 'CSC - Direct Intake', 1, 2017);
+
 -- --------------------------------------------------------
 
 --
@@ -429,7 +437,7 @@ ALTER TABLE `unit_sub_exam`
 -- AUTO_INCREMENT for table `admin_details`
 --
 ALTER TABLE `admin_details`
-  MODIFY `adminId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `adminId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `combination`
@@ -453,7 +461,7 @@ ALTER TABLE `stud_exam_reg`
 -- AUTO_INCREMENT for table `unit`
 --
 ALTER TABLE `unit`
-  MODIFY `unitId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `unitId` int(11) NOT NULL AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `unit_sub_exam`
@@ -469,7 +477,7 @@ ALTER TABLE `unit_sub_exam`
 -- Constraints for table `admin_details`
 --
 ALTER TABLE `admin_details`
-  ADD CONSTRAINT `admin_details_ibfk_1` FOREIGN KEY (`email`) REFERENCES `admin` (`email`);
+  ADD CONSTRAINT `admin_details_ibfk_1` FOREIGN KEY (`email`) REFERENCES `admin` (`email`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `combination_subjects`
