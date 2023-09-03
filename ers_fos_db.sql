@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 03, 2023 at 06:14 AM
+-- Generation Time: Sep 03, 2023 at 11:36 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -327,7 +327,32 @@ CREATE TABLE `unit` (
 INSERT INTO `unit` (`unitId`, `unitCode`, `name`, `subject`, `level`, `acYearAdded`) VALUES
 (1, 'CSC101S3', 'Foundations of Computer Science', 'CSC - Direct Intake', 1, 2017),
 (2, 'CSC102S3', 'Computer Programming I', 'CSC - Direct Intake', 1, 2017),
-(3, 'CSC103S3', 'Introduction to Computer Systems', 'CSC - Direct Intake', 1, 2017);
+(3, 'CSC103S3', 'Introduction to Computer Systems', 'CSC - Direct Intake', 1, 2017),
+(4, 'CSC102G3', 'CSC102G3', 'CSC', 1, 2017),
+(5, 'CSC104G2', 'CSC104G2', 'CSC', 1, 2017),
+(6, 'PMM103G3', 'PMM103G3', 'PMM', 1, 2017),
+(7, 'PMM104G2', 'PMM104G2', 'PMM', 1, 2017),
+(8, 'AMM103G3', 'AMM103G3', 'AMM', 1, 2017),
+(9, 'AMM104G2', 'AMM104G2', 'AMM', 1, 2017),
+(10, 'STA103G3', 'STA103G3', 'STA', 1, 2017),
+(11, 'STA104G2', 'STA104G2', 'STA', 1, 2017),
+(12, 'PHY107G3', 'PHY107G3', 'PHY', 1, 2017),
+(13, 'BOA103G2', 'BOA103G2', 'BOT', 1, 2017),
+(14, 'BOA104G2', 'BOA104G2', 'BOT', 1, 2017),
+(15, 'BOA105G2', 'BOA105G2', 'BOT', 1, 2017),
+(16, 'FIS103G2', 'FIS103G2', 'FSC', 1, 2017),
+(17, 'FIS104G2', 'FIS104G2', 'FSC', 1, 2017),
+(18, 'FIS105G2', 'FIS105G2', 'FSC', 1, 2017),
+(19, 'ZOL104G2', 'ZOL104G2', 'ZOO', 1, 2017),
+(20, 'ZOL105G2', 'ZOL105G2', 'ZOO', 1, 2017),
+(21, 'CSC106S3', 'CSC106S3', 'CSC - Direct Intake', 1, 2017),
+(22, 'CSC108S2', 'CSC108S2', 'CSC - Direct Intake', 1, 2017),
+(23, 'CSC109S2', 'CSC109S2', 'CSC - Direct Intake', 1, 2017),
+(24, 'CSC111S2', 'CSC111S2', 'CSC - Direct Intake', 1, 2017),
+(25, 'CSC112S3', 'CSC112S3', 'CSC - Direct Intake', 1, 2017),
+(26, 'CHE102G2', 'CHE102G2', 'CHE', 1, 2017),
+(27, 'CHE104G3', 'CHE104G3', 'CHE', 1, 2017),
+(28, 'CHE106G1', 'CHE106G1', 'CHE', 1, 2017);
 
 -- --------------------------------------------------------
 
@@ -450,7 +475,7 @@ ALTER TABLE `combination`
 -- AUTO_INCREMENT for table `exam_reg`
 --
 ALTER TABLE `exam_reg`
-  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `stud_exam_reg`
@@ -462,7 +487,7 @@ ALTER TABLE `stud_exam_reg`
 -- AUTO_INCREMENT for table `unit`
 --
 ALTER TABLE `unit`
-  MODIFY `unitId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `unitId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `unit_sub_exam`
