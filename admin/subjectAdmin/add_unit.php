@@ -1,12 +1,5 @@
 <?php
 
-
-
-
-?>
-
-<?php
-
     if (isset($_POST['submit'])) {
         $unitCode = $_POST["unitCode"];
         $unitName = $_POST["unitName"];
@@ -14,7 +7,7 @@
         $level = $_POST["level"];
         $acYear = $_POST["acYear"];
 
-            $query = "SELECT unitCode from unit where unitCode ='$unitCode' ";
+            $query = "SELECT unitCode from unit where unitCode ='$unitCode' and acYearAdded = '$acYear'";
 
             if (mysqli_num_rows(mysqli_query($con, $query))) {
 
@@ -27,8 +20,6 @@
                     $msg[0] = "error!";
                     $msg[1] = "warning";
                 } else {
-                    $query = "INSERT INTO unit (unitCode, name, subject, level, acYearAdded) values('$unitCode', '$unitName', '$subject', '$level', '$acYear')";
-                    mysqli_query($con, $query);
                     $msg[0] = "Successfully added!";
                     $msg[1] = "done";
                 }
@@ -41,8 +32,7 @@
 ?>
 
 
-
-
+<link rel="stylesheet" href="../../assets/css/main.css">
 
 
         <h1 class="titlehead">Add Unit</h1>
@@ -99,8 +89,7 @@
                     <input type="submit" name="submit" value="Add">
                 </div>
             </form>
-            <!-- <a href="index.php?page=stud">
+            <a href="index.php?page=units">
                 <button>Back</button>
-            </a> -->
+            </a>
         </div>
-

@@ -326,7 +326,8 @@ CREATE TABLE `unit` (
 
 INSERT INTO `unit` (`unitId`, `unitCode`, `name`, `subject`, `level`, `acYearAdded`) VALUES
 (1, 'CSC101S3', 'Foundations of Computer Science', 'CSC - Direct Intake', 1, 2017),
-(2, 'CSC102S3', 'Computer Programming I', 'CSC - Direct Intake', 1, 2017);
+(2, 'CSC102S3', 'Computer Programming I', 'CSC - Direct Intake', 1, 2017),
+(3, 'CSC103S3', 'Introduction to Computer Systems', 'CSC - Direct Intake', 1, 2017);
 
 -- --------------------------------------------------------
 
@@ -461,7 +462,7 @@ ALTER TABLE `stud_exam_reg`
 -- AUTO_INCREMENT for table `unit`
 --
 ALTER TABLE `unit`
-  MODIFY `unitId` int(11) NOT NULL AUTO_INCREMENT=3;
+  MODIFY `unitId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `unit_sub_exam`
