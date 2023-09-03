@@ -234,3 +234,9 @@ $adminlist = mysqli_query($con, $get_admins);
         myform.submit()
     }
 </script>
+
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
