@@ -137,9 +137,10 @@ function setSelected($fieldName, $fieldValue) {
                     ";
 
                     $unitsQueryResult = mysqli_query($con, $unitSQL);
-                    $units = mysqli_fetch_assoc($unitsQueryResult);
-
-                    if ($units) {
+                    //$units = mysqli_fetch_assoc($unitsQueryResult);
+                    //print_r($unitsQueryResult->num_rows);
+                   // exit;
+                    if ($unitsQueryResult) {
                         if (mysqli_num_rows($unitsQueryResult) == 0) {
                             header("Location: index.php?error=Something-went-wrong");
                             exit();

@@ -7,6 +7,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] == "Admin_Master") {
     exit();
 }
 require_once("../config/adminName.php");
+require_once("subjectAdmin/assignUnits/currentExam.php");
 ?>
 <!doctype html>
 <html lang="en">
@@ -36,9 +37,9 @@ require_once("../config/adminName.php");
 
 <div class = "card">
     <?php
-    //print_r($_POST);
-    //echo "<br>";
-    //print_r($_GET);
+//    print_r($_POST);
+//    echo "<br>";
+//    print_r($_GET);
     if ($_SESSION['role'] == "Admin_Student") {
         if(isset($_GET['page'])){
             if($_GET['page'] === "stud"){
@@ -69,6 +70,16 @@ require_once("../config/adminName.php");
             if($_GET['page'] === "subComb"){
                 include("subjectAdmin/subject_combination.php");
             }
+            else if($_GET['page'] === "units"){
+                include("subjectAdmin/unit.php");
+            }
+            else if($_GET['page'] === "addUnit"){
+                include("subjectAdmin/add_unit.php");
+            }
+            else if($_GET['page'] === "asignUnits" && isset($curExam)){
+                include("subjectAdmin/assignUnits/assignUnits.php");
+            }
+
             else
                 include("subjectAdmin/subj_admin_dashboard.php");
         }
@@ -84,9 +95,6 @@ require_once("../config/adminName.php");
         subMenu.classList.toggle("open-menu");
     }
 </script>
-
-
-
 
 </body>
 </html>

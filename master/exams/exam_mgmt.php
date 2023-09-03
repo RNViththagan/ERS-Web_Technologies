@@ -71,10 +71,10 @@ $res = mysqli_query($con, $get_exams);
         while ($fetch = mysqli_fetch_assoc($res)) {
             ?>
             <tr>
-                <td><?php echo $fetch['academic_year'] ?></td>
-                <td><?php echo $fetch['semester'] ?></td>
-                <td><?php echo $fetch['closing_date'] ?></td>
-                <td><?php echo $fetch['status'] ?></td>
+                <td><?php echo strtoupper($fetch['academic_year']) ?></td>
+                <td><?php echo strtoupper($fetch['semester']) ?></td>
+                <td><?php echo strtoupper($fetch['closing_date']) ?></td>
+                <td><?php echo strtoupper($fetch['status']) ?></td>
                 <td>
                     <button onclick="edit(<?php echo $fetch['exam_id'] ?>)">Edit</button>
                 </td>

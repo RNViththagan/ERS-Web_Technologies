@@ -124,9 +124,10 @@ else{
     </select><br>
     Status:
     <select name="status" required>
-        <option value="draft">draft</option>
-        <option value="registration" <?php if($edit and $status =="registration") echo "selected"?>>registration</option>
-        <option value="closed" <?php if($edit and $status =="closed") echo "selected"?>>closed</option>
+        <option value="draft">Draft</option>
+        <option value="registration" <?php if($edit and $status =="registration") echo "selected"?>>Registration</option>
+        <option value="closed" <?php if($edit and $status =="closed") echo "selected"?>>Closed</option>
+        <option value="hidden" <?php if($edit and $status =="hidden") echo "selected"?>>Hidden</option>
     </select><br>
     closing date:
     <input name="close_date" type="date" min="<?php echo ($edit)?"$closing_date":date('Y-m-d'); ?>" <?php if($edit) echo "value='$closing_date'"?> required><br>
@@ -146,7 +147,8 @@ else{
         var closeDateInput = document.getElementsByName("close_date")[0];
         var closeDate = new Date(closeDateInput.value);
 
-        var today = new Date();
+        var today = closeDate.min;
+        console.log(today);
 
         if (isNaN(academicYear) || academicYear < maxPreviousYear) {
             alert("Please enter a valid academic year greater than or equal to the previous year.");
