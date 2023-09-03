@@ -71,57 +71,54 @@ $stdlist = mysqli_query($con, $sql);
         <select name="year" id="year">
             <option value="none"></option>
             <?php
-            // Fetch distinct exam names from the database
-            $distinctYear = "SELECT DISTINCT SUBSTRING(regNo, 1, 4) AS starting_year FROM student";
-            $result = $con->query($distinctYear);
+                $distinctYear = "SELECT DISTINCT SUBSTRING(regNo, 1, 4) AS starting_year FROM student";
+                $result = $con->query($distinctYear);
 
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    echo "<option value='" . $row["starting_year"] . "' ";
-                    echo ($year == $row["starting_year"]) ? "selected" : "";
-                    echo ">" . $row["starting_year"] . "</option>";
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value='" . $row["starting_year"] . "' ";
+                        echo ($year == $row["starting_year"]) ? "selected" : "";
+                        echo ">" . $row["starting_year"] . "</option>";
+                    }
                 }
-            }
             ?>
         </select>
         <?php
-        // Fetch distinct exam names from the database
-        $distinctDept = "SELECT DISTINCT SUBSTRING(SUBSTRING_INDEX(regNo, '/', 2), 6) AS code FROM student";
-        $result = $con->query($distinctDept);
-        if ($result->num_rows > 1) { ?>
-            <label for="dept">Dept</label>
-            <select for="dept" name="dept">
-                <option value="none"></option>
-                <?php
-                while ($row = $result->fetch_assoc()) {
-                    echo "<option value='" . $row["code"] . "' ";
-                    echo ($dept == $row["code"]) ? "selected" : "";
-                    echo ">" . $row["code"] . "</option>";
-                }
-                ?>
-            </select>
+            $distinctDept = "SELECT DISTINCT SUBSTRING(SUBSTRING_INDEX(regNo, '/', 2), 6) AS code FROM student";
+            $result = $con->query($distinctDept);
+            if ($result->num_rows > 1) { ?>
+                <label for="dept">Dept</label>
+                <select for="dept" name="dept">
+                    <option value="none"></option>
+                    <?php
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value='" . $row["code"] . "' ";
+                        echo ($dept == $row["code"]) ? "selected" : "";
+                        echo ">" . $row["code"] . "</option>";
+                    }
+                    ?>
+                </select>
             <?php
-        }
+            }
         ?>
         <?php
-        // Fetch distinct exam names from the database
-        $distinctStatus = "SELECT DISTINCT status FROM student_check";
-        $result = $con->query($distinctStatus);
+            $distinctStatus = "SELECT DISTINCT status FROM student_check";
+            $result = $con->query($distinctStatus);
 
-        if ($result->num_rows > 1) { ?>
-            <label for="status">Status</label>
-            <select for="status" name="status">
-                <option value="none"></option>
+            if ($result->num_rows > 1) { ?>
+                <label for="status">Status</label>
+                <select for="status" name="status">
+                    <option value="none"></option>
+                    <?php
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value='" . $row["status"] . "' ";
+                        echo ($status == $row["status"]) ? "selected" : "";
+                        echo ">" . $row["status"] . "</option>";
+                    }
+                    ?>
+                </select>
                 <?php
-                while ($row = $result->fetch_assoc()) {
-                    echo "<option value='" . $row["status"] . "' ";
-                    echo ($status == $row["status"]) ? "selected" : "";
-                    echo ">" . $row["status"] . "</option>";
-                }
-                ?>
-            </select>
-            <?php
-        }
+            }
         ?>
         <button type="submit" name="filter" value="Filter">Filter</button>
 
