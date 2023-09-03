@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 02, 2023 at 04:36 PM
+-- Generation Time: Sep 03, 2023 at 04:34 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -156,7 +156,7 @@ CREATE TABLE `exam_reg` (
   `exam_id` int(11) NOT NULL,
   `academic_year` varchar(10) NOT NULL,
   `semester` enum('1','2') NOT NULL,
-  `status` enum('draft','registration','closed') DEFAULT 'draft',
+  `status` enum('draft','registration','closed','hidden') DEFAULT 'draft',
   `closing_date` date NOT NULL DEFAULT '2020-01-01',
   `date_created` date DEFAULT '2020-01-01'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -166,8 +166,8 @@ CREATE TABLE `exam_reg` (
 --
 
 INSERT INTO `exam_reg` (`exam_id`, `academic_year`, `semester`, `status`, `closing_date`, `date_created`) VALUES
-(1, '2020', '1', 'closed', '2023-08-28', '2023-08-28'),
-(2, '2020', '2', 'registration', '2023-09-30', '2023-09-01');
+(1, '2020', '1', 'hidden', '2023-08-28', '2023-08-28'),
+(2, '2020', '2', 'draft', '2023-09-30', '2023-09-01');
 
 -- --------------------------------------------------------
 
@@ -179,6 +179,15 @@ CREATE TABLE `reg_units` (
   `regId` int(11) NOT NULL,
   `exam_unit_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `reg_units`
+--
+
+INSERT INTO `reg_units` (`regId`, `exam_unit_id`) VALUES
+(9, 2),
+(10, 6),
+(10, 7);
 
 -- --------------------------------------------------------
 
@@ -257,7 +266,7 @@ INSERT INTO `student_check` (`regNo`, `email`, `password`, `status`, `verificati
 ('2020/CSC/061', 'vimalanthushani1122@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
 ('2020/CSC/065', 'vieronicka27@gmail.com', '$2y$10$NO9stDEgF3lkVlDNTxc4d.BSlqGWzGsU9YvmmN8fWnee56JWy9DGa', 'active', 0, 'verified'),
 ('2020/CSC/066', 'v.sayanishan.sv@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
-('2020/CSC/074', 'saaru27kesan@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/CSC/074', 'saaru27kesan@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 175670, 'verified'),
 ('2020/CSC/075', 'anathansinega@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
 ('2020/SP/068', 'theekshy27@gmail.com', '$2y$10$9IvVe6SXBRE3Pz5qtBvCJ.Evj4fKjN2aJjA4UOPdStrfnNRepRVVq', 'active', 0, 'verified'),
 ('2020/SP/129', 'kugatharshan26@gmail.com', NULL, 'unregistered', NULL, 'not_verified');
@@ -278,6 +287,14 @@ CREATE TABLE `stud_exam_reg` (
   `type` enum('proper','repeat') NOT NULL,
   `reg_date` DATE DEFAULT '2020-01-01'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `stud_exam_reg`
+--
+
+INSERT INTO `stud_exam_reg` (`regId`, `exam_id`, `stud_regNo`, `indexNo`, `level`, `combId`, `type`, `reg_date`) VALUES
+(9, 2, '2020/CSC/051', 's11267', 1, 1, 'proper', '2020-01-01'),
+(10, 2, '2020/CSC/051', 's11267', 1, 13, 'proper', '2020-01-01');
 
 -- --------------------------------------------------------
 
@@ -320,6 +337,41 @@ CREATE TABLE `unit` (
   `acYearAdded` int(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `unit`
+--
+
+INSERT INTO `unit` (`unitId`, `unitCode`, `name`, `subject`, `level`, `acYearAdded`) VALUES
+(1, 'CSC101S3', 'Foundations of Computer Science', 'CSC - Direct Intake', 1, 2017),
+(2, 'CSC102S3', 'Computer Programming I', 'CSC - Direct Intake', 1, 2017),
+(3, 'CSC103S3', 'Introduction to Computer Systems', 'CSC - Direct Intake', 1, 2017),
+(4, 'CSC102G3', 'CSC102G3', 'CSC', 1, 2017),
+(5, 'CSC104G2', 'CSC104G2', 'CSC', 1, 2017),
+(6, 'PMM103G3', 'PMM103G3', 'PMM', 1, 2017),
+(7, 'PMM104G2', 'PMM104G2', 'PMM', 1, 2017),
+(8, 'AMM103G3', 'AMM103G3', 'AMM', 1, 2017),
+(9, 'AMM104G2', 'AMM104G2', 'AMM', 1, 2017),
+(10, 'STA103G3', 'STA103G3', 'STA', 1, 2017),
+(11, 'STA104G2', 'STA104G2', 'STA', 1, 2017),
+(12, 'PHY107G3', 'PHY107G3', 'PHY', 1, 2017),
+(13, 'BOA103G2', 'BOA103G2', 'BOT', 1, 2017),
+(14, 'BOA104G2', 'BOA104G2', 'BOT', 1, 2017),
+(15, 'BOA105G2', 'BOA105G2', 'BOT', 1, 2017),
+(16, 'FIS103G2', 'FIS103G2', 'FSC', 1, 2017),
+(17, 'FIS104G2', 'FIS104G2', 'FSC', 1, 2017),
+(18, 'FIS105G2', 'FIS105G2', 'FSC', 1, 2017),
+(19, 'ZOL104G2', 'ZOL104G2', 'ZOO', 1, 2017),
+(20, 'ZOL105G2', 'ZOL105G2', 'ZOO', 1, 2017),
+(21, 'CSC106S3', 'CSC106S3', 'CSC - Direct Intake', 1, 2017),
+(22, 'CSC108S2', 'CSC108S2', 'CSC - Direct Intake', 1, 2017),
+(23, 'CSC109S2', 'CSC109S2', 'CSC - Direct Intake', 1, 2017),
+(24, 'CSC111S2', 'CSC111S2', 'CSC - Direct Intake', 1, 2017),
+(25, 'CSC112S3', 'CSC112S3', 'CSC - Direct Intake', 1, 2017),
+(26, 'CHE102G2', 'CHE102G2', 'CHE', 1, 2017),
+(27, 'CHE104G3', 'CHE104G3', 'CHE', 1, 2017),
+(28, 'CHE106G1', 'CHE106G1', 'CHE', 1, 2017),
+(29, 'CSC104S2', 'Mathematics for Computing I', 'CSC - Direct Intake', 1, 2017);
+
 -- --------------------------------------------------------
 
 --
@@ -332,6 +384,18 @@ CREATE TABLE `unit_sub_exam` (
   `unitId` int(11) NOT NULL,
   `type` enum('proper','repeat') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `unit_sub_exam`
+--
+
+INSERT INTO `unit_sub_exam` (`exam_unit_id`, `exam_id`, `unitId`, `type`) VALUES
+(7, 2, 1, 'proper'),
+(8, 2, 2, 'proper'),
+(2, 2, 6, 'proper'),
+(3, 2, 7, 'proper'),
+(9, 2, 21, 'proper'),
+(10, 2, 29, 'proper');
 
 --
 -- Indexes for dumped tables
@@ -418,8 +482,7 @@ ALTER TABLE `unit`
 --
 ALTER TABLE `unit_sub_exam`
   ADD PRIMARY KEY (`exam_unit_id`),
-  ADD UNIQUE KEY `exam_id` (`exam_id`,`unitId`,`type`),
-  ADD KEY `unitId` (`unitId`);
+  ADD UNIQUE KEY `exam_id` (`exam_id`,`unitId`,`type`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -429,7 +492,7 @@ ALTER TABLE `unit_sub_exam`
 -- AUTO_INCREMENT for table `admin_details`
 --
 ALTER TABLE `admin_details`
-  MODIFY `adminId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `adminId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `combination`
@@ -441,25 +504,25 @@ ALTER TABLE `combination`
 -- AUTO_INCREMENT for table `exam_reg`
 --
 ALTER TABLE `exam_reg`
-  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `stud_exam_reg`
 --
 ALTER TABLE `stud_exam_reg`
-  MODIFY `regId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `regId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `unit`
 --
 ALTER TABLE `unit`
-  MODIFY `unitId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `unitId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `unit_sub_exam`
 --
 ALTER TABLE `unit_sub_exam`
-  MODIFY `exam_unit_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `exam_unit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables
@@ -469,7 +532,7 @@ ALTER TABLE `unit_sub_exam`
 -- Constraints for table `admin_details`
 --
 ALTER TABLE `admin_details`
-  ADD CONSTRAINT `admin_details_ibfk_1` FOREIGN KEY (`email`) REFERENCES `admin` (`email`);
+  ADD CONSTRAINT `admin_details_ibfk_1` FOREIGN KEY (`email`) REFERENCES `admin` (`email`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `combination_subjects`
@@ -482,8 +545,8 @@ ALTER TABLE `combination_subjects`
 -- Constraints for table `reg_units`
 --
 ALTER TABLE `reg_units`
-  ADD CONSTRAINT `reg_units_ibfk_1` FOREIGN KEY (`exam_unit_id`) REFERENCES `unit_sub_exam` (`exam_unit_id`),
-  ADD CONSTRAINT `reg_units_ibfk_2` FOREIGN KEY (`regId`) REFERENCES `stud_exam_reg` (`regId`);
+  ADD CONSTRAINT `reg_units_ibfk_1` FOREIGN KEY (`exam_unit_id`) REFERENCES `unit_sub_exam` (`unitId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `reg_units_ibfk_2` FOREIGN KEY (`regId`) REFERENCES `stud_exam_reg` (`regId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `student`
@@ -509,8 +572,8 @@ ALTER TABLE `unit`
 -- Constraints for table `unit_sub_exam`
 --
 ALTER TABLE `unit_sub_exam`
-  ADD CONSTRAINT `unit_sub_exam_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `exam_reg` (`exam_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `unit_sub_exam_ibfk_2` FOREIGN KEY (`unitId`) REFERENCES `unit` (`unitId`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `unit_sub_exam_ibfk_1` FOREIGN KEY (`unitId`) REFERENCES `unit` (`unitId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `unit_sub_exam_ibfk_2` FOREIGN KEY (`exam_id`) REFERENCES `exam_reg` (`exam_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

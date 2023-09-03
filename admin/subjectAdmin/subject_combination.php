@@ -60,7 +60,7 @@ while ($sub = $subjects->fetch_assoc()) {
 
 $subarr .= "];";
 ?>
-?<link rel="stylesheet" href="../../assets/css/gen_combinations.css">
+<link rel="stylesheet" href="../../assets/css/gen_combinations.css">
 <h1 class="sub_comb">Subject Combinations</h1>
 <table border="1">
     <tr>

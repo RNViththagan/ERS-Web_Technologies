@@ -38,9 +38,16 @@
                     <p>Subject combination</p>
                     <!-- <span>></span> -->
                 </a>
-                <a href="index.php?page=asgnSub" class="sub-menu-link">
+                <?php if(isset($curExam)){?>
+                <a href="index.php?page=asignUnits" class="sub-menu-link">
                     <img src="../assets/img/panels/profile.png">
                     <p>Assign Subjects</p>
+                    <!-- <span>></span> -->
+                </a>
+                <?php } ?>
+                <a href="index.php?page=units" class="sub-menu-link">
+                    <img src="../assets/img/panels/profile.png">
+                    <p>Units</p>
                     <!-- <span>></span> -->
                 </a>
             <?php } ?>
