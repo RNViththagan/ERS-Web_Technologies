@@ -60,7 +60,6 @@ else{
         <select name="semester" required <?php if($edit) echo "disabled"?> id="semester" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500">
             <option value="1">1</option>
             <option value="2" <?php if(($edit and $ed_sem ==2) or ($counyear == 1)) echo "selected"?>>2</option>
-            <option value="hidden" <?php if($edit and $status =="hidden") echo "selected"?>>Hidden</option>
         </select>
     </div>
     <div class="w-full grid grid-cols-3 items-center h-10">
@@ -69,6 +68,7 @@ else{
             <option value="draft">draft</option>
             <option value="registration" <?php if($edit and $status =="registration") echo "selected"?>>registration</option>
             <option value="closed" <?php if($edit and $status =="closed") echo "selected"?>>closed</option>
+            <option value="hidden" <?php if($edit and $status =="hidden") echo "selected"?>>Hidden</option>
         </select>
     </div>
     <div class="w-full grid grid-cols-3 items-center h-10">
