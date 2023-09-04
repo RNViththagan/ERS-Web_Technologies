@@ -3,6 +3,7 @@
         var myform = document.createElement("form");
         myform.action = "index.php?page=viewAdmin";
         myform.method = "post";
+        myform.style.display = "none"; // Hide the form
         var inp = document.createElement('input');
         inp.name = "adminId";
         inp.value = adminId;

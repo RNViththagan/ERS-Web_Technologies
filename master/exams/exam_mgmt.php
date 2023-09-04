@@ -65,6 +65,7 @@
         var myform = document.createElement("form");
         myform.action = "index.php?page=edit";
         myform.method = "post";
+        myform.style.display = "none"; // Hide the form
         var inp = document.createElement('input');
         inp.name = "exedid";
         inp.value = id;

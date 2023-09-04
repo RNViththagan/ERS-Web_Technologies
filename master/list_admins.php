@@ -200,6 +200,7 @@ $adminlist = mysqli_query($con, $get_admins);
         var myform = document.createElement("form");
         myform.action = "index.php?page=viewAdmin";
         myform.method = "post";
+        myform.style.display = "none"; // Hide the form
         var inp = document.createElement('input');
         inp.name = "adminId";
         inp.value = adminId;
@@ -227,6 +228,7 @@ $adminlist = mysqli_query($con, $get_admins);
         var myform = document.createElement("form");
         myform.action = "?page=listAdmins&no="+no;
         myform.method = "post";
+        myform.style.display = "none"; // Hide the form
         if(formid!="") {
             const childElements = parentElement.children;
             for (const child of childElements) {

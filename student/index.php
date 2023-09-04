@@ -115,8 +115,6 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                 <div class="h-px w-3/4 bg-gray-300"></div>
                 <li class=""><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="index.php">Dashboard</a></li>
                 <div class="h-px w-3/4 bg-gray-300"></div>
-                <li class=""><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="../contact.html">Contact</a></li>
-                <div class="h-px w-3/4 bg-gray-300"></div>
                 <li class="mb-3 "><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="../logout.php">Logout</a></li>
             </ul>   
         </div>   
@@ -218,7 +216,7 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                     </form>
                     <?php } else { 
                         if (isset($errors['update-error'])) { ?>
-                            <p class="error-text"><?php echo $error['update-error'] ?></p>
+                            <p class="error-text"><?php echo $errors['update-error'] ?></p>
                         <?php } ?>
                         <div class="mt-4 w-full h-full flex flex-col items-center justify-around lg:mt-0 lg:h-[430px]">
                             <div class="detail-row">
@@ -266,7 +264,8 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                             <th class="font-semibold border-gray-100 border-x-2">Type</th>
                             <th class="font-semibold border-gray-100 border-x-2">Level</th>
                             <th class="font-semibold border-gray-100 border-x-2">Semester</th>
-                            <th class="font-semibold ">Subject<br>Combination</th>
+                            <th class="font-semibold border-gray-100 border-x-2 ">Subject<br>Combination</th>
+                            <th class="font-semibold">Action</th>
                         </thead>
                         <tbody class="text-center ">
                             <?php
