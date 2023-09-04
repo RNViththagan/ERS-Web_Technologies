@@ -157,7 +157,7 @@ $adminlist = mysqli_query($con, $get_admins);
                     <td><?php echo $row['name']; ?></td>
                     <td><?php echo $row['role']; ?></td>
                     <td><?php echo $row['department']; ?></td>
-                    <td class="<?php echo ($row['status'] == 'active') ? 'text-green-600' : 'text-red-400'; ?>"><?php echo $row['status']; ?></td>
+                    <td class="<?php echo ($row['status'] == 'active') ? 'text-green-600' : 'text-red-400'; ?>"><?php echo strtoupper($row['status']); ?></td>
                     <td>
                         <button onclick="view('<?php echo $row['email']; ?>')" class="btn outline-btn !py-1">View</button>
                     </td>
