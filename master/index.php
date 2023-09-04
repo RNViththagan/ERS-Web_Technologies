@@ -10,6 +10,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != "Admin_Master") {
 }
 require_once("../config/connect.php");
 require_once("../config/adminName.php");
+require_once("../config/postSender.php");
 ?>
 
 
@@ -81,9 +82,9 @@ require_once("../config/adminName.php");
                 else
                     header("Location:index.php?page=listAdmins");
             }else if ($_GET['page'] === "profile") {
-                include("profile.php");
+                include("../config/profile.php");
             } else if ($_GET['page'] === "updateProfile") {
-                include("updateProfile.php");
+                include("../config/updateProfile.php");
             }else if ($_GET['page'] === "pwdChg") {
                 include("../login/pwd_change_admin.php");
             }else if ($_GET['page'] === "addAdmin") {
