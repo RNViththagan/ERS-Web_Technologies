@@ -80,80 +80,57 @@ if (isset($_POST['save'])) {
     <?php if (isset($msg['error'])) : ?>
         <div class="msg error-msg"><?php echo $msg['error']; ?></div>
     <?php endif; ?>
-    <form method="post" action="">
-        <table>
-            <tr>
-                <td>Registration No:</td>
-                <td>
-                    <input type="text" name="newRegNo" value="<?php echo $row['regNo']; ?>"/>
-                    <input type="hidden" name="regNo" value="<?php echo $row['regNo']; ?>"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Status:</td>
-                <td>
-                    <select for="status" name="status">
-                        <option value="unregistered" <?php echo ("unregistered" == $row['status']) ? "selected" : ""; ?>>unregistered</option>
-                        <option value="active" <?php echo ("active" == $row['status']) ? "selected" : ""; ?>>active</option>
-                        <option value="inactive" <?php echo ("inactive" == $row['status']) ? "selected" : ""; ?>>inactive</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>Email:</td>
-                <td>
-                    <input type="text" name="email" value="<?php echo $row['email']; ?>"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Full Name:</td>
-                <td>
-                    <input type="text" name="fullName" value="<?php echo $row['fullName']; ?>"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Name with Initials:</td>
-                <td>
-                    <input type="text" name="nameWithInitial" value="<?php echo $row['nameWithInitial']; ?>"/>
-                </td>
-            </tr>
-            <tr>
-                <td>District:</td>
-                <td>
-                    <input type="text" name="district" value="<?php echo $row['district']; ?>"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Mobile No:</td>
-                <td>
-                    <input type="text" name="mobileNo" value="<?php echo $row['mobileNo']; ?>"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Home Tp No:</td>
-                <td>
-                    <input type="text" name="landlineNo" value="<?php echo $row['landlineNo']; ?>"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Home Address:</td>
-                <td>
-                    <input type="text" name="homeAddress" value="<?php echo $row['homeAddress']; ?>"/>
-                </td>
-            </tr>
-            <tr>
-                <td>Address in Jaffna:</td>
-                <td>
-                    <input type="text" name="addressInJaffna" value="<?php echo $row['addressInJaffna']; ?>"/>
-                </td>
-            </tr>
-    
-        </table>
+    <form method="post" action="" class="w-[500px] mx-auto flex flex-col items-center gap-4">
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <label for="newRegNo">Registration No:</label>
+            <input type="text" name="newRegNo" value="<?php echo $row['regNo']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" />
+            <input type="hidden" name="regNo" value="<?php echo $row['regNo']; ?>"/>
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <label for="status">Status:</label>
+            <select for="status" name="status" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" >
+                <option value="unregistered" <?php echo ("unregistered" == $row['status']) ? "selected" : ""; ?>>unregistered</option>
+                <option value="active" <?php echo ("active" == $row['status']) ? "selected" : ""; ?>>active</option>
+                <option value="inactive" <?php echo ("inactive" == $row['status']) ? "selected" : ""; ?>>inactive</option>
+            </select>
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <label for="email">Email:</label>
+            <input type="text" name="email" value="<?php echo $row['email']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" />
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <label for="fullName">Full Name:</label>
+            <input type="text" name="fullName" value="<?php echo $row['fullName']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" />
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <label for="nameWithInitial">Name with Initials:</label>
+            <input type="text" name="nameWithInitial" value="<?php echo $row['nameWithInitial']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" />
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <label for="district">District:</label>
+            <input type="text" name="district" value="<?php echo $row['district']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" />
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <label for="mobileNo">Mobile No:</label>
+            <input type="text" name="mobileNo" value="<?php echo $row['mobileNo']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" />
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <label for="landlineNo">Home Tp No:</label>
+            <input type="text" name="landlineNo" value="<?php echo $row['landlineNo']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" />
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <label for="homeAddress">Home Address:</label>
+            <input type="text" name="homeAddress" value="<?php echo $row['homeAddress']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" />
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <label for="addressInJaffna">Address in Jaffna:</label>
+            <input type="text" name="addressInJaffna" value="<?php echo $row['addressInJaffna']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" />
+        </div>
     
         <div class="w-full grid grid-cols-3 items-center h-10 gap-5 mt-5 mb-10">
-            <button type="submit" name="save" value="Save">Save</button>
-            <button type="reset" name="reset" value="Reset">Reset</button>
-            <button onclick="view('<?php echo $row['regNo']; ?>')">Discard</button>
+            <button type="reset" name="reset" value="Reset" class="btn outline-btn">Reset</button>
+            <button onclick="view('<?php echo $row['regNo']; ?>')" class="btn outline-btn">Discard</button>
+            <button type="submit" name="save" value="Save" class="btn fill-btn">Save</button>
         </div>
     </form>
 </div>

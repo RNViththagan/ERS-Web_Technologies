@@ -83,8 +83,10 @@ if (isset($_POST['chg-pwd'])) {
         </div>
 
 
-
-        <button type="submit" name="chg-pwd" class="btn outline-btn mt-3">Change Password</button>
+        <div class="w-1/2 grid grid-cols-3 items-center h-10 gap-5 mt-5 mb-10">
+            <input type="button" value="< Back" onclick="history.back()" class="btn outline-btn">
+            <button type="submit" name="chg-pwd" class="col-span-2 w-full btn fill-btn">Change Password</button>
+        </div>
     </form>
 </div>
 
