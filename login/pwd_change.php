@@ -53,96 +53,46 @@ if (isset($_POST['chg-pwd'])) {
     }
 } ?>
 
-
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #f0f0f0;
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
     }
-
-    .password-form {
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-        width: 300px;
-    }
-
-    .password-form h2 {
-        margin-top: 0;
-    }
-
-    .password-form label {
-        display: block;
-        margin-bottom: 8px;
-    }
-
-    .password-form input {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 12px;
-        border: 1px solid #ccc;
-        border-radius: 3px;
-    }
-
-    .password-form button {
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        padding: 10px 16px;
-        border-radius: 3px;
-        cursor: pointer;
-    }
-
-    .password-form button:hover {
-        background-color: #0056b3;
-    }
-
-    .msg {
-        margin-top: 10px;
-        padding: 10px;
-        border-radius: 3px;
-    }
-
-    .error-msg {
-        background-color: #ffdddd;
-        color: #ff0000;
-    }
-
-    .info-msg {
-        background-color: #ddffdd;
-        color: #00aa00;
-    }
-</style>
+</script>
 
 
-<div class="password-form">
-    <h2>Change Password</h2>
+
+<div class="w-10/12 mx-auto ">
+    <h2 class="title text-center mb-10">Change Password</h2>
     <?php if (isset($msg['error'])) : ?>
-        <div class="msg error-msg"><?php echo $msg['error']; ?></div>
+        <div class="error-text"><?php echo $msg['error']; ?></div>
     <?php endif; ?>
 
     <?php if (isset($msg['info'])) : ?>
-        <div class="msg info-msg"><?php echo $msg['info']; ?></div>
+        <div class="error-text !text-green-500"><?php echo $msg['info']; ?></div>
     <?php endif; ?>
 
-    <form action="" method="post">
-        <label for="currentPassword">Current Password:</label>
-        <input type="password" id="currentPassword" name="currentPassword" required>
+    <form action="" method="post" class="flex flex-col items-center justify-around gap-6">
+        <div class="detail-row">
+            <label for="currentPassword">Current Password:</label>
+            <input type="password" class="w-full border-2 border-gray-500 rounded-full outline-none py-2 px-4" id="currentPassword" name="currentPassword" required>
 
-        <label for="newPassword">New Password:</label>
-        <input type="password" id="newPassword" name="newPassword" required>
+        </div>
 
-        <label for="confirmNewPassword">Confirm New Password:</label>
-        <input type="password" id="confirmNewPassword" name="confirmNewPassword" required>
+        <div class="detail-row">
+            <label for="newPassword">New Password:</label>
+            <input type="password" class="w-full border-2 border-gray-500 rounded-full outline-none py-2 px-4" id="newPassword" name="newPassword" required>
+        </div>
 
-        <button type="submit" name="chg-pwd">Change Password</button>
+        <div class="detail-row">
+            <label for="confirmNewPassword">Confirm New Password:</label>
+            <input type="password" class="w-full border-2 border-gray-500 rounded-full outline-none py-2 px-4" id="confirmNewPassword" name="confirmNewPassword" required>
+        </div>
+
+
+        <div class="w-1/2 grid grid-cols-3 items-center h-10 gap-5 mt-5 mb-10">
+            <input type="button" value="< Back" onclick="history.back()" class="btn outline-btn">
+            <button type="submit" name="chg-pwd" class="col-span-2 w-full btn fill-btn">Change Password</button>
+        </div>
     </form>
 </div>
 

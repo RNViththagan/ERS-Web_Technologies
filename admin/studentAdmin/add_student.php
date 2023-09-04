@@ -50,28 +50,28 @@ if (isset($_POST['submit'])) {
     }
 </script>
 
-<link rel="stylesheet" href="../../assets/css/main.css">
-<h1 class="titlehead">Add Student</h1>
-<div class="container">
-    <form action="" method="post">
+
+<div class="w-[500px] mx-auto flex flex-col items-center gap-4">
+    <h1 class="title mb-5">Add Student</h1>
+    <form action="" method="post" class="w-full flex flex-col items-center gap-5">
         <?php
         if (isset($msg)) {
             echo "<b class='" . $msg[1] . "'>" . $msg[0] . "</b>";
         }
         ?>
-        <div class="formcomp">
+
+
+        <div class="w-full grid grid-cols-3 items-center h-10">
             <label for="regno">Registration No.: </label>
-            <input type="text" name="regno" required>
+            <input type="text" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" name="regno" required>
         </div>
-        <div class="formcomp">
+        <div class="w-full grid grid-cols-3 items-center h-10">
             <label for="email">Email: </label>
-            <input type="email" name="email" required>
+            <input type="email" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" name="email" required>
         </div>
-        <div class="formcomp formbutton">
-            <input type="submit" name="submit" value="Register">
+        <div class="w-full grid grid-cols-3 items-center h-10 gap-5 mt-5 mb-10">
+            <input type="button" value="< Back" onclick="history.back()" class="btn outline-btn">
+            <input type="submit" class="col-span-2 w-full btn fill-btn" name="submit" value="Register">
         </div>
     </form>
-    <a href="index.php?page=stud">
-        <button>Back</button>
-    </a>
 </div>

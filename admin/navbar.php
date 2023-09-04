@@ -1,62 +1,128 @@
-<nav>
-    <img src="<?php echo $rpath;?>..\assets\img\panels\logo.png" class="logo">
+<nav
+  id="navBar"
+  class="fixed top-0 bottom-0 lg:left-0 py-5 px-7 w-[300px] bg-white drop-shadow-sm transition-all">
+  <div class="flex items-center justify-between">
+    <img
+      src="../assets/img/logo/ERS_logo.gif"
+      alt="Logo"
+      class="w-28 transition-all"
+      id="nav-logo" />
+    <i
+      onclick="toggleNavBar()"
+      id="open-close-btn"
+      class="bi bi-arrow-bar-left text-xl py-1 px-2 rounded-lg bg-blue-200 text-black cursor-pointer transition-all"></i>
+  </div>
 
-    <div class="user">
-        <p><?php echo $userprofname?></p>
-        <svg class="user-pic" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 46 44" onclick="toggleMenu()">
-            <ellipse cx="22.924" cy="22" rx="22.924" ry="22" fill="white"/>
-            <path d="M22.9242 22.1692C24.9552 22.1692 26.9031 21.3758 28.3393 19.9635C29.7755 18.5512 30.5823 16.6357 30.5823 14.6385C30.5823 12.6412 29.7755 10.7257 28.3393 9.31341C26.9031 7.90111 24.9552 7.1077 22.9242 7.1077C20.8931 7.1077 18.9452 7.90111 17.5091 9.31341C16.0729 10.7257 15.2661 12.6412 15.2661 14.6385C15.2661 16.6357 16.0729 18.5512 17.5091 19.9635C18.9452 21.3758 20.8931 22.1692 22.9242 22.1692ZM20.19 24.9933C14.2968 24.9933 9.52246 29.6882 9.52246 35.4834C9.52246 36.4483 10.3182 37.2308 11.2994 37.2308H34.549C35.5302 37.2308 36.3259 36.4483 36.3259 35.4834C36.3259 29.6882 31.5515 24.9933 25.6584 24.9933H20.19Z"
-                  fill="black"/>
-        </svg>
-        <img src="<?php echo $rpath;?>..\assets/img/panels/down.png" onclick="toggleMenu()">
-    </div>
+  <hr class="bg-gray-700 my-10" />
 
-    <!-- <img src="../img/panels/user.png" class="user-pic" onclick="toggleMenu()"> -->
+  <div class="flex flex-col gap-5" id="navLinks">
+    <a
+      id="dashboardLink"
+      href="../admin"
+      class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
+      <i class="bi bi-boxes text-xl"></i>
+      <span class="transition-all">Dashboard</span>
+    </a>
 
-    <div class="sub-menu-wrap" id="subMenu">
-        <div class="sub-menu">
-            <a href="<?php echo $rpath;?>../admin" class="sub-menu-link">
-                <img src="<?php echo $rpath;?>..\assets/img/panels/dashboard.png">
-                <p>Dashboard</p>
-                <!-- <span>></span> -->
+    <a
+      id="dashboardLink"
+      href="index.php?page=profile"
+      class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
+      <i class="bi bi-person-lines-fill text-xl"></i>
+      <span class="transition-all">Profile</span>
+    </a>
+
+    <?php if ($_SESSION['role'] == "Admin_Student") {?>
+        <a
+          id="dashboardLink"
+          href="index.php?page=stud"
+          class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
+          <i class="bi bi-people-fill text-xl"></i>
+          <span class="transition-all">Students</span>
+        </a>
+    <?php } ?>
+
+    <?php if ($_SESSION['role'] == "Admin_Subject") {?>
+        <a
+            id="dashboardLink"
+            href="index.php?page=subComb"
+            class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
+            <i class="bi bi-list-nested text-xl"></i>
+            <span class="transition-all">Subject combination</span>
             </a>
-            <a href="#" class="sub-menu-link">
-                <img src="<?php echo $rpath;?>..\assets/img/panels/profile.png">
-                <p>Profile</p>
-                <!-- <span>></span> -->
-            </a>
-            <?php if ($_SESSION['role'] == "Admin_Student") {?>
-                <a href="index.php?page=stud" class="sub-menu-link">
-                    <img src="../assets/img/panels/student.png">
-                    <p>Students</p>
-                    <!-- <span>></span> -->
-                </a>
-            <?php } ?>
-            <?php if ($_SESSION['role'] == "Admin_Subject") {?>
-                <a href="index.php?page=subComb" class="sub-menu-link">
-                    <img src="../assets/img/panels/profile.png">
-                    <p>Subject combination</p>
-                    <!-- <span>></span> -->
-                </a>
-                <?php if(isset($curExam)){?>
-                <a href="index.php?page=asignUnits" class="sub-menu-link">
-                    <img src="../assets/img/panels/profile.png">
-                    <p>Assign Subjects</p>
-                    <!-- <span>></span> -->
-                </a>
-                <?php } ?>
-                <a href="index.php?page=units" class="sub-menu-link">
-                    <img src="../assets/img/panels/profile.png">
-                    <p>Units</p>
-                    <!-- <span>></span> -->
-                </a>
-            <?php } ?>
-            <hr>
-            <a href="../logout.php" class="sub-menu-link">
-                <img src="../assets/img/panels/logout.png">
-                <p>Logout</p>
-                <!-- <span>></span> -->
-            </a>
-        </div>
-    </div>
+        <a
+                id="dashboardLink"
+                href="index.php?page=units"
+                class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
+            <i class="bi bi-list-nested text-xl"></i>
+            <span class="transition-all">Units</span>
+        </a>
+      <?php if(isset($curExam)){?>
+        <a
+            id="dashboardLink"
+            href="index.php?page=asignUnits"
+            class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
+            <i class="bi bi-journal-plus text-xl"></i>
+            <span class="transition-all">Exam Units</span>
+        </a>
+        <?php } ?>
+    <?php } ?>
+
+
+
+    <a
+      id="dashboardLink"
+      href="../logout.php"
+      class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
+      <i class="bi bi-box-arrow-left text-xl"></i>
+      <span class="transition-all">Logout</span>
+    </a>
+  </div>
+
+  <hr class="bg-gray-700 my-10" />
+
+  <a
+    id="profile-sec"
+    href="index.php?page=profile"
+    class="fixed bottom-10 w-10/12 mx-auto bg-blue-200 rounded-xl flex items-center gap-3 py-1 px-4 cursor-pointer overflow-x-hidden">
+      <i
+        class="user-icon bi bi-person-fill text-2xl py-0.5 px-2 rounded-lg bg-white text-blue-600"></i>
+      <div class="name-email leading-tight">
+        <h4 class="text-black font-bold"><?php echo $userprofname ?></h4>
+        <p class="text-sm font-semibold text-gray-700"><?php echo $_SESSION['userid'] ?></p>
+      </div>
+    </a>
 </nav>
+
+<script>
+  function toggleNavBar() {
+    var navBarLogo = document.getElementById("nav-logo");
+    var navBar = document.getElementById("navBar");
+    var navBarSibling = document.getElementById("nextSibling");
+    var dashLinks = document.querySelectorAll("[id='dashboardLink']");
+
+    navBar.classList.toggle("open");
+
+    if (navBarSibling) {
+      navBarSibling.classList.toggle("remove-ml-300");
+    }
+
+    if (
+      navBarLogo.src === "../assets/img/logo/ERS_logo.gif"
+    ) {
+      setTimeout(function () {
+        navBarLogo.setAttribute(
+          "src",
+          "<?php echo $rpath ?>../assets/img/logo/ERS_logo_icon.ico"
+        );
+      }, 75);
+    } else {
+      navBarLogo.setAttribute("src", "<?php echo $rpath ?>../assets/img/logo/ERS_logo.gif");
+    }
+  }
+
+  dashLinks.addEventListener("click", function () {
+    this.classList.add("active");
+  });
+</script>
+
