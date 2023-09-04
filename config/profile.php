@@ -6,7 +6,7 @@ $userID = $_SESSION['userid'];
 $selectSQL = "SELECT admin.name, admin_details.* FROM admin_details INNER JOIN admin ON admin.email= admin_details.email WHERE admin.email = '$userID';";
 $selectQuery = mysqli_query($con, $selectSQL);
 $admin = mysqli_fetch_assoc($selectQuery);
-$title = isset($admin["title"]) ? $admin["title"]."." : "";
+$title = (isset($admin["title"]) && $admin["title"]!="") ? $admin["title"]."." : "";
 $name = isset($admin["name"]) ? $admin["name"] : "";
 $fullName = isset($admin["fullName"]) ? $admin["fullName"] : "";
 $email = isset($admin["email"]) ? $admin["email"] : "";

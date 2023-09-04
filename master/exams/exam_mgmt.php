@@ -20,11 +20,11 @@
     <hr class="my-5">
     <table class="w-full text-center">
         <tr class="h-12 bg-blue-100 font-semibold">
-            <th>academic_year</th>
-            <th>semester</th>
-            <th>closing_data</th>
-            <th>status</th>
-            <th>action</th>
+            <th>Academic Year</th>
+            <th>Semester</th>
+            <th>Closing Date</th>
+            <th>Status</th>
+            <th>Action</th>
         </tr>
 
         <?php
@@ -52,7 +52,11 @@
 
     </table>
 </div>
-
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
 
 
 

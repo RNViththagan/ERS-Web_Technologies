@@ -8,8 +8,9 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != "Admin_Master") {
     header("location:../login.php");
     exit();
 }
-include("../config/connect.php");
+require_once("../config/connect.php");
 require_once("../config/adminName.php");
+require_once("../config/postSender.php");
 ?>
 
 
@@ -62,6 +63,9 @@ require_once("../config/adminName.php");
 <div id="nextSibling" class="transition-all ml-[300px] h-screen flex items-center justify-center">
     <div class="card">
         <?php
+        // print_r($_POST);
+        // echo "<br>";
+        // print_r($_GET);
         if (isset($_GET['page'])) {
             if ($_GET['page'] === "listAdmins") {
                 include("list_admins.php");
@@ -78,14 +82,14 @@ require_once("../config/adminName.php");
                 else
                     header("Location:index.php?page=listAdmins");
             }else if ($_GET['page'] === "profile") {
-                include("profile.php");
+                include("../config/profile.php");
             } else if ($_GET['page'] === "updateProfile") {
-                include("updateProfile.php");
+                include("../config/updateProfile.php");
             }else if ($_GET['page'] === "pwdChg") {
                 include("../login/pwd_change_admin.php");
             }else if ($_GET['page'] === "addAdmin") {
                     include("add_admin.php");
-            }else
+            } else
                 include("admin_dashboard.php");
         } else
             include("admin_dashboard.php");
@@ -93,13 +97,6 @@ require_once("../config/adminName.php");
         ?>
     </div>
 </div>
-
-<script>
-    if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-    }
-</script>
-
 
 </body>
 </html>

@@ -8,6 +8,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] == "Admin_Master") {
 }
 require_once("../config/adminName.php");
 require_once("subjectAdmin/assignUnits/currentExam.php");
+require_once("../config/postSender.php");
 ?>
 <!doctype html>
 <html lang="en">
@@ -63,6 +64,10 @@ require_once("subjectAdmin/assignUnits/currentExam.php");
 <div id="nextSibling" class="transition-all ml-[300px] h-screen flex items-center justify-center">
     <div class = "card">
         <?php
+//        print_r($_POST);
+//        echo "<br>";
+//        print_r($_GET);
+
         if ($_SESSION['role'] == "Admin_Student") {
             if(isset($_GET['page'])){
                 if($_GET['page'] === "stud"){
@@ -74,11 +79,11 @@ require_once("subjectAdmin/assignUnits/currentExam.php");
                     else
                         header("Location:index.php?page=stud");
                 } else if ($_GET['page'] === "profile") {
-                    include("profile.php");
+                    include("../config/profile.php");
                 } else if ($_GET['page'] === "pwdChg") {
                     include("../login/pwd_change_admin.php");
                 } else if ($_GET['page'] === "updateProfile") {
-                    include("updateProfile.php");
+                    include("../config/updateProfile.php");
                 } else if($_GET['page'] === "editStud"){
                     if(isset($_POST['regNo']))
                         include("studentAdmin/admin_edit_student.php");
@@ -97,6 +102,25 @@ require_once("subjectAdmin/assignUnits/currentExam.php");
             if(isset($_GET['page'])){
                 if($_GET['page'] === "subComb"){
                     include("subjectAdmin/subject_combination.php");
+                }
+                else if($_GET['page'] === "units"){
+                    include("subjectAdmin/unit.php");
+                }
+                else if($_GET['page'] === "addUnit"){
+                    include("subjectAdmin/add_unit.php");
+                } else if($_GET['page'] === "editUnit"){
+                    if(isset($_POST['unitId']))
+                        include("subjectAdmin/unit_edit.php");
+                    else
+                        header("Location:index.php?page=units");
+                } else if ($_GET['page'] === "profile") {
+                    include("../config/profile.php");
+                } else if ($_GET['page'] === "pwdChg") {
+                    include("../login/pwd_change_admin.php");
+                } else if ($_GET['page'] === "updateProfile") {
+                    include("../config/updateProfile.php");
+                }else if($_GET['page'] === "asignUnits" && isset($curExam)){
+                    include("subjectAdmin/assignUnits/assignUnits.php");
                 }
                 else
                     include("subjectAdmin/subj_admin_dashboard.php");

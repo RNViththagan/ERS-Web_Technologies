@@ -78,16 +78,16 @@ if (isset($_POST['save'])) {
 
 
 <div class="w-full mx-auto flex flex-col items-center gap-4">
-    <h1 class="title">Student Profile Setting</h1>
-    
+    <h1 class="title">Admin Profile Edit</h1>
+
     <form method="post" action="" class="w-[500px] mx-auto flex flex-col items-center gap-4">
         <input type="hidden" name="editAdminId" value="<?php echo $row['adminId']; ?>"/>
-    
+
         <div class="w-full grid grid-cols-3 items-center h-10">
             <label for="newEmail">Email:</label>
             <input type="text" name="newEmail" value="<?php echo $row['email']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500"/>
             <input type="hidden" name="editAdminId" value="<?php echo $row['email']; ?>"/>
-            
+
         </div>
         <div class="w-full grid grid-cols-3 items-center h-10">
             <label for="role">Role:</label>
@@ -99,7 +99,7 @@ if (isset($_POST['save'])) {
                     Admin Subject
                 </option>
             </select>
-            
+
         </div>
         <div class="w-full grid grid-cols-3 items-center h-10">
             <label for="status">Status:</label>
@@ -111,33 +111,29 @@ if (isset($_POST['save'])) {
                     inactive
                 </option>
             </select>
-            
+
         </div>
         <div class="w-full grid grid-cols-3 items-center h-10">
             <label for="name">Name:</label>
             <input type="text" name="name" value="<?php echo $row['name']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500"/>
-            
         </div>
         <div class="w-full grid grid-cols-3 items-center h-10">
             <label for="fullName">Full Name:</label>
             <input type="text" name="fullName" value="<?php echo $row['fullName']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500"/>
-            
         </div>
         <div class="w-full grid grid-cols-3 items-center h-10">
             <label for="department">Department:</label>
             <input type="text" name="department" value="<?php echo $row['department']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500"/>
-            
         </div>
-
         <div class="w-full grid grid-cols-3 items-center h-10">
             <label for="mobileNo">Mobile No:</label>
             <input type="text" name="mobileNo" value="<?php echo $row['mobileNo']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500"/>
-            
+
         </div>
-    
+
         <div class="w-full grid grid-cols-3 items-center h-10 gap-5 mt-5 mb-10">
             <button type="reset" name="reset" value="Reset" class="btn outline-btn">Reset</button>
-            <button onclick="view('<?php echo $row['email']; ?>')" class="btn outline-btn">Discard</button>
+            <button onclick="view('<?php echo $row['email']; ?>');return false;" class="btn outline-btn">Discard</button>
             <button type="submit" name="save" value="Save" class="btn fill-btn">Save</button>
         </div>
     </form>

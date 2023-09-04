@@ -51,15 +51,25 @@
             <span class="transition-all">Subject combination</span>
             </a>
         <a
+                id="dashboardLink"
+                href="index.php?page=units"
+                class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
+            <i class="bi bi-list-nested text-xl"></i>
+            <span class="transition-all">Units</span>
+        </a>
+      <?php if(isset($curExam)){?>
+        <a
             id="dashboardLink"
-            href="index.php?page=asgnSub"
+            href="index.php?page=asignUnits"
             class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
             <i class="bi bi-journal-plus text-xl"></i>
-            <span class="transition-all">Assign Subjects</span>
+            <span class="transition-all">Exam Units</span>
         </a>
+        <?php } ?>
     <?php } ?>
 
-    
+
+
     <a
       id="dashboardLink"
       href="../logout.php"
@@ -90,15 +100,15 @@
     var navBar = document.getElementById("navBar");
     var navBarSibling = document.getElementById("nextSibling");
     var dashLinks = document.querySelectorAll("[id='dashboardLink']");
-    
+
     navBar.classList.toggle("open");
-    
+
     if (navBarSibling) {
       navBarSibling.classList.toggle("remove-ml-300");
     }
 
     if (
-      navBarLogo.src == "http://localhost/ERS-Web_Technologies/assets/img/logo/ERS_logo.gif"
+      navBarLogo.src === "../assets/img/logo/ERS_logo.gif"
     ) {
       setTimeout(function () {
         navBarLogo.setAttribute(

@@ -58,25 +58,24 @@ $stdlist = mysqli_query($con, $sql);
 
 <div class="flex flex-col items-center justify-around gap-5">
     <h1 class="title">Student Management</h1>
-    
-    <form  id="searchform" action="index.php?page=listAdmins" method="post" class="flex items-center gap-5">
+
+    <form  id="searchform" action="index.php?page=stud" method="post" class="flex items-center gap-5">
         <div class="search-bar w-96 h-10 border-2 border-gray-500 rounded-full flex items-center gap-5 px-5">
             <i class="bi bi-search"></i>
-            <input type="text" name="search_key" placeholder="Search Here" value="<?php echo (isset($search_key)) ? $search_key : "" ?>" class="outline-none h-full w-full" required>
+            <input type="text" name="searchkey" placeholder="Search Here" value="<?php echo (isset($searchkey)) ? $searchkey : "" ?>" class="outline-none h-full w-full" required>
         </div>
         <button class="btn fill-btn" type="submit" name="search">Search</button>
     </form>
-    
-    
+
+
     <div class="filter">
         <form id="filterform" method="post" action="index.php?page=stud"  class="flex gap-5 items-center">
-    
+
             <select name="year" id="year"  class="p-2 border-2 border-gray-500 rounded-lg outline-none">
                 <option value="none">Select Year</option>
                 <?php
                     $distinctYear = "SELECT DISTINCT SUBSTRING(regNo, 1, 4) AS starting_year FROM student";
                     $result = $con->query($distinctYear);
-    
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                             echo "<option value='" . $row["starting_year"] . "' ";
@@ -92,7 +91,7 @@ $stdlist = mysqli_query($con, $sql);
                 $distinctDept = "SELECT DISTINCT SUBSTRING(SUBSTRING_INDEX(regNo, '/', 2), 6) AS code FROM student";
                 $result = $con->query($distinctDept);
                 if ($result->num_rows > 1) { ?>
-                
+
                     <select for="dept" name="dept" class="p-2 border-2 border-gray-500 rounded-lg outline-none">
                         <option value="none">Select Department</option>
                         <?php
@@ -109,12 +108,12 @@ $stdlist = mysqli_query($con, $sql);
 
 
             <?php
-    
+
                 $distinctStatus = "SELECT DISTINCT status FROM student_check";
                 $result = $con->query($distinctStatus);
-    
+
                 if ($result->num_rows > 1) { ?>
-                
+
                     <select for="status" name="status" class="p-2 border-2 border-gray-500 rounded-lg outline-none">
                         <option value="none">Select Status</option>
                         <?php
@@ -135,9 +134,9 @@ $stdlist = mysqli_query($con, $sql);
                     <button id="add" class="btn outline-btn">Reset</button>
                 </a>
             </div>
-   
+
         </form>
-    
+
     </div>
 
     <a href="index.php?page=addStud">
@@ -174,7 +173,7 @@ $stdlist = mysqli_query($con, $sql);
         }
         ?>
     </table>
-</div>
+
 
 
 
@@ -184,23 +183,24 @@ $stdlist = mysqli_query($con, $sql);
 $prev_page = $current_page - 1;
 $next_page = $current_page + 1;
 
-echo "<br>";
-if ($prev_page > 0) {
-    echo "<button  onclick='pagechange($prev_page)'>Previous</button>";
-}
+    echo "<br>";
+    if ($prev_page > 0) {
+        echo "<button  onclick='pagechange($prev_page)'>Previous</button>";
+    }
 
 
-$count_result = mysqli_query($con, $forcount);
-$total_records = $count_result->num_rows;
+    $count_result = mysqli_query($con, $forcount);
+    $total_records = $count_result->num_rows;
 
-$total_pages = ceil($total_records / $records_per_page);
+    $total_pages = ceil($total_records / $records_per_page);
 
-if ($next_page <= $total_pages) {
-    echo "<button onclick='pagechange($next_page)'>Next</button>";
-}
-?>
+    if ($next_page <= $total_pages) {
+        echo "<button onclick='pagechange($next_page)'>Next</button>";
+    }
+    ?>
 
 
+</div>
 <script>
     function view(regNo) {
         var myform = document.createElement("form");
@@ -224,7 +224,8 @@ if ($next_page <= $total_pages) {
         echo "subName.name = 'filter';";
     }
     else if (isset($_POST['search']))
-        echo "formid = 'searchform' \nsubName.name = 'search';";
+        echo "formid = 'searchform';\n";
+        echo "subName.name = 'search';";
     ?>
     
 

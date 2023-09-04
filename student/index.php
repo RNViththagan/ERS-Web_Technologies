@@ -159,8 +159,13 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                     <?php if (isset($_GET['update'])) { ?>
                         <div class="mt-4 w-full h-full flex flex-col items-center justify-around lg:mt-0 lg:h-[750px]">
                             <div class="detail-row ">
-                                <label class="hidden lg:block" for="title">Title: <span class="text-red-500">*</span></label>
-                                <input class="inputs  w-full lg:w-1/2" type="text" id="title" name="title" value="<?php echo $title; ?>" required >
+                                <label class="hidden lg:block"  for="title">Title: <span class="text-red-500">*</span></label>
+                                <select for="title" name="title" id="title" class="inputs w-full  border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" >
+                                    <option value="" selected disabled>Select Title</option>
+                                    <option value="Mr" <?php echo ("Mr" == $title) ? "selected" : ""; ?>>Mr</option>
+                                    <option value="Mrs" <?php echo ("Mrs" == $title) ? "selected" : ""; ?>>Mrs</option>
+                                    <option value="Ms" <?php echo ("Ms" == $title) ? "selected" : ""; ?>>Ms</option>
+                                </select>
                             </div>
 
                             <div class="detail-row">

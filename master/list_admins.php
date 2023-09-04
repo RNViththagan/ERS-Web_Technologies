@@ -82,7 +82,9 @@ $adminlist = mysqli_query($con, $get_admins);
           
           <?php
           // Fetch distinct departments from the database
-          $distinctDept = "SELECT DISTINCT department FROM admin_details";
+          $distinctDept = "SELECT DISTINCT department 
+                FROM `admin` 
+                LEFT JOIN `admin_details` ON `admin_details`.`email` = `admin`.`email` WHERE role !='Admin_Master'";
           $result = $con->query($distinctDept);
           if ($result->num_rows > 1) {?>
 
@@ -105,7 +107,9 @@ $adminlist = mysqli_query($con, $get_admins);
           
           <?php
             // Fetch distinct status from the database
-            $distinctStatus = "SELECT DISTINCT status FROM admin";
+            $distinctStatus = "SELECT DISTINCT status
+                            FROM `admin` 
+                LEFT JOIN `admin_details` ON `admin_details`.`email` = `admin`.`email` WHERE role !='Admin_Master'";
             $result = $con->query($distinctStatus);
 
             if ($result->num_rows > 1) { ?>
@@ -233,5 +237,11 @@ $adminlist = mysqli_query($con, $get_admins);
         document.body.appendChild(myform);
         console.log(myform);
         myform.submit()
+    }
+</script>
+
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
     }
 </script>

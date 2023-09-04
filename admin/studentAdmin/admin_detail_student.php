@@ -20,7 +20,7 @@ if (isset($_POST['regNo'])) {
         <div class="w-full grid grid-cols-3 items-center h-10">
             <h4>Status:</h4>
             <p class="text-gray-600"> <?php echo $row['status']; ?> </p>
-        </div> 
+        </div>
         <div class="w-full grid grid-cols-3 items-center h-10">
             <h4>Email:</h4>
             <p class="text-gray-600"> <?php echo $row['email']; ?> </p>
