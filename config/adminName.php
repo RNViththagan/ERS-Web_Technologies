@@ -9,7 +9,7 @@ $get_name = "
     WHERE ad.email ='".$_SESSION['userid']."'";
 
 $res = mysqli_fetch_assoc(mysqli_query($con, $get_name));
-$userproftitle = $res['title'];
+$userproftitle = ($res['title']!="")?$res['title']."":"";
 $userprofname = $res['name'];
 
 ?>
