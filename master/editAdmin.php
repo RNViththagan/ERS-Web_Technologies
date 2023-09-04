@@ -72,86 +72,75 @@ if (isset($_POST['save'])) {
     }
 </style>
 
-<link rel="stylesheet" type="text/css" href="../../assets/css/style_admin_student.css">
-
-
 <?php if (isset($msg['error'])) : ?>
     <div class="msg error-msg"><?php echo $msg['error']; ?></div>
 <?php endif; ?>
 
 
-<h1>Student Profile Setting</h1>
+<div class="w-full mx-auto flex flex-col items-center gap-4">
+    <h1 class="title">Admin Profile Edit</h1>
 
-<form method="post" action="">
-    <input type="hidden" name="editAdminId" value="<?php echo $row['adminId']; ?>"/>
+    <form method="post" action="" class="w-[500px] mx-auto flex flex-col items-center gap-4">
+        <input type="hidden" name="editAdminId" value="<?php echo $row['adminId']; ?>"/>
 
-    <table>
-        <tr>
-            <td>Email:</td>
-            <td>
-                <input type="text" name="newEmail" value="<?php echo $row['email']; ?>"/>
-                <input type="hidden" name="editAdminId" value="<?php echo $row['email']; ?>"/>
-            </td>
-        </tr>
-        <tr>
-            <td>Role:</td>
-            <td>
-                <select for="role" name="role">
-                    <option value="Admin_Student" <?php echo ("Admin_Student" == $row['role']) ? "selected" : ""; ?>>
-                        Admin Student
-                    </option>
-                    <option value="Admin_Subject" <?php echo ("Admin_Subject" == $row['role']) ? "selected" : ""; ?>>
-                        Admin Subject
-                    </option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Status:</td>
-            <td>
-                <select for="status" name="status">
-                    <option value="active" <?php echo ("active" == $row['status']) ? "selected" : ""; ?>>
-                        active
-                    </option>
-                    <option value="inactive" <?php echo ("inactive" == $row['status']) ? "selected" : ""; ?>>
-                        inactive
-                    </option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>Name:</td>
-            <td>
-                <input type="text" name="name" value="<?php echo $row['name']; ?>"/>
-            </td>
-        </tr>
-        <tr>
-            <td>Full Name:</td>
-            <td>
-                <input type="text" name="fullName" value="<?php echo $row['fullName']; ?>"/>
-            </td>
-        </tr>
-        <tr>
-            <td>Department:</td>
-            <td>
-                <input type="text" name="department" value="<?php echo $row['department']; ?>"/>
-            </td>
-        </tr>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <label for="newEmail">Email:</label>
+            <input type="text" name="newEmail" value="<?php echo $row['email']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500"/>
+            <input type="hidden" name="editAdminId" value="<?php echo $row['email']; ?>"/>
+
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <label for="role">Role:</label>
+            <select for="role" name="role" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500">
+                <option value="Admin_Student" <?php echo ("Admin_Student" == $row['role']) ? "selected" : ""; ?>>
+                    Admin Student
+                </option>
+                <option value="Admin_Subject" <?php echo ("Admin_Subject" == $row['role']) ? "selected" : ""; ?>>
+                    Admin Subject
+                </option>
+            </select>
+
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <label for="status">Status:</label>
+            <select for="status" name="status" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500">
+                <option value="active" <?php echo ("active" == $row['status']) ? "selected" : ""; ?>>
+                    active
+                </option>
+                <option value="inactive" <?php echo ("inactive" == $row['status']) ? "selected" : ""; ?>>
+                    inactive
+                </option>
+            </select>
+
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <label for="name">Name:</label>
+            <input type="text" name="name" value="<?php echo $row['name']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500"/>
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <label for="fullName">Full Name:</label>
+            <input type="text" name="fullName" value="<?php echo $row['fullName']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500"/>
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <label for="department">Department:</label>
+            <input type="text" name="department" value="<?php echo $row['department']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500"/>
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <label for="mobileNo">Mobile No:</label>
+            <input type="text" name="mobileNo" value="<?php echo $row['mobileNo']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500"/>
+
+        </div>
+
+        <div class="w-full grid grid-cols-3 items-center h-10 gap-5 mt-5 mb-10">
+            <button type="reset" name="reset" value="Reset" class="btn outline-btn">Reset</button>
+            <button onclick="view('<?php echo $row['email']; ?>');return false;" class="btn outline-btn">Discard</button>
+            <button type="submit" name="save" value="Save" class="btn fill-btn">Save</button>
+        </div>
+    </form>
+</div>
 
 
-        <tr>
-            <td>Mobile No:</td>
-            <td>
-                <input type="text" name="mobileNo" value="<?php echo $row['mobileNo']; ?>"/>
-            </td>
-        </tr>
 
-    </table>
-
-    <button type="submit" name="save" value="Save">Save</button>
-    <button type="reset" name="reset" value="Reset">Reset</button>
-</form>
-<button onclick="view('<?php echo $row['email']; ?>')">Discard</button>
 <script>
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);

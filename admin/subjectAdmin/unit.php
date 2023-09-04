@@ -2,7 +2,7 @@
 
 
 $current_page = isset($_GET['no']) ? intval($_GET['no']) : 1;
-$records_per_page = 3;
+$records_per_page =10;
 $offset = ($current_page - 1) * $records_per_page;
 
 
@@ -34,6 +34,9 @@ $unitlist = mysqli_query($con, $sql);
     <input type="text" name="searchkey" value="<?php echo (isset($searchkey)) ? $searchkey : "" ?>" required>
     <button type="submit" name="search">Search</button>
 </form>
+<a href="index.php?page=units">
+    <button id="add" class="btn outline-btn"> Reset</button>
+</a>
 
 
 <a href="index.php?page=addUnit">
@@ -100,7 +103,7 @@ $unitlist = mysqli_query($con, $sql);
 <script>
     function edit(unitId) {
         var myform = document.createElement("form");
-        myform.action = "SubjectAdmin/unit_edit.php";
+        myform.action = "index.php?page=editUnit";
         myform.method = "post";
         var inp = document.createElement('input');
         inp.name = "unitId";
@@ -114,14 +117,21 @@ $unitlist = mysqli_query($con, $sql);
     formid ="";
     var subName = document.createElement('input');
 
-
+    <?php
+    if (isset($_POST['filter'])) {
+        echo "formid = 'filterform';\n";
+        echo "subName.name = 'filter';";
+    }
+    else if (isset($_POST['search']))
+        echo "formid = 'searchform';\nsubName.name = 'search';";
+    ?>
 
     const parentElement = document.getElementById(formid);
     function pagechange(no) {
         var myform = document.createElement("form");
-        myform.action = "../index.php?page=units&no="+no;
+        myform.action = "index.php?page=units&no="+no;
         myform.method = "post";
-        if(formid!="") {
+        if(formid!=="") {
             const childElements = parentElement.children;
             for (const child of childElements) {
                 myform.appendChild(child.cloneNode(true));
