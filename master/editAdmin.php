@@ -80,7 +80,7 @@ if (isset($_POST['save'])) {
 <?php endif; ?>
 
 
-<h1>Student Profile Setting</h1>
+<h1>edit Admin Profile </h1>
 
 <form method="post" action="">
     <input type="hidden" name="editAdminId" value="<?php echo $row['adminId']; ?>"/>
