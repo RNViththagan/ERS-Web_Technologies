@@ -116,19 +116,15 @@ if (isset($_POST['save'])) {
         <div class="w-full grid grid-cols-3 items-center h-10">
             <label for="name">Name:</label>
             <input type="text" name="name" value="<?php echo $row['name']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500"/>
-
         </div>
         <div class="w-full grid grid-cols-3 items-center h-10">
             <label for="fullName">Full Name:</label>
             <input type="text" name="fullName" value="<?php echo $row['fullName']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500"/>
-
         </div>
         <div class="w-full grid grid-cols-3 items-center h-10">
             <label for="department">Department:</label>
             <input type="text" name="department" value="<?php echo $row['department']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500"/>
-
         </div>
-
         <div class="w-full grid grid-cols-3 items-center h-10">
             <label for="mobileNo">Mobile No:</label>
             <input type="text" name="mobileNo" value="<?php echo $row['mobileNo']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500"/>

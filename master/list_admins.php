@@ -78,6 +78,8 @@ $adminlist = mysqli_query($con, $get_admins);
           </select>
 
 
+          
+          
           <?php
           // Fetch distinct departments from the database
           $distinctDept = "SELECT DISTINCT department 
@@ -86,6 +88,7 @@ $adminlist = mysqli_query($con, $get_admins);
           $result = $con->query($distinctDept);
           if ($result->num_rows > 1) {?>
 
+          
             <select for="dept" name="dept" class="p-2 border-2 border-gray-500 rounded-lg outline-none">
                 <option value="none">Select Department</option>
                 <?php
@@ -100,6 +103,8 @@ $adminlist = mysqli_query($con, $get_admins);
           <?php } ?>
 
 
+          
+          
           <?php
             // Fetch distinct status from the database
             $distinctStatus = "SELECT DISTINCT status

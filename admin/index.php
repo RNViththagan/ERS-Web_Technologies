@@ -67,6 +67,7 @@ require_once("../config/postSender.php");
 //        print_r($_POST);
 //        echo "<br>";
 //        print_r($_GET);
+
         if ($_SESSION['role'] == "Admin_Student") {
             if(isset($_GET['page'])){
                 if($_GET['page'] === "stud"){
@@ -121,7 +122,6 @@ require_once("../config/postSender.php");
                 }else if($_GET['page'] === "asignUnits" && isset($curExam)){
                     include("subjectAdmin/assignUnits/assignUnits.php");
                 }
-
                 else
                     include("subjectAdmin/subj_admin_dashboard.php");
             }

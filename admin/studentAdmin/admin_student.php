@@ -76,7 +76,6 @@ $stdlist = mysqli_query($con, $sql);
                 <?php
                     $distinctYear = "SELECT DISTINCT SUBSTRING(regNo, 1, 4) AS starting_year FROM student";
                     $result = $con->query($distinctYear);
-
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
                             echo "<option value='" . $row["starting_year"] . "' ";
