@@ -224,8 +224,7 @@ $next_page = $current_page + 1;
         echo "subName.name = 'filter';";
     }
     else if (isset($_POST['search']))
-        echo "formid = 'searchform';\n";
-        echo "subName.name = 'search';";
+        echo "formid = 'searchform';\nsubName.name = 'search';";
     ?>
     
 

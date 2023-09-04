@@ -218,7 +218,7 @@ $adminlist = mysqli_query($con, $get_admins);
         echo "subName.name = 'filter';";
     }
     else if (isset($_POST['search']))
-        echo "formid = 'searchform' \nsubName.name = 'search';";
+        echo "formid = 'searchform';\nsubName.name = 'search';";
     ?>
 
 

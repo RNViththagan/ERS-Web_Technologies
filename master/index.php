@@ -86,7 +86,7 @@ require_once("../config/postSender.php");
             } else if ($_GET['page'] === "updateProfile") {
                 include("../config/updateProfile.php");
             }else if ($_GET['page'] === "pwdChg") {
-                include("../login/pwd_change_admin.php");
+                include("../login/pwd_change.php");
             }else if ($_GET['page'] === "addAdmin") {
                     include("add_admin.php");
             } else

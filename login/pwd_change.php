@@ -53,6 +53,12 @@ if (isset($_POST['chg-pwd'])) {
     }
 } ?>
 
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
+
 
 
 <div class="w-10/12 mx-auto ">
