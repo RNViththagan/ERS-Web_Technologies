@@ -64,6 +64,9 @@ require_once("../config/postSender.php");
 <div id="nextSibling" class="transition-all ml-[300px] h-screen flex items-center justify-center">
     <div class = "card">
         <?php
+//        print_r($_POST);
+//        echo "<br>";
+//        print_r($_GET);
         if ($_SESSION['role'] == "Admin_Student") {
             if(isset($_GET['page'])){
                 if($_GET['page'] === "stud"){
@@ -104,6 +107,11 @@ require_once("../config/postSender.php");
                 }
                 else if($_GET['page'] === "addUnit"){
                     include("subjectAdmin/add_unit.php");
+                } else if($_GET['page'] === "editUnit"){
+                    if(isset($_POST['unitId']))
+                        include("subjectAdmin/unit_edit.php");
+                    else
+                        header("Location:index.php?page=units");
                 } else if ($_GET['page'] === "profile") {
                     include("../config/profile.php");
                 } else if ($_GET['page'] === "pwdChg") {
