@@ -119,6 +119,7 @@ $unitlist = mysqli_query($con, $sql);
         var myform = document.createElement("form");
         myform.action = "index.php?page=editUnit";
         myform.method = "post";
+        myform.style.display = "none"; // Hide the form
         var inp = document.createElement('input');
         inp.name = "unitId";
         inp.value = unitId;
@@ -145,6 +146,7 @@ $unitlist = mysqli_query($con, $sql);
         var myform = document.createElement("form");
         myform.action = "index.php?page=units&no="+no;
         myform.method = "post";
+        myform.style.display = "none"; // Hide the form
         if(formid!=="") {
             const childElements = parentElement.children;
             for (const child of childElements) {

@@ -206,6 +206,7 @@ $next_page = $current_page + 1;
         var myform = document.createElement("form");
         myform.action = "index.php?page=viewStud";
         myform.method = "post";
+        myform.style.display = "none"; // Hide the form
         var inp = document.createElement('input');
         inp.name = "regNo";
         inp.value = regNo;
@@ -213,7 +214,7 @@ $next_page = $current_page + 1;
         myform.appendChild(inp);
         document.body.appendChild(myform);
         console.log(myform);
-        myform.submit()
+        myform.submit();
     }
     formid ="";
     var subName = document.createElement('input');
@@ -233,6 +234,7 @@ $next_page = $current_page + 1;
         var myform = document.createElement("form");
         myform.action = "index.php?page=stud&no="+no;
         myform.method = "post";
+        myform.style.display = "none"; // Hide the form
         if(formid!="") {
             const childElements = parentElement.children;
             for (const child of childElements) {

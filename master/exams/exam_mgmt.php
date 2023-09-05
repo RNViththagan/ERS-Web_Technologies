@@ -14,7 +14,7 @@
     <div class="w-full flex items-center justify-between">
         <h1 class="title">Exams</h1>
         <a href="?page=add">
-            <button class="btn fill-btn">add</button>
+            <button class="btn fill-btn">Add</button>
         </a>
     </div>
     <hr class="my-5">
@@ -35,7 +35,7 @@
                     <td><?php echo $fetch['academic_year'] ?></td>
                     <td><?php echo $fetch['semester'] ?></td>
                     <td><?php echo $fetch['closing_date'] ?></td>
-                    <td><?php echo $fetch['status'] ?></td>
+                    <td><?php echo strtoupper($fetch['status']) ?></td>
                     <td>
                         <button onclick="edit(<?php echo $fetch['exam_id'] ?>)" class="btn outline-btn !py-1">Edit</button>
                     </td>
@@ -65,6 +65,7 @@
         var myform = document.createElement("form");
         myform.action = "index.php?page=edit";
         myform.method = "post";
+        myform.style.display = "none"; // Hide the form
         var inp = document.createElement('input');
         inp.name = "exedid";
         inp.value = id;

@@ -1,6 +1,7 @@
 <?php
 ob_start();
 session_start();
+require_once("config/exam_cheker.php");
 if (!isset($_SESSION['userid'])) {
     header("location:login.php");
     exit();

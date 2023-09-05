@@ -102,6 +102,9 @@ require_once("../config/postSender.php");
                 else if($_GET['page'] === "units"){
                     include("subjectAdmin/unit.php");
                 }
+                else if($_GET['page'] === "subj"){
+                    include("subjectAdmin/subject.php");
+                }
                 else if($_GET['page'] === "addUnit"){
                     include("subjectAdmin/add_unit.php");
                 } else if($_GET['page'] === "editUnit"){
