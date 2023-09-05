@@ -14,7 +14,7 @@ $limit = " LIMIT $offset, $records_per_page";
 $searchOp = "";
 if (isset($_POST['search'])) {
     $searchkey = $_POST['searchkey'];
-    $searchOp = " unitCode LIKE '%$searchkey%' or name LIKE '%$searchkey%'";
+    $searchOp = " unitCode LIKE '%$searchkey%' or name LIKE '%$searchkey%' or subject LIKE '%$searchkey%'";
     if ($searchOp != "") {
         $sql .= " Where " . $searchOp;
     }

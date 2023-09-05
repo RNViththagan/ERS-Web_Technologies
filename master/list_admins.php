@@ -172,25 +172,26 @@ $adminlist = mysqli_query($con, $get_admins);
         }
         ?>
     </table>
-    <?php
-    $prev_page = $current_page - 1;
-    $next_page = $current_page + 1;
+    <div class="w-1/2 flex items-center justify-around mt-10">
+        <?php
+        $prev_page = $current_page - 1;
+        $next_page = $current_page + 1;
 
-    echo "<br>";
-    if ($prev_page > 0) {
-        echo "<button  onclick='pagechange($prev_page)'>Previous</button>";
-    }
+        if ($prev_page > 0) {
+            echo "<button onclick='pagechange($prev_page)' class='btn outline-btn'>< Previous</button>";
+        }
 
 
-    $count_result = mysqli_query($con, $forcount);
-    $total_records = $count_result->num_rows;
+        $count_result = mysqli_query($con, $forcount);
+        $total_records = $count_result->num_rows;
 
-    $total_pages = ceil($total_records / $records_per_page);
+        $total_pages = ceil($total_records / $records_per_page);
 
-    if ($next_page <= $total_pages) {
-        echo "<button onclick='pagechange($next_page)'>Next</button>";
-    }
-    ?>
+        if ($next_page <= $total_pages) {
+            echo "<button onclick='pagechange($next_page)' class='btn outline-btn'>Next ></button>";
+        }
+        ?>
+    </div>
 
 
 </div>
