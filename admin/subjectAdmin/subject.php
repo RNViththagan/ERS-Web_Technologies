@@ -70,7 +70,7 @@ include("../../config/connect.php");
             </table>
         </div>
 
-        <h1 class="titlehead">Add Subject</h1>
+        <h1 class="title">Add Subject</h1>
         <div class="container">
             <form action="" method="post">
                 <?php

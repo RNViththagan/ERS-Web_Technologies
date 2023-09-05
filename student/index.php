@@ -18,21 +18,10 @@ elseif (isset($_SESSION['role'])) {
 include("../config/connect.php");
 $errors = array();
 $regNo = $_SESSION['userid'];
-$selectSQL = "SELECT * FROM student WHERE regNo = '$regNo';";
-$selectQuery = mysqli_query($con, $selectSQL);
-$user = mysqli_fetch_assoc($selectQuery);
 
-$title = isset($user["title"]) ? $user["title"] : "";
-$fullName = isset($user["fullName"]) ? $user["fullName"] : "";
-$nameWithInitial = isset($user["nameWithInitial"]) ? $user["nameWithInitial"] : "";
-$email = isset($user["email"]) ? $user["email"] : "";
-// $index = isset($user["indexNumber"]) ? $user["indexNumber"] : "";
-$userDistrict = isset($user["district"]) ? $user["district"] : "";
-$mobileNo = isset($user["mobileNo"]) ? $user["mobileNo"] : "";
-$landlineNo = isset($user["landlineNo"]) ? $user["landlineNo"] : "";
-$home_address = isset($user["homeAddress"]) ? $user["homeAddress"] : "";
-$jaffna_address = isset($user["addressInJaffna"]) ? $user["addressInJaffna"] : "";
-$profile_img = isset($user['profile_img']) ? $user['profile_img'] : "blankProfile.png";
+// if (isset($_POST['deleteConfirm'])) {
+
+// }
 
 if (isset($_POST["submit"]))  {
     $title= $_POST["title"];
@@ -70,6 +59,22 @@ if (isset($_POST["submit"]))  {
 }
 
 
+$selectSQL = "SELECT * FROM student WHERE regNo = '$regNo';";
+$selectQuery = mysqli_query($con, $selectSQL);
+$user = mysqli_fetch_assoc($selectQuery);
+
+$title = isset($user["title"]) ? $user["title"] : "";
+$fullName = isset($user["fullName"]) ? $user["fullName"] : "";
+$nameWithInitial = isset($user["nameWithInitial"]) ? $user["nameWithInitial"] : "";
+$email = isset($user["email"]) ? $user["email"] : "";
+// $index = isset($user["indexNumber"]) ? $user["indexNumber"] : "";
+$userDistrict = isset($user["district"]) ? $user["district"] : "";
+$mobileNo = isset($user["mobileNo"]) ? $user["mobileNo"] : "";
+$landlineNo = isset($user["landlineNo"]) ? $user["landlineNo"] : "";
+$home_address = isset($user["homeAddress"]) ? $user["homeAddress"] : "";
+$jaffna_address = isset($user["addressInJaffna"]) ? $user["addressInJaffna"] : "";
+$profile_img = isset($user['profile_img']) ? $user['profile_img'] : "blankProfile.png";
+
 $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', 'Badulla', 'Batticaloa', 'Gampaha', 'Hambantota', 'Jaffna', 'Kalutara', 'Kegalle', 'Kilinochchi', 'Kurunegala', 'Mannar', 'Matale', 'Matara', 'Moneragala', 'Mullativu', 'Nuwara Eliya', 'Polonnaruwa', 'Puttalam', 'Ratnapura', 'Trincomalee', 'Vavuniya'];
 
 ?>
@@ -91,7 +96,7 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
     src="https://kit.fontawesome.com/5ce4b972fd.js"
     crossorigin="anonymous"></script>
 </head>
-<body class=" bg-gray-50" id="student">
+<body class=" bg-gray-50 sm:text-xs xl:text-sm 2xl:text-base" id="student">
     <nav class="w-full h-[15vh] min-h-fit drop-shadow-md bg-white fixed top-0 left-0">
         <div class="w-10/12 h-full m-auto flex items-center justify-between">
             <a href="index.php">
@@ -122,7 +127,7 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
         </div>   
     </nav>
 
-    
+        
     <?php if (isset($_GET['error'])) { ?>
         <div class="exam-false fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
             <form class="card h-40 w-1/2 flex flex-col items-center justify-around gap-7" action="index.php" method="POST">
@@ -138,6 +143,7 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
             </form>
         </div>
     <?php } ?>
+
     <div class="body-sec my-[20vh]">
         <div class="container m-auto">
             <div class="card w-11/12 m-auto grid grid-rows-[30%_70%] lg:grid-cols-[30%_1%_69%] ">
@@ -267,11 +273,13 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                             <th class="font-semibold border-gray-100 border-x-2">Level</th>
                             <th class="font-semibold border-gray-100 border-x-2">Semester</th>
                             <th class="font-semibold ">Subject<br>Combination</th>
+                            <th class="font-semibold " colspan="2">Action</th>
                         </thead>
                         <tbody class="text-center ">
                             <?php
                                 if (mysqli_num_rows($examQuery) > 0) {
                                     while ($exam = $examQuery->fetch_assoc()) {
+                                        $regID = $exam['regId'];
                                         $examID = $exam['exam_id'];
                                         $date = $exam['reg_date'];
                                         $type = $exam['type'];
@@ -282,19 +290,21 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                                         $comb = mysqli_fetch_assoc(mysqli_query($con, "SELECT combinationName FROM `combination` WHERE combinationID = $combID"));
                                         $combination = $comb['combinationName'];
                                         echo "
-                                        <tr class='h-10 even:bg-blue-50'>
+                                        <tr class='h-12 even:bg-blue-50'>
                                             <td>$date</td>
                                             <td>$type</td>
                                             <td>$level</td>
                                             <td>$semester</td>
                                             <td>$combination</td>
+                                            <td><a href='exam_reg.php?edit=true&id=$regID' class='btn fill-btn !py-1.5 !px-4 !font-light'>Edit</a></td>
+                                            <td><button onclick='confirmDelete($regID)' class='btn fill-btn !py-1.5 !px-4 !font-light !bg-red-500'>Delete</button></td>
                                         </tr>
                                         ";
                                         } 
                                 } else { 
                                     echo "
                                         <tr class='h-10 even:bg-blue-50'>
-                                            <td colspan='5'>No record found</td>
+                                            <td colspan='7'>No record found</td>
                                         </tr>
                                     ";
                                 }
@@ -304,6 +314,9 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                     <a href="exam_reg.php" class="btn outline-btn w-1/2 mt-7 text-xs lg:text-base">Register for a new Exam</a>
                 </div>
             <?php } ?> 
+
+
+            
         </div>
     </div>
 
@@ -318,5 +331,10 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
         userMenu.classList.toggle('absolute');
         userMenu.classList.toggle('-translate-y-full');
         userMenu.classList.toggle('lg:translate-x-full');
+    }
+
+
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
     }
 </script>

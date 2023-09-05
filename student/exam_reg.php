@@ -20,6 +20,7 @@ $errors = array();
 $units = array();
 $regNo = $_SESSION['userid'];
 
+
 $selectSQL = "SELECT * FROM student WHERE regNo = '$regNo';";
 $selectQuery = mysqli_query($con, $selectSQL);
 $user = mysqli_fetch_assoc($selectQuery);
@@ -30,7 +31,7 @@ $examDetails = mysqli_query($con, $examDetailsSQL);
 $exam = mysqli_fetch_assoc($examDetails);
 
 if (mysqli_num_rows($examDetails) == 0) {
-    header("Location: index.php?error=Sorry! There is no exams to register");
+    header("Location: exaexam_reg.php?error=Sorry! There is no exams to register");
     exit();
 }
 
@@ -74,6 +75,23 @@ function setSelected($fieldName, $fieldValue) {
     crossorigin="anonymous"></script>
 </head>
 <body class="bg-slate-200" id="exam">
+    <?php if (isset($_GET['error'])) { ?>
+        <div class="exam-false fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
+            <form class="card h-40 w-1/2 flex flex-col items-center justify-around gap-7" action="index.php" method="POST">
+                <p class="text-center"><?php echo $_GET['error'] ?></p>
+                <input class="btn fill-btn" type="submit" value="OK" name="ok">
+            </form>
+        </div>
+    <?php } elseif (isset($_GET['success'])) { ?>
+        <div class="exam-false fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
+            <form class="card h-40 w-1/2 flex flex-col items-center justify-around gap-7" action="index.php" method="POST">
+                <p class="text-center text-green-700"><?php echo $_GET['success'] ?></p>
+                <input class="btn fill-btn !bg-green-700" type="submit" value="OK" name="ok">
+            </form>
+        </div>
+    <?php } ?>
+
+
     <nav class="w-full h-[15vh] min-h-fit drop-shadow-md bg-white fixed top-0 left-0">
         <div class="w-10/12 h-full m-auto flex items-center justify-between">
             <a href="index.php">
@@ -142,11 +160,11 @@ function setSelected($fieldName, $fieldValue) {
                    // exit;
                     if ($unitsQueryResult) {
                         if (mysqli_num_rows($unitsQueryResult) == 0) {
-                            header("Location: index.php?error=Something-went-wrong");
+                            header("Location: exam_reg.php?error=Something-went-wrong");
                             exit();
                         }
                     } else {
-                        header("Location: index.php?error=Something-went-wrong");
+                        header("Location: exam_reg.php?error=Something-went-wrong");
                         exit();
                     }
 
@@ -169,13 +187,13 @@ function setSelected($fieldName, $fieldValue) {
                         $stud_exam_reg_query = mysqli_query($con, $stud_exam_reg_sql);
 
                         if (!$stud_exam_reg_query) {
-                            header("Location: index.php?error=Something-went-wrong");
+                            header("Location: exam_reg.php?error=Something-went-wrong");
                             exit();
                         }
 
                         $regId = mysqli_insert_id($con);
                         $inserted = true;
-
+                        
                         foreach ($regUnits as $unitId) {
                             $reg_units_sql = "INSERT INTO reg_units(regId, exam_unit_id) VALUES($regId, $unitId)";
                             $reg_units_query = mysqli_query($con, $reg_units_sql);
@@ -187,9 +205,9 @@ function setSelected($fieldName, $fieldValue) {
                         }
 
                         if ($inserted) {
-                            header("location: index.php?success=Successfully Registered.");
+                            header("location: exam_reg.php?success=Successfully Registered.");
                         } else {
-                            header("Location: index.php?error=Something-went-wrong");
+                            header("Location: exam_reg.php?error=Something-went-wrong");
                         }
                     }
                 }
@@ -327,5 +345,10 @@ function setSelected($fieldName, $fieldValue) {
         userMenu.classList.toggle('absolute');
         userMenu.classList.toggle('-translate-y-full');
         userMenu.classList.toggle('lg:translate-x-full');
+    }
+
+    
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
     }
 </script>

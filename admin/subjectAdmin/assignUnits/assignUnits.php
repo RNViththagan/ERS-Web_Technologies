@@ -36,59 +36,65 @@ if (isset($_POST['unit_subjects'])) {
 }
 ?>
 
-<link rel="stylesheet" href="subjectAdmin/assignUnits/assignunit.css">
 
-    <h1>Subject Selection Form</h1>
-    <div class="exam-info">
-        <h4>Exam : <?php echo $curExam['academic_year'] . " semester" . $curExam['semester']; ?></h4>
-    </div>
+
+<div class="flex flex-col items-center justify-around gap-5">
+    <h1 class="title">Subject Selection Form</h1>
+    <h4 class="text-gray-800">Exam : <?php echo $curExam['academic_year'] . " semester" . $curExam['semester']; ?></h4>
 
     <?php
     if (isset($msg['error'])) {
-        echo '<div class="error-message">' . $msg['error'] . '</div>';
+        echo '<div class="text-red-500">' . $msg['error'] . '</div>';
     }
 
     if (isset($msg['success'])) {
-        echo '<div class="success-message">' . $msg['success'] . '</div>';
+        echo '<div class="text-green-500">' . $msg['success'] . '</div>';
     }
     ?>
 
-    <form id="assignment-form" action="" method="POST">
+    <form id="assignment-form" action="" method="POST" class="flex flex-col items-center gap-5 mt-5">
         <input type="hidden" name="exam_id" id="exam_id" value="<?php echo $curExam['exam_id'] ?>">
         <!-- Part 1: Selection -->
-        <label for="level">Select Level:</label>
-        <select id="level" name="level">
-            <option value="" disabled selected>Select Level</option>
-            <option value="1">Level 1</option>
-            <option value="2">Level 2</option>
-            <option value="3">Level 3</option>
-            <option value="4">Level 4</option>
-        </select>
+        <div class="w-full grid grid-cols-3 gap-4 items-center h-8">
+            <label for="level">Select Level:</label>
+            <select id="level" name="level" class="col-span-2 w-full h-full border border-gray-400 rounded-full px-5 outline-none focus:border-blue-500">
+                <option value="" disabled selected>Select Level</option>
+                <option value="1">Level 1</option>
+                <option value="2">Level 2</option>
+                <option value="3">Level 3</option>
+                <option value="4">Level 4</option>
+            </select>
+        </div>
 
-        <label for="subject">Select Subject:</label>
-        <select id="subject" name="subject">
-            <option value="" disabled selected>Select Subject</option>
-            <!-- Populate subjects dynamically based on data -->
-        </select>
+        <div class="w-full grid grid-cols-3 gap-4 items-center h-8">
+            <label for="subject">Select Subject:</label>
+            <select id="subject" name="subject" class="col-span-2 w-full h-full border border-gray-400 rounded-full px-5 outline-none focus:border-blue-500">
+                <option value="" disabled selected>Select Subject</option>
+                <!-- Populate subjects dynamically based on data -->
+            </select>
+        </div>
 
-        <label for="type">Select Type:</label>
-        <select id="type" name="type">
-            <option value="" disabled selected>Select Type</option>
-            <option value="Proper">Proper</option>
-            <option value="Repeat">Repeat</option>
-        </select>
+        <div class="w-full grid grid-cols-3 gap-4 items-center h-8">
+            <label for="type">Select Type:</label>
+            <select id="type" name="type" class="col-span-2 w-full h-full border border-gray-400 rounded-full px-5 outline-none focus:border-blue-500">
+                <option value="" disabled selected>Select Type</option>
+                <option value="Proper">Proper</option>
+                <option value="Repeat">Repeat</option>
+            </select>
+        </div>
 
-        <button type="button" class="form-btn" id="assign-button">Assign Units</button>
+        <button type="button" class="btn fill-btn mt-4" id="assign-button">Assign Units</button>
         <div id="msgDiv"></div>
         <!-- Part 2: Dynamic Unit Assignment -->
-        <div id="unit-assignment-container" style="display: none;">
+        <div id="unit-assignment-container" style="display: none;" class="mt-5 flex flex-col items-center justify-around gap-4">
             <div id="unit-assignment"></div>
-            <button id="add-unit" type="button">Add Unit</button>
+            <button id="add-unit" type="button" class="btn outline-btn !py-1 !px-4 mt-2">Add Unit</button>
         </div>
 
         <!-- Part 3: Buttons -->
-        <button type="button" class="form-btn" id="submit-button" style="display: none;">Submit</button>
+        <button type="button" class="btn fill-btn" id="submit-button" style="display: none;">Submit</button>
     </form>
+</div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -284,6 +290,7 @@ if (isset($_POST['unit_subjects'])) {
             function addUnitDropdown(unitId) {
                 var unitDropdown = document.createElement("select");
                 unitDropdown.name = "unit_subjects[]";
+                unitDropdown.className = "col-span-2 border border-gray-400 rounded-full my-2 py-1 px-5 outline-none focus:border-blue-500";
 
                 // Populate the unit dropdown with the stored data
                 unitDropdown.innerHTML = `
@@ -295,7 +302,7 @@ if (isset($_POST['unit_subjects'])) {
                 }
 
                 var removeButton = document.createElement("button");
-                removeButton.className = "remove-unit";
+                removeButton.className = "btn outline-btn !py-1 !px-4 ml-5 my-2";
                 removeButton.type = "button";
                 removeButton.textContent = "Remove";
 

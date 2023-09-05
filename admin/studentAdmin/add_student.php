@@ -15,25 +15,25 @@ if (isset($_POST['submit'])) {
     $regNoPattern = '/^\d{4}\/[A-Z]+\/\d{3}$/';
     if (!preg_match($regNoPattern, $regno)) {
         $msg[0] = "Invalid Registration No (XXXX/XXX/XXX)";
-        $msg[1] = "warning";
+        $msg[1] = "text-red-500";
     } else {
         $query = "SELECT * from student_check where regNo ='$regno' or email ='$email'";
 
         if (mysqli_num_rows(mysqli_query($con, $query))) {
 
             $msg[0] = "registration no or email already added!";
-            $msg[1] = "warning";
+            $msg[1] = "text-red-500";
         } else {
             $query = "INSERT INTO student_check (regNo,email) values('$regno','$email')";
             if (!mysqli_query($con, $query)) {
 
                 $msg[0] = "error!";
-                $msg[1] = "warning";
+                $msg[1] = "text-red-500";
             } else {
                 $query = "INSERT INTO student (regNo) values('$regno')";
                 mysqli_query($con, $query);
                 $msg[0] = "Successfully added!";
-                $msg[1] = "done";
+                $msg[1] = "text-green-500";
             }
         }
     }
