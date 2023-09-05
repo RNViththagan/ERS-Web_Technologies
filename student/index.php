@@ -262,7 +262,12 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
             AND er.status IN ('registration', 'closed') ORDER BY ser.exam_id DESC LIMIT 7;";
 
                 $examQuery = mysqli_query($con, $examSQL);
-                
+
+                $examDetailsSQL = "SELECT * FROM `exam_reg` WHERE status = 'registration';";
+                $examDetails = mysqli_query($con, $examDetailsSQL);
+                $exam = mysqli_fetch_assoc($examDetails);
+                $exreg = (mysqli_num_rows($examDetails) != 0);
+
                 ?>
                 <div class="card mt-32 w-11/12 mx-auto flex flex-col items-center">
                     <h2 class="font-extrabold text-center underline text-xl">Exam History</h2>
@@ -273,7 +278,7 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                             <th class="font-semibold border-gray-100 border-x-2">Level</th>
                             <th class="font-semibold border-gray-100 border-x-2">Semester</th>
                             <th class="font-semibold border-gray-100 border-x-2 ">Subject<br>Combination</th>
-                            <th class="font-semibold">Action</th>
+                            <th <?php if($exreg) echo "colspan=2"?> class="font-semibold">Action</th>
                         </thead>
                         <tbody class="text-center ">
                             <?php
@@ -299,7 +304,10 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                                             <td>$semester</td>
                                             <td>$combination</td>
                                             <td>
-                                                <button onclick=\"openReg('$regId','$eState')\" class=\"btn outline-btn !py-1\">$btnName</button>
+                                                <button onclick=\"openReg('$regId','$eState')\" class=\"btn fill-btn !my-1 !mx-2\">$btnName</button>
+                                            </td>
+                                            <td>
+                                                <button onclick=\"openReg('$regId','delete')\" class=\"btn fill-btn !bg-red-500 !my-1 !mx-3\">Delete</button>
                                             </td>
                                         </tr>
                                         ";
@@ -315,11 +323,7 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                         </tbody>
                     </table>
                     <?php
-                    $examDetailsSQL = "SELECT * FROM `exam_reg` WHERE status = 'registration';";
-                    $examDetails = mysqli_query($con, $examDetailsSQL);
-                    $exam = mysqli_fetch_assoc($examDetails);
-
-                    if (mysqli_num_rows($examDetails) != 0) {?>
+                    if($exreg){?>
                     <a href="exam_reg.php" class="btn outline-btn w-1/2 mt-7 text-xs lg:text-base">Register for a new Exam</a>
                     <?php }?>
                 </div>
@@ -342,7 +346,12 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
 
     function openReg(regId,eState) {
         var myform = document.createElement("form");
-        myform.action = (eState==="closed")?"view_reg.php":"exam_reg.php?edit=true";
+        if(eState==="closed")
+            myform.action = "view_reg.php"
+        else if(eState==="registration")
+            myform.action = "exam_reg.php?edit=true";
+        else if(eState==="delete")
+            myform.action = "deleteReg.php";
         myform.method = "post";
         myform.style.display = "none"; // Hide the form
         var inp = document.createElement('input');
