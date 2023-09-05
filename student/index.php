@@ -115,6 +115,8 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                 <div class="h-px w-3/4 bg-gray-300"></div>
                 <li class=""><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="index.php">Dashboard</a></li>
                 <div class="h-px w-3/4 bg-gray-300"></div>
+                <li class=""><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="#">Contact</a></li>
+                <div class="h-px w-3/4 bg-gray-300"></div>
                 <li class="mb-3 "><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="../logout.php">Logout</a></li>
             </ul>   
         </div>   
@@ -276,7 +278,6 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                             <?php
                                 if (mysqli_num_rows($examQuery) > 0) {
                                     while ($exam = $examQuery->fetch_assoc()) {
-                                        print_r($exam);
                                         $regId = $exam['regId'];
                                         $examID = $exam['exam_id'];
                                         $date = $exam['reg_date'];
