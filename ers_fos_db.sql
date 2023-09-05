@@ -40,9 +40,10 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`email`, `password`, `name`, `role`, `status`) VALUES
-('admin_master@nexus.com', '$2y$10$3RXxBIvCklptQmFmbsoBNeiiCIG74twdSSqlRh663cCLkG/1DPJHq', 'Viththagan', 'Admin_Master', 'active'),
+('admin_master@nexus.com', '$2y$10$DWDHkfoxdQr/RHb7sdiaMeIy./lOZmFBQcOZaTedLFxTTB1xu.TEi', 'Viththagan', 'Admin_Master', 'active'),
+('asintha1997@gmail.com', '$2y$10$pIZwkWacf0tf2p0UxzazRuPlRM.rvB4qKHdFSJ.jaxZqf0lTlt1SS', 'Asintha', 'Admin_Student', 'active'),
 ('stud_admin1@nexus.com', '$2y$10$IUzrF9GhBdTzDXXbmxA19.XZuxKo9le3hETfrRsqKG35goK4w1npS', 'Student admin 1', 'Admin_Student', 'active'),
-('subj_admin1@nexus.com', '$2y$10$6IniUusMCkDLxZFhTVWyL.Nk0BBkFuzzLUzSCdFOqy32NexOPRNvi', 'subj1', 'Admin_Subject', 'inactive'),
+('subj_admin1@nexus.com', '$2y$10$6IniUusMCkDLxZFhTVWyL.Nk0BBkFuzzLUzSCdFOqy32NexOPRNvi', 'Asintha', 'Admin_Subject', 'inactive'),
 ('subj_admin2@nexus.com', '$2y$10$7v728eNqfjD61XwpVjLwvO/o4cNMvUmDW7QeqluimnhJsGNSzaqt.', 'Shankar', 'Admin_Subject', 'active'),
 ('viththagan@nexus.com', '$2y$10$HrF7DQS3U0xzZ5Xaom37LO4EAWXBK9zhhPBOsD.YqeIMvE4.kHgyG', 'viththagan', 'Admin_Subject', 'active');
 
@@ -69,9 +70,10 @@ CREATE TABLE `admin_details` (
 INSERT INTO `admin_details` (`adminId`, `email`, `title`, `fullName`, `department`, `mobileNo`, `profile_img`) VALUES
 (1, 'admin_master@nexus.com', 'Mr', 'Roy Nesarajah Viththagan', 'Computer Science', 771234567, '1.jpg'),
 (2, 'stud_admin1@nexus.com', '', 'John cena', 'CSC', NULL, NULL),
-(3, 'subj_admin1@nexus.com', '', '', 'physics', NULL, NULL),
+(3, 'subj_admin1@nexus.com', 'Mr', 'Subject Admin One', 'DCS', 774589852, '3.jpg'),
 (4, 'viththagan@nexus.com', '', NULL, NULL, NULL, NULL),
-(5, 'subj_admin2@nexus.com', '', '', 'Bio', NULL, NULL);
+(5, 'subj_admin2@nexus.com', '', '', 'Bio', NULL, NULL),
+(6, 'asintha1997@gmail.com', '', 'Asintha udeshitha', 'Student', 703833130, NULL);
 
 -- --------------------------------------------------------
 
@@ -126,11 +128,6 @@ INSERT INTO `combination_subjects` (`combinationID`, `subject`) VALUES
 (3, 'BOT'),
 (3, 'CHE'),
 (3, 'FSC'),
-(4, 'CHE'),
-(5, 'CHE'),
-(6, 'CHE'),
-(7, 'CSC'),
-(8, 'CSC'),
 (9, 'AMM'),
 (9, 'CSC'),
 (9, 'STA'),
@@ -145,7 +142,22 @@ INSERT INTO `combination_subjects` (`combinationID`, `subject`) VALUES
 (12, 'STA'),
 (13, 'AMM'),
 (13, 'PHY'),
-(13, 'PMM');
+(13, 'PMM'),
+(14, 'AMM'),
+(14, 'CHE'),
+(14, 'PMM'),
+(4, 'BOT'),
+(4, 'CHE'),
+(4, 'ZOO'),
+(5, 'CHE'),
+(5, 'FSC'),
+(5, 'ZOO'),
+(7, 'AMM'),
+(7, 'CHE'),
+(7, 'CSC'),
+(8, 'AMM'),
+(8, 'CSC'),
+(8, 'PHY');
 
 -- --------------------------------------------------------
 
@@ -186,9 +198,25 @@ CREATE TABLE `reg_units` (
 --
 
 INSERT INTO `reg_units` (`regId`, `exam_unit_id`) VALUES
-(9, 2),
-(10, 6),
-(10, 7);
+(13, 1),
+(14, 2),
+(14, 21),
+(14, 24),
+(14, 25),
+(15, 2),
+(15, 21),
+(15, 22),
+(15, 23),
+(15, 24),
+(15, 25),
+(16, 2),
+(16, 21),
+(16, 22),
+(16, 23),
+(16, 24),
+(16, 25),
+(17, 26),
+(17, 27);
 
 -- --------------------------------------------------------
 
@@ -215,11 +243,13 @@ CREATE TABLE `student` (
 
 INSERT INTO `student` (`regNo`, `title`, `nameWithInitial`, `fullName`, `district`, `mobileNo`, `landlineNo`, `homeAddress`, `addressInJaffna`, `profile_img`) VALUES
 ('2018/SB/001', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2019/CSC/041', 'Mr', 'Saanusan', NULL, NULL, NULL, NULL, NULL, 'Kandaramadam', '2019CSC041.jpg'),
 ('2019/SP/178', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/007', 'Mr', 'C. R. B. Nilwakka', 'Chamod Rashmika Bandara Nilwakka', 'Kandy', '0772684933', '0779472689', 'No 4/56, Matale Rd, Wattegama.', 'Duvarakai, vamas lane, palali Rd, kondavil.', '2020CSC007.jpg'),
-('2020/CSC/010', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/CSC/010', 'Ms', 'G.Dharshika', 'Dharshika Gnanaseelan', 'Kandy', '0767106659', '0812235149', '21/12B Riverdale Road, Anniwatta, Kandy.', '21/12B Riverdale Road, Anniwatta, Kandy.', 'blankProfile.png'),
 ('2020/CSC/027', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/028', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/CSC/033', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/046', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/051', 'Mr', 'R.N.Viththagan', 'Roy Nesarajah Viththagan', 'Jaffna', '0771234567', '0123456789', 'Jaffna', 'Jaffna', '2020CSC051.jpg'),
 ('2020/CSC/052', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -228,10 +258,48 @@ INSERT INTO `student` (`regNo`, `title`, `nameWithInitial`, `fullName`, `distric
 ('2020/CSC/061', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/065', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/066', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('2020/CSC/074', 'Mr', 'P.Saarukesan', 'Premkumar Saarukesan', 'Batticaloa', '0764722514', '0652054047', 'Chenkalady', 'Kandaramadam', NULL),
+('2020/CSC/074', 'Mr', 'P.Saarukesan', 'Premkumar Saarukesan', 'Batticaloa', '0764722514', '0652054047', 'Chenkalady', 'Kandaramadam', '2020CSC074.jpg'),
 ('2020/CSC/075', NULL, '', '', '', '', '', '', '', NULL),
+('2020/SB/001', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SB/002', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SB/005', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SB/006', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SB/008', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SB/010', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SB/012', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SB/014', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SB/020', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SB/035', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SB/038', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SB/091', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/001', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/002', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/003', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/004', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/005', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/007', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/008', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/009', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/012', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/014', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/015', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/017', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/018', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/019', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/035', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/041', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/044', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/047', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/059', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/SP/068', 'Miss', 'J.Jeyatheekshy', 'Jeyatheekshy Jeyarajen', 'Batticaloa', '0760586135', '0760586135', 'No.04, Building Quaters, Navalady Road, Kallady ,Batticaloa', 'Thirunelveli, Jaffna', '2020SP068.jpg'),
-('2020/SP/129', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+('2020/SP/070', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/092', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/121', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/129', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/143', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/145', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/SP/170', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2021/CSC/080', 'Ms', 'J. Varsha', 'Varsha Jeyarajalingam', 'Colombo', '0768766755', '0112363600', '12-3/2, Collingwood Place, Colombo-06.', '1082, K.K.S Road, Kokuvil, Jaffna', '2021CSC080.png');
 
 -- --------------------------------------------------------
 
@@ -253,24 +321,65 @@ CREATE TABLE `student_check` (
 --
 
 INSERT INTO `student_check` (`regNo`, `email`, `password`, `status`, `verificationCode`, `verificationStatus`) VALUES
-('2018/SB/001', '001sb18@test.com', NULL, 'unregistered', NULL, 'not_verified'),
+('2018/SB/001', '001sb18@test.com', '$2y$10$beowQ3HLK6AmzhFjT7qkLud2bCwuQZHXzevwHOEVfEIT1loisfVP.', 'unregistered', 422791, 'not_verified'),
+('2019/CSC/041', 'saanusansaanu@gmail.com', '$2y$10$rOKfjhDCai20ZtBWEZTdXuQnP.kqaHRv4xDMIdnE8j8Vxqa8qPDKC', 'active', 0, 'verified'),
 ('2019/SP/178', '178sp19@test.com', NULL, 'unregistered', NULL, 'not_verified'),
 ('2020/CSC/007', 'cnilwakka@gmail.com', '$2y$10$f64XVozpm4azju5H1fdZKe1QFSLr/U2QWLwojsETCK12/IHniPI9W', 'active', 0, 'verified'),
 ('2020/CSC/010', 'dharshikagnanaseelan4@gmail.com', '$2y$10$ewPtbft5YqpV6qkGcZjSL.s/hwCgiQjnYLOUjNRisKD9DLP7pHLhe', 'active', 0, 'verified'),
 ('2020/CSC/027', 'kgobi24lk@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
 ('2020/CSC/028', 'lahiruishan400@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
-('2020/CSC/046', 'audeshitha@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
+('2020/CSC/033', 'sankavimohan2000@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
+('2020/CSC/046', 'audeshitha@gmail.com', '$2y$10$IK1KYlGrrxEToFExo2It2OdClNukZTqXVd0Fg4cuyBDv7XNWt3ERi', 'active', 0, 'verified'),
 ('2020/CSC/051', 'viththagan1999@gmail.com', '$2y$10$43cjXmjEzaBbdy5aNR/LquaQqXrqVU9r/Hj4tcshbN9UUHhNlCzIO', 'active', 0, 'verified'),
 ('2020/CSC/052', '52csc20@test.com', NULL, 'unregistered', NULL, 'not_verified'),
 ('2020/CSC/055', 'sathasivamnerujan35@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
-('2020/CSC/057', 'sivavithu15@live.com', '$2y$10$XhU8xrtIuzrHZXYiNUZbq.yb5zzuJApvAFEt3/TYMVf9QHPJmmgZC', 'active', 0, 'verified'),
+('2020/CSC/057', 'sivavithu15@live.com', '$2y$10$.E1MuzO7Bux8La8hnn8ZW.hipP55CUkgaltLmoDSRq/eVzXv8/CiW', 'active', 0, 'verified'),
 ('2020/CSC/061', 'vimalanthushani1122@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
 ('2020/CSC/065', 'vieronicka27@gmail.com', '$2y$10$NO9stDEgF3lkVlDNTxc4d.BSlqGWzGsU9YvmmN8fWnee56JWy9DGa', 'active', 0, 'verified'),
 ('2020/CSC/066', 'v.sayanishan.sv@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
 ('2020/CSC/074', 'saaru27kesan@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
-('2020/CSC/075', 'anathansinega@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
+('2020/CSC/075', 'anathansinega@gmail.com', '$2y$10$dD8TJUyT0mj8GpJkP9CAQOtBFzBzDxjxi3brvsX0Cca.CfKhgpsbC', 'active', 0, 'verified'),
+('2020/SB/001', '2020SB001@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SB/002', '2020SB002@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SB/005', '2020SB005@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SB/006', '2020SB006@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SB/008', '2020SB008@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SB/010', '2020SB010@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SB/012', '2020SB012@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SB/014', '2020SB014@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SB/020', 'student@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SB/035', '2020SB035@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SB/038', '2020SB038@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SB/091', '2020SB091@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/001', '2020SP001@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/002', '2020SP002@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/003', '2020SP003@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/004', '2020SP004@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/005', '2020SP005@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/007', '2020SP007@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/008', '2020SP008@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/009', '2020SP009@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/012', '2020SP012@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/014', '2020SP014@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/015', '2020SP015@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/017', '2020SP017@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/018', '2020SP018@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/019', '2020SP019@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/035', '2020SP035@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/041', '2020SP041@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/044', '2020SP044@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/047', '2020SP047@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/059', '2020SP059@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SB/081', 'js.shapnika@gmail.com', '$2y$10$iusdS7HsFHvm9OCyNP9fcuW2m954X9lrIPD33ZvAdMpnhkyz8L7Jm', 'active', 0, 'verified'),
 ('2020/SP/068', 'theekshy27@gmail.com', '$2y$10$9IvVe6SXBRE3Pz5qtBvCJ.Evj4fKjN2aJjA4UOPdStrfnNRepRVVq', 'active', 0, 'verified'),
-('2020/SP/129', 'kugatharshan26@gmail.com', NULL, 'unregistered', NULL, 'not_verified');
+('2020/SP/070', '2020SP070@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/092', '2020SP092@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/121', '2020SP121@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/129', 'kugatharshan26@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
+('2020/SP/143', '2020SP143@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/145', '2020SB145@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SP/170', '2020SP170@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2021/CSC/080', 'varujeya@gmail.com', '$2y$10$ruNdUYfduFryNF3/X902i.8dglkW8jbUDgEqCens.3ub0vvLRGDfm', 'active', 0, 'verified');
 
 -- --------------------------------------------------------
 
@@ -294,8 +403,11 @@ CREATE TABLE `stud_exam_reg` (
 --
 
 INSERT INTO `stud_exam_reg` (`regId`, `exam_id`, `stud_regNo`, `indexNo`, `level`, `combId`, `type`, `reg_date`) VALUES
-(9, 2, '2020/CSC/051', 's11267', 1, 1, 'proper', '2020-01-01'),
-(10, 2, '2020/CSC/051', 's11267', 1, 13, 'proper', '2020-01-01');
+(13, 2, '2020/CSC/046', 'S1212', 2, 1, 'proper', '2023-09-05'),
+(14, 2, '2021/CSC/080', 'S11749', 1, 1, 'proper', '2023-09-05'),
+(15, 2, '2020/CSC/007', 'S11228', 1, 1, 'proper', '2023-09-05'),
+(16, 2, '2020/CSC/046', 'S1212', 1, 1, 'proper', '2023-09-05'),
+(17, 2, '2020/CSC/074', 'S11289', 1, 11, 'proper', '2023-09-05');
 
 -- --------------------------------------------------------
 
@@ -371,7 +483,60 @@ INSERT INTO `unit` (`unitId`, `unitCode`, `name`, `subject`, `level`, `acYearAdd
 (26, 'CHE102G2', 'CHE102G2', 'CHE', 1, 2017),
 (27, 'CHE104G3', 'CHE104G3', 'CHE', 1, 2017),
 (28, 'CHE106G1', 'CHE106G1', 'CHE', 1, 2017),
-(29, 'CSC104S2', 'Mathematics for Computing I', 'CSC - Direct Intake', 1, 2017);
+(29, 'CSC104S2', 'Mathematics for Computing I', 'CSC - Direct Intake', 1, 2017),
+(30, 'CSC201S2', 'Database Systems Concepts and Design', 'CSC - Direct Intake', 2, 2017),
+(31, 'CSC202S2', 'Computer Programming II', 'CSC - Direct Intake', 2, 2017),
+(32, 'CSC203S2', 'Operating Systems', 'CSC - Direct Intake', 2, 2017),
+(33, 'CSC204S2', 'Data Structures & Algorithms', 'CSC - Direct Intake', 2, 2017),
+(34, 'CSC205S2', 'Software Engineering', 'CSC - Direct Intake', 2, 2017),
+(35, 'CSC206S4', 'Mathematics for Computing III', 'CSC - Direct Intake', 2, 2017),
+(36, 'CSC207S3', 'Computer Architecture', 'CSC - Direct Intake', 2, 2017),
+(37, 'CSC208S3', 'Concepts of Programming Languages', 'CSC - Direct Intake', 2, 2017),
+(38, 'CSC209S3', 'Bioinformatics', 'CSC - Direct Intake', 2, 2017),
+(39, 'CSC210S3', 'Web Technologies', 'CSC - Direct Intake', 2, 2017),
+(40, 'CSC211S2', 'Emerging Trends in Computer Science', 'CSC - Direct Intake', 2, 2017),
+(41, 'CSC212S2', 'Professional Practice', 'CSC - Direct Intake', 2, 2017),
+(42, 'CSC201G2', 'Database Systems Concepts and Design', 'CSC', 2, 2017),
+(43, 'CSC202G2', 'Computer Programming II', 'CSC', 2, 2017),
+(44, 'CSC203G2', 'Operating Systems', 'CSC', 2, 2017),
+(45, 'CSC204G2', 'Data Structures & Algorithms', 'CSC', 2, 2017),
+(46, 'CSC205G2', 'Software Engineering', 'CSC', 2, 2017),
+(47, 'CHE201G2', 'Coordination and Organometallic Chemistry', 'CHE', 2, 2017),
+(48, 'CHE202G3', 'Quantum Mechanical Approach to Atomic and Molecular Structure and Molecular Spectroscopy', 'CHE', 2, 2017),
+(49, 'CHE203G2', 'Organic Chemistry II', 'CHE', 2, 2017),
+(50, 'CHE204G2', 'Inorganic  and Organic Chemistry Laboratory II', 'CHE', 2, 2017),
+(51, 'FIS201G2', 'Laboratory Techniques', 'FSC', 2, 2017),
+(52, 'FIS202G2', 'Aquatic Fauna and Flora', 'FSC', 2, 2017),
+(53, 'FIS203G2', 'Principles of aquatic ecology and fish behaviour', 'FSC', 2, 2017),
+(54, 'FIS204G2', 'Fish biology and embryology', 'FSC', 2, 2017),
+(55, 'FIS205G2', 'Fish Parasitology and Diseases', 'FSC', 2, 2017),
+(56, 'ZOL201G2', 'Invertebrate Phylogeny and Biology', 'ZOO', 2, 2017),
+(57, 'ZOL202G2', 'Vertebrate Phylogeny and Biology', 'ZOO', 2, 2017),
+(58, 'ZOL203G2', 'Comparative Anatomy and Physiology', 'ZOO', 2, 2017),
+(59, 'ZOL204G2', 'Animal Ecology', 'ZOO', 2, 2017),
+(60, 'ZOL205G2', 'Animal Behaviour', 'ZOO', 2, 2017),
+(61, 'BOA201G2', 'Plant Morphology and Anatomy', 'BOT', 2, 2017),
+(62, 'BOA202G2', 'Plant Systematics', 'BOT', 2, 2017),
+(63, 'BOA203G2', 'Biochemistry', 'BOT', 2, 2017),
+(64, 'BOA204G2', 'Genetics', 'BOT', 2, 2017),
+(65, 'BOA205G2', 'General Microbiology', 'BOT', 2, 2017),
+(66, 'PHY201G2', 'Practical Physics II', 'PHY', 2, 2017),
+(67, 'PHY202G2', 'Solid State Physics', 'PHY', 2, 2017),
+(68, 'PHY203G2', 'Optics and Special Relativity', 'PHY', 2, 2017),
+(69, 'PHY204G2', 'Electromagnetism', 'PHY', 2, 2017),
+(70, 'PHY205G2', 'Computational Physics', 'PHY', 2, 2017),
+(71, 'STA201G3', 'Statistical Theory', 'STA', 2, 2017),
+(72, 'STA202G2', 'Sampling Techniques', 'STA', 2, 2017),
+(73, 'STA203G3', 'Design and Analysis of Experiments', 'STA', 2, 2017),
+(74, 'STA204G2', 'Statistical Inference', 'STA', 2, 2017),
+(75, 'PMM201G3', 'Linear Algebra', 'PMM', 2, 2017),
+(76, 'PMM203G3', 'Analysis', 'PMM', 2, 2017),
+(77, 'PMM202G2', 'Advanced Calculus', 'PMM', 2, 2017),
+(78, 'PMM204G2', 'Linear Algebra and Analytic Geometry', 'PMM', 2, 2017),
+(79, 'AMM201G3', 'Mathematical Methods', 'AMM', 2, 2017),
+(80, 'AMM202G2', 'Fluid Dynamics', 'AMM', 2, 2017),
+(81, 'AMM203G3', 'Linear Programming', 'AMM', 2, 2017),
+(82, 'AMM204G2', 'Linear Algebra and Analytic Geometry', 'AMM', 2, 2017);
 
 -- --------------------------------------------------------
 
@@ -391,14 +556,34 @@ CREATE TABLE `unit_sub_exam` (
 --
 
 INSERT INTO `unit_sub_exam` (`exam_unit_id`, `exam_id`, `unitId`, `type`) VALUES
-(7, 2, 1, 'proper'),
-(8, 2, 2, 'proper'),
-(2, 2, 6, 'proper'),
-(3, 2, 7, 'proper'),
-(13, 2, 13, 'proper'),
-(14, 2, 14, 'proper'),
-(9, 2, 21, 'proper'),
-(10, 2, 29, 'proper');
+(15, 2, 31, 'proper'),
+(16, 2, 32, 'proper'),
+(17, 2, 33, 'proper'),
+(18, 2, 38, 'proper'),
+(19, 2, 39, 'proper'),
+(20, 2, 41, 'proper'),
+(21, 2, 43, 'proper'),
+(22, 2, 44, 'proper'),
+(23, 2, 45, 'proper'),
+(41, 2, 48, 'proper'),
+(42, 2, 50, 'proper'),
+(36, 2, 53, 'proper'),
+(37, 2, 54, 'proper'),
+(38, 2, 55, 'proper'),
+(39, 2, 58, 'proper'),
+(40, 2, 59, 'proper'),
+(33, 2, 63, 'proper'),
+(34, 2, 64, 'proper'),
+(35, 2, 65, 'proper'),
+(30, 2, 66, 'proper'),
+(31, 2, 69, 'proper'),
+(32, 2, 70, 'proper'),
+(28, 2, 73, 'proper'),
+(29, 2, 74, 'proper'),
+(24, 2, 76, 'proper'),
+(25, 2, 78, 'proper'),
+(26, 2, 81, 'proper'),
+(27, 2, 82, 'proper');
 
 --
 -- Indexes for dumped tables
