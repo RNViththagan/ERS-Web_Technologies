@@ -115,8 +115,6 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                 <div class="h-px w-3/4 bg-gray-300"></div>
                 <li class=""><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="index.php">Dashboard</a></li>
                 <div class="h-px w-3/4 bg-gray-300"></div>
-                <li class=""><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="../contact.html">Contact</a></li>
-                <div class="h-px w-3/4 bg-gray-300"></div>
                 <li class="mb-3 "><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="../logout.php">Logout</a></li>
             </ul>   
         </div>   
@@ -218,7 +216,7 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                     </form>
                     <?php } else { 
                         if (isset($errors['update-error'])) { ?>
-                            <p class="error-text"><?php echo $error['update-error'] ?></p>
+                            <p class="error-text"><?php echo $errors['update-error'] ?></p>
                         <?php } ?>
                         <div class="mt-4 w-full h-full flex flex-col items-center justify-around lg:mt-0 lg:h-[430px]">
                             <div class="detail-row">
@@ -254,7 +252,12 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
             </div>
 
             <?php if (!isset($_GET['update'])) {
-                $examSQL = "SELECT * FROM `stud_exam_reg` WHERE stud_regNo = '$regNo';";
+                $examSQL = "SELECT ser.*, er.status AS exam_state
+            FROM `stud_exam_reg` AS ser
+            INNER JOIN `exam_reg` AS er ON ser.exam_id = er.exam_id
+            WHERE ser.stud_regNo = '$regNo' 
+            AND er.status IN ('registration', 'closed') ORDER BY ser.exam_id DESC LIMIT 7;";
+
                 $examQuery = mysqli_query($con, $examSQL);
                 
                 ?>
@@ -266,21 +269,26 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                             <th class="font-semibold border-gray-100 border-x-2">Type</th>
                             <th class="font-semibold border-gray-100 border-x-2">Level</th>
                             <th class="font-semibold border-gray-100 border-x-2">Semester</th>
-                            <th class="font-semibold ">Subject<br>Combination</th>
+                            <th class="font-semibold border-gray-100 border-x-2 ">Subject<br>Combination</th>
+                            <th class="font-semibold">Action</th>
                         </thead>
                         <tbody class="text-center ">
                             <?php
                                 if (mysqli_num_rows($examQuery) > 0) {
                                     while ($exam = $examQuery->fetch_assoc()) {
+                                        print_r($exam);
+                                        $regId = $exam['regId'];
                                         $examID = $exam['exam_id'];
                                         $date = $exam['reg_date'];
-                                        $type = $exam['type'];
+                                        $type = strtoupper($exam['type']);
                                         $level = $exam['level'];
                                         $combID = $exam['combId'];
                                         $sem = mysqli_fetch_assoc(mysqli_query($con, "SELECT semester FROM `exam_reg` WHERE exam_id = $examID"));
                                         $semester = $sem['semester'];
                                         $comb = mysqli_fetch_assoc(mysqli_query($con, "SELECT combinationName FROM `combination` WHERE combinationID = $combID"));
                                         $combination = $comb['combinationName'];
+                                        $eState = $exam['exam_state'];
+                                        $btnName = ($eState=="closed")?"View":"Edit";
                                         echo "
                                         <tr class='h-10 even:bg-blue-50'>
                                             <td>$date</td>
@@ -288,6 +296,9 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                                             <td>$level</td>
                                             <td>$semester</td>
                                             <td>$combination</td>
+                                            <td>
+                                                <button onclick=\"openReg('$regId','$eState')\" class=\"btn outline-btn !py-1\">$btnName</button>
+                                            </td>
                                         </tr>
                                         ";
                                         } 
@@ -301,7 +312,14 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                             ?>
                         </tbody>
                     </table>
+                    <?php
+                    $examDetailsSQL = "SELECT * FROM `exam_reg` WHERE status = 'registration';";
+                    $examDetails = mysqli_query($con, $examDetailsSQL);
+                    $exam = mysqli_fetch_assoc($examDetails);
+
+                    if (mysqli_num_rows($examDetails) != 0) {?>
                     <a href="exam_reg.php" class="btn outline-btn w-1/2 mt-7 text-xs lg:text-base">Register for a new Exam</a>
+                    <?php }?>
                 </div>
             <?php } ?> 
         </div>
@@ -320,3 +338,26 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
         userMenu.classList.toggle('lg:translate-x-full');
     }
 </script>
+<script>
+    function openReg(regId,eState) {
+        var myform = document.createElement("form");
+        myform.action = (eState==="closed")?"view_reg.php":"exam_reg.php?edit=true";
+        myform.method = "post";
+        myform.style.display = "none"; // Hide the form
+        var inp = document.createElement('input');
+        inp.name = "regId";
+        inp.value = regId;
+        inp.type = "hidden";
+        myform.appendChild(inp);
+        document.body.appendChild(myform);
+        console.log(myform);
+        myform.submit();
+    }
+</script>
+
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
+

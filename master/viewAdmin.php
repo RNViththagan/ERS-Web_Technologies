@@ -57,6 +57,7 @@ FROM `admin`
         var myform = document.createElement("form");
         myform.action = "index.php?page=editAdmin";
         myform.method = "post";
+        myform.style.display = "none"; // Hide the form
         var inp = document.createElement('input');
         inp.name = "editAdminId";
         inp.value = editAdminId;

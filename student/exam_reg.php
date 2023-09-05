@@ -14,6 +14,13 @@ elseif (isset($_SESSION['role'])) {
     }
 }
 
+$edit = false;
+if(isset($_GET['edit']) && isset($_POST['regId'])){
+    $edit = true;
+    $regId =$_POST['regId'];
+}
+
+
 include("../config/connect.php");
 
 $errors = array();
@@ -25,10 +32,10 @@ $selectQuery = mysqli_query($con, $selectSQL);
 $user = mysqli_fetch_assoc($selectQuery);
 $profile_img = isset($user['profile_img']) ? $user['profile_img'] : "blankProfile.png";
 
-$examDetailsSQL = "SELECT * FROM `exam_reg` WHERE status = 'registration';";
+$examDetailsSQL = "SELECT * FROM `exam_reg` WHERE status = 'registration' ORDER BY exam_id DESC LIMIT 1;";
 $examDetails = mysqli_query($con, $examDetailsSQL);
 $exam = mysqli_fetch_assoc($examDetails);
-
+$exam_id = $exam['exam_id'];
 if (mysqli_num_rows($examDetails) == 0) {
     header("Location: index.php?error=Sorry! There is no exams to register");
     exit();
@@ -74,32 +81,32 @@ function setSelected($fieldName, $fieldValue) {
     crossorigin="anonymous"></script>
 </head>
 <body class="bg-slate-200" id="exam">
-    <nav class="w-full h-[15vh] min-h-fit drop-shadow-md bg-white fixed top-0 left-0">
-        <div class="w-10/12 h-full m-auto flex items-center justify-between">
-            <a href="index.php">
-                <img src="../assets/img/logo/ERS_logo.gif" alt="logo" class="w-28 align-middle">
-            </a>    
-            <ul>
-                <?php if (!isset($profile_img)) { ?>
-                    <li onclick="openMenu()" class="py-2 px-[14px] bg-[var(--primary)] rounded-full drop-shadow-md cursor-pointer lh:relative"><i class="fa-solid fa-user text-2xl text-[#dfeaff]"></i></li>
-                <?php } else { ?>
-                    <img onclick="openMenu()" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full drop-shadow-md cursor-pointer ring-4" src="../assets/uploads/<?php echo $profile_img; ?>" alt="user img">
-                <?php } ?>
-            </ul>
-                       
-        </div>
-        <div class="hidden top-[14.8vh] right-0 h-56 w-full bg-white -translate-y-full z-20 transition-transform lg:top-[16vh] lg:drop-shadow-2xl lg:right-24 lg:w-56 lg:translate-x-full lg:h-72 lg:rounded-tl-3xl lg:rounded-br-3xl lg:text-gray-800" id="user-menu">
-            <ul class="w-11/12 h-full m-auto flex flex-col items-center justify-around text-center">
-                <li class="mt-3 "><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="exam_reg.php">Exam Registration</a></li>
-                <div class="h-px w-3/4 bg-gray-300"></div>
-                <li class=""><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="index.php">Dashboard</a></li>
-                <div class="h-px w-3/4 bg-gray-300"></div>
-                <li class=""><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="../contact.html">Contact</a></li>
-                <div class="h-px w-3/4 bg-gray-300"></div>
-                <li class="mb-3 "><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="../logout.php">Logout</a></li>
-            </ul>   
-        </div>   
-    </nav>
+<!--    <nav class="w-full h-[15vh] min-h-fit drop-shadow-md bg-white fixed top-0 left-0">-->
+<!--        <div class="w-10/12 h-full m-auto flex items-center justify-between">-->
+<!--            <a href="index.php">-->
+<!--                <img src="../assets/img/logo/ERS_logo.gif" alt="logo" class="w-28 align-middle">-->
+<!--            </a>    -->
+<!--            <ul>-->
+<!--                --><?php //if (!isset($profile_img)) { ?>
+<!--                    <li onclick="openMenu()" class="py-2 px-[14px] bg-[var(--primary)] rounded-full drop-shadow-md cursor-pointer lh:relative"><i class="fa-solid fa-user text-2xl text-[#dfeaff]"></i></li>-->
+<!--                --><?php //} else { ?>
+<!--                    <img onclick="openMenu()" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full drop-shadow-md cursor-pointer ring-4" src="../assets/uploads/--><?php //echo $profile_img; ?><!--" alt="user img">-->
+<!--                --><?php //} ?>
+<!--            </ul>-->
+<!--                       -->
+<!--        </div>-->
+<!--        <div class="hidden top-[14.8vh] right-0 h-56 w-full bg-white -translate-y-full z-20 transition-transform lg:top-[16vh] lg:drop-shadow-2xl lg:right-24 lg:w-56 lg:translate-x-full lg:h-72 lg:rounded-tl-3xl lg:rounded-br-3xl lg:text-gray-800" id="user-menu">-->
+<!--            <ul class="w-11/12 h-full m-auto flex flex-col items-center justify-around text-center">-->
+<!--                <li class="mt-3 "><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="exam_reg.php">Exam Registration</a></li>-->
+<!--                <div class="h-px w-3/4 bg-gray-300"></div>-->
+<!--                <li class=""><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="index.php">Dashboard</a></li>-->
+<!--                <div class="h-px w-3/4 bg-gray-300"></div>-->
+<!--                <li class=""><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="../contact.html">Contact</a></li>-->
+<!--                <div class="h-px w-3/4 bg-gray-300"></div>-->
+<!--                <li class="mb-3 "><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="../logout.php">Logout</a></li>-->
+<!--            </ul>   -->
+<!--        </div>   -->
+<!--    </nav>-->
 
     <div class="w-1/2 mx-auto mt-[22vh] mb-20">
         <div class="card ">
@@ -142,7 +149,7 @@ function setSelected($fieldName, $fieldValue) {
                    // exit;
                     if ($unitsQueryResult) {
                         if (mysqli_num_rows($unitsQueryResult) == 0) {
-                            header("Location: index.php?error=Something-went-wrong");
+                            header("Location: index.php?error=No units were assign to this combination.");
                             exit();
                         }
                     } else {
@@ -164,8 +171,9 @@ function setSelected($fieldName, $fieldValue) {
                         $level = $_POST['level'];
                         $combination = $_POST['combination'];
                         $regUnits = $_POST['units'];
+                        $date =date('Y-m-d');
 
-                        $stud_exam_reg_sql = "INSERT INTO stud_exam_reg(exam_id, stud_regNo, indexNo, level, combId, type) VALUES($exam_id, '$regNo', '$indexNo', $level, $combination, '$type')";
+                        $stud_exam_reg_sql = "INSERT INTO stud_exam_reg(exam_id, stud_regNo, indexNo, level, combId, type, reg_date) VALUES($exam_id, '$regNo', '$indexNo', $level, $combination, '$type', '$date')";
                         $stud_exam_reg_query = mysqli_query($con, $stud_exam_reg_sql);
 
                         if (!$stud_exam_reg_query) {
@@ -222,8 +230,8 @@ function setSelected($fieldName, $fieldValue) {
                             </div>
                             <div class="detail-row !w-full">
                                 <label class="hidden lg:block" for="type">Type: <span class="text-red-500">*</span></label>
-                                <select class="inputs" id="type" name="type" required>
-                                    <option value="select" <?php setSelected('type', 'select') ?>>Select Type</option>
+                                <select class="inputs" id="type" name="type"  required>
+                                    <option value="select" <?php setSelected('type', 'select') ?> disabled selected>Select Type</option>
                                     <option value="proper" <?php setSelected('type', 'proper') ?>>Proper</option>
                                     <option value="repeat" <?php setSelected('type', 'repeat') ?>>Repeat</option>
                                 </select>
@@ -231,7 +239,7 @@ function setSelected($fieldName, $fieldValue) {
                             <div class="detail-row !w-full">
                                 <label class="hidden lg:block" for="level">Level: <span class="text-red-500">*</span></label>
                                 <select class="inputs" id="level" name="level" required>
-                                    <option value="select" <?php setSelected('level', 'select') ?>>Select Level</option>
+                                    <option value="select" <?php setSelected('level', 'select') ?> disabled selected>Select Level</option>
                                     <option value="1" <?php setSelected('level', 1) ?>>Level 1</option>
                                     <option value="2" <?php setSelected('level', 2) ?>>Level 2</option>
                                     <option value="3" <?php setSelected('level', 3) ?>>Level 3</option>
@@ -241,7 +249,7 @@ function setSelected($fieldName, $fieldValue) {
                             <div class="detail-row !w-full">
                                 <label class="hidden lg:block" for="combination">Subject Combination: <span class="text-red-500">*</span></label>
                                 <select class="inputs" id="combination" name="combination" required>
-                                    <option value="select">Select Combination</option>
+                                    <option value="select" disabled selected>Select Combination</option>
                                     <?php
                                     while ($userCombination = mysqli_fetch_assoc($combinationList)) { ?>
                                         <option value="<?php echo $userCombination['combinationID'] ?>" <?php setSelected('combination', $userCombination['combinationID']) ?>>
