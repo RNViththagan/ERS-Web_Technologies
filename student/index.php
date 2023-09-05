@@ -305,11 +305,13 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                                             <td>$combination</td>
                                             <td>
                                                 <button onclick=\"openReg('$regId','$eState')\" class=\"btn fill-btn !my-1 !mx-2\">$btnName</button>
-                                            </td>
+                                            </td>";
+                                        echo
+                                                ($exreg)?"
                                             <td>
                                                 <button onclick=\"openReg('$regId','delete')\" class=\"btn fill-btn !bg-red-500 !my-1 !mx-3\">Delete</button>
-                                            </td>
-                                        </tr>
+                                            </td>":"";
+                                        echo "</tr>
                                         ";
                                         } 
                                 } else { 
