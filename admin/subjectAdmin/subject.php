@@ -1,12 +1,5 @@
 <?php
 
-include("../../config/connect.php");
-
-
-?>
-
-<?php
-
     if (isset($_POST['submit'])) {
         $subject = strtoupper($_POST['subject']);
 
@@ -40,12 +33,6 @@ include("../../config/connect.php");
 
 
 
-<!DOCTYPE html>
-    <head>
-        <title></title>
-    </head>
-
-    <body>
         <div>
             <table>
                 <tr>
@@ -86,9 +73,9 @@ include("../../config/connect.php");
                     <input type="submit" name="submit" value="Register">
                 </div>
             </form>
-            <!-- <a href="index.php?page=stud">
-                <button>Back</button>
-            </a> -->
         </div>
-    </body>
-</html>
+<script>
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
+</script>
