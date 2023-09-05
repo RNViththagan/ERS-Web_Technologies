@@ -13,7 +13,7 @@
       class="bi bi-arrow-bar-left text-xl py-1 px-2 rounded-lg bg-blue-200 text-black cursor-pointer transition-all"></i>
   </div>
 
-  <hr class="bg-gray-700 my-10" />
+  <hr class="bg-gray-700 my-5" />
 
   <div class="flex flex-col gap-5" id="navLinks">
     <a
@@ -65,8 +65,8 @@
       <i
         class="user-icon bi bi-person-fill text-2xl py-0.5 px-2 rounded-lg bg-white text-blue-600"></i>
       <div class="name-email leading-tight">
-        <h4 class="text-black font-bold"><?php echo $userprofname ?></h4>
-        <p class="text-sm font-semibold text-gray-700"><?php echo $_SESSION['userid'] ?></p>
+        <h4 class="text-black font-bold text-sm"><?php echo $userprofname ?></h4>
+        <p class="text-xs font-semibold text-gray-700"><?php echo $_SESSION['userid'] ?></p>
       </div>
     </a>
 </nav>

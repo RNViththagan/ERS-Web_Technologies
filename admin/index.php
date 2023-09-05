@@ -34,7 +34,7 @@ require_once("../config/postSender.php");
 </head>
 
 
-<body class="bg-gray-200">
+<body class="bg-gray-200 sm:text-xs xl:text-sm 2xl:text-base">
 
 <!-- Header nav-bar -->
 <?php
@@ -61,8 +61,8 @@ require_once("../config/postSender.php");
 
 
 <!-- Content body -->
-<div id="nextSibling" class="transition-all ml-[300px] h-screen flex items-center justify-center">
-    <div class = "card">
+<div id="nextSibling" class="transition-all ml-[300px] h-auto flex items-center justify-center py-20">
+    <div class = "card drop-shadow-xl">
         <?php
 //        print_r($_POST);
 //        echo "<br>";
@@ -134,7 +134,11 @@ require_once("../config/postSender.php");
     </div>
 </div>
 
-
+<script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>
 
 </body>
 </html>

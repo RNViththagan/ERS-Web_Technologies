@@ -60,53 +60,55 @@ while ($sub = $subjects->fetch_assoc()) {
 
 $subarr .= "];";
 ?>
-<link rel="stylesheet" href="../../assets/css/gen_combinations.css">
-<h1 class="sub_comb">Subject Combinations</h1>
-<table border="1">
-    <tr>
-        <th>Combination ID</th>
-        <th>Combination Name</th>
-    </tr>
-    <?php
-    $getCombinationsQuery = "SELECT * FROM combination";
-    $combinations = mysqli_query($con, $getCombinationsQuery);
 
-    while ($combination = mysqli_fetch_assoc($combinations)) {
-        echo "<tr>";
-        echo "<td>" . $combination['combinationID'] . "</td>";
-        echo "<td>" . $combination['combinationName'] . "</td>";
-        echo "</tr>";
-    }
-    ?>
-</table>
 
-<div class="form-container">
-    <h2 class="text-center text-primary">Add New Combination</h2>
-    <div class="msg">
+<div class="flex flex-col items-center justify-around gap-5">
+    <h1 class="title">Subject Combinations</h1>
+    <div class="form-container">
+        <!-- <h2 class="text-center text-primary">Add New Combination</h2> -->
+        <div class="text-center">
+            <?php
+            if (isset($successMsg)) {
+                echo "<p class='text-green-500'>$successMsg</p>";
+            } elseif (isset($errorMsg)) {
+                echo "<p class='text-red-500'>$errorMsg</p>";
+            }
+            ?>
+        </div>
+        <form action="" method="post" id="combinationForm" class="flex flex-col justify-center items-center gap-5 mt-8">
+            <div class="w-full flex items-center gap-5">
+                <input type="number" id="subjectCount" name="subjectCount" min="1" max="4"
+                       placeholder="Number of Subjects" class="w-56 border border-gray-400 rounded-full py-2 px-5 outline-none focus:border-blue-500" required>
+                <button type="button" id="generateButton" class="btn fill-btn">Generate</button>
+            </div>
+
+            <div id="dropdownContainer" class="mt-2 flex flex-col gap-2">
+                <!-- Dropdowns will be generated here -->
+            </div>
+            <div id="addCombinationBtnContainer" class="mt-3" style="display: none;">
+                <input type="submit" name="sub_comb" value="Add Combination" class="btn fill-btn">
+            </div>
+        </form>
+    </div>
+
+    <table class="w-96 mt-5 text-center">
+        <tr class="h-10 bg-blue-100 font-semibold">
+            <th>Combination ID</th>
+            <th>Combination Name</th>
+        </tr>
         <?php
-        if (isset($successMsg)) {
-            echo "<p class='success-msg'>$successMsg</p>";
-        } elseif (isset($errorMsg)) {
-            echo "<p class='error-msg'>$errorMsg</p>";
+        $getCombinationsQuery = "SELECT * FROM combination";
+        $combinations = mysqli_query($con, $getCombinationsQuery);
+
+        while ($combination = mysqli_fetch_assoc($combinations)) {
+            echo "<tr class='h-10 odd:bg-blue-50'>";
+            echo "<td>" . $combination['combinationID'] . "</td>";
+            echo "<td>" . $combination['combinationName'] . "</td>";
+            echo "</tr>";
         }
         ?>
-    </div>
-    <form action="" method="post" id="combinationForm">
-        <div class="text-input">
-            <i class="fa-solid fa-clipboard-list-check text-primary">No of Subjects</i>
-            <div></div>
-            <input type="number" id="subjectCount" name="subjectCount" min="1" value="1" max="4"
-                   placeholder="Number of Subjects" class="w-full outline-none">
-            <button type="button" id="generateButton" class="btn btn-primary mt-3">Generate</button>
-        </div>
+    </table>
 
-        <div id="dropdownContainer" class="mt-2">
-            <!-- Dropdowns will be generated here -->
-        </div>
-        <div id="addCombinationBtnContainer" class="mt-3" style="display: none;">
-            <input type="submit" name="sub_comb" value="Add Combination" class="btn btn-primary">
-        </div>
-    </form>
 </div>
 <script>
     if (window.history.replaceState) {
@@ -138,12 +140,13 @@ $subarr .= "];";
 
         for (let i = 1; i <= generatedSubjects; i++) {
             const div = document.createElement('div');
-            div.classList.add("drpclass");
+            div.className = "flex items-center gap-4";
             const label = document.createElement('label');
             label.textContent = `Subject ${i}: `;
 
             const dropdown = document.createElement('select');
             dropdown.name = `subject${i}`;
+            dropdown.className = "w-56 border border-gray-400 rounded-full py-2 px-5 outline-none focus:border-blue-500";
 
             for (let j = 0; j < subjects.length; j++) {
                 const option = document.createElement('option');

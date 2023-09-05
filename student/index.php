@@ -91,7 +91,7 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
     src="https://kit.fontawesome.com/5ce4b972fd.js"
     crossorigin="anonymous"></script>
 </head>
-<body class=" bg-gray-50" id="student">
+<body class=" bg-gray-50 sm:text-xs xl:text-sm 2xl:text-base" id="student">
     <nav class="w-full h-[15vh] min-h-fit drop-shadow-md bg-white fixed top-0 left-0">
         <div class="w-10/12 h-full m-auto flex items-center justify-between">
             <a href="index.php">
@@ -122,7 +122,7 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
         </div>   
     </nav>
 
-    
+
     <?php if (isset($_GET['error'])) { ?>
         <div class="exam-false fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
             <form class="card h-40 w-1/2 flex flex-col items-center justify-around gap-7" action="index.php" method="POST">
@@ -138,6 +138,7 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
             </form>
         </div>
     <?php } ?>
+
     <div class="body-sec my-[20vh]">
         <div class="container m-auto">
             <div class="card w-11/12 m-auto grid grid-rows-[30%_70%] lg:grid-cols-[30%_1%_69%] ">
@@ -291,7 +292,7 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                                         $eState = $exam['exam_state'];
                                         $btnName = ($eState=="closed")?"View":"Edit";
                                         echo "
-                                        <tr class='h-10 even:bg-blue-50'>
+                                        <tr class='h-12 even:bg-blue-50'>
                                             <td>$date</td>
                                             <td>$type</td>
                                             <td>$level</td>
@@ -306,7 +307,7 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                                 } else { 
                                     echo "
                                         <tr class='h-10 even:bg-blue-50'>
-                                            <td colspan='5'>No record found</td>
+                                            <td colspan='7'>No record found</td>
                                         </tr>
                                     ";
                                 }
@@ -338,8 +339,7 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
         userMenu.classList.toggle('-translate-y-full');
         userMenu.classList.toggle('lg:translate-x-full');
     }
-</script>
-<script>
+
     function openReg(regId,eState) {
         var myform = document.createElement("form");
         myform.action = (eState==="closed")?"view_reg.php":"exam_reg.php?edit=true";
@@ -354,11 +354,8 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
         console.log(myform);
         myform.submit();
     }
-</script>
 
-<script>
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
     }
 </script>
-

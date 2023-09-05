@@ -36,7 +36,7 @@ require_once("../config/postSender.php");
     src="https://kit.fontawesome.com/5ce4b972fd.js"
     crossorigin="anonymous"></script>
 </head>
-<body class="bg-gray-200">
+<body class="bg-gray-200 sm:text-xs xl:text-sm 2xl:text-base">
 
 <?php
     $rpath = "";
@@ -60,8 +60,8 @@ require_once("../config/postSender.php");
 <?php } ?>
 
 
-<div id="nextSibling" class="transition-all ml-[300px] h-screen flex items-center justify-center">
-    <div class="card">
+<div id="nextSibling" class="transition-all ml-[300px] h-auto flex items-center justify-center py-20">
+    <div class="card drop-shadow-xl">
         <?php
         // print_r($_POST);
         // echo "<br>";
