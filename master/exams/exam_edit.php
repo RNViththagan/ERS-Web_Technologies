@@ -44,7 +44,7 @@ else{
 
 
 <form action="index.php" method="POST" onsubmit="return validateForm()" class="w-[500px] mx-auto flex flex-col items-center gap-4">
-    <?php echo ($edit == false) ? "<h1 class='title mb-5'>Add Exam</h1>" : "<h1 class='title mb-5'>Edit Admin</h1>";?>
+    <?php echo ($edit == false) ? "<h1 class='title mb-5'>Add Exam</h1>" : "<h1 class='title mb-5'>Edit Exam</h1>";?>
 
     <?php if($edit) echo "<input type='hidden' name='exam_id' value='$exam_id'>";?>
 
@@ -65,9 +65,9 @@ else{
     <div class="w-full grid grid-cols-3 items-center h-10">
         <label for="status">Status:</label>
         <select name="status" id="status" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" required>
-            <option value="draft">draft</option>
-            <option value="registration" <?php if($edit and $status =="registration") echo "selected"?>>registration</option>
-            <option value="closed" <?php if($edit and $status =="closed") echo "selected"?>>closed</option>
+            <option value="draft">Draft</option>
+            <option value="registration" <?php if($edit and $status =="registration") echo "selected"?>>Registration</option>
+            <option value="closed" <?php if($edit and $status =="closed") echo "selected"?>>Closed</option>
             <option value="hidden" <?php if($edit and $status =="hidden") echo "selected"?>>Hidden</option>
         </select>
     </div>
