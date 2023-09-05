@@ -13,7 +13,8 @@ if (isset($_POST['subject']) && isset($_POST['level']) && isset($_POST['exam_id'
                                 LEFT JOIN `unit` ON `unit_sub_exam`.`unitId` = `unit`.`unitId`
                                 WHERE unit_sub_exam.exam_id = $exam_id
                                         AND subject = '$subject'
-                                        AND type = '$type';";
+                                        AND type = '$type'
+										AND level = $level;";
 
     $result = mysqli_query($con, $get_query);
 
