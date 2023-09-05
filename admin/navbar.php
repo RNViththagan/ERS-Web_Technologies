@@ -13,7 +13,7 @@
       class="bi bi-arrow-bar-left text-xl py-1 px-2 rounded-lg bg-blue-200 text-black cursor-pointer transition-all"></i>
   </div>
 
-  <hr class="bg-gray-700 my-10" />
+  <hr class="bg-gray-700 my-5" />
 
   <div class="flex flex-col gap-5" id="navLinks">
     <a
@@ -59,18 +59,18 @@
             <span class="transition-all">Subject combination</span>
             </a>
         <a
-                id="dashboardLink"
-                href="index.php?page=units"
-                class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
-            <i class="bi bi-list-nested text-xl"></i>
-            <span class="transition-all">Units</span>
+            id="dashboardLink"
+            href="index.php?page=units"
+            class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
+            <i class="bi bi-journal-plus text-xl"></i>
+          <span class="transition-all">Units</span>
         </a>
       <?php if(isset($curExam)){?>
         <a
             id="dashboardLink"
             href="index.php?page=asignUnits"
             class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
-            <i class="bi bi-journal-plus text-xl"></i>
+            <i class="bi bi-pencil-square text-xl"></i>
             <span class="transition-all">Exam Units</span>
         </a>
         <?php } ?>
@@ -96,8 +96,8 @@
       <i
         class="user-icon bi bi-person-fill text-2xl py-0.5 px-2 rounded-lg bg-white text-blue-600"></i>
       <div class="name-email leading-tight">
-        <h4 class="text-black font-bold"><?php echo $userprofname ?></h4>
-        <p class="text-sm font-semibold text-gray-700"><?php echo $_SESSION['userid'] ?></p>
+        <h4 class="text-black font-bold text-sm"><?php echo $userprofname ?></h4>
+        <p class="text-xs font-semibold text-gray-700"><?php echo $_SESSION['userid'] ?></p>
       </div>
     </a>
 </nav>

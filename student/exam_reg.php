@@ -46,6 +46,7 @@ $errors = array();
 $units = array();
 $regNo = $_SESSION['userid'];
 
+
 $selectSQL = "SELECT * FROM student WHERE regNo = '$regNo';";
 $selectQuery = mysqli_query($con, $selectSQL);
 $user = mysqli_fetch_assoc($selectQuery);
@@ -56,7 +57,7 @@ $examDetails = mysqli_query($con, $examDetailsSQL);
 $exam = mysqli_fetch_assoc($examDetails);
 $exam_id = $exam['exam_id'];
 if (mysqli_num_rows($examDetails) == 0) {
-    header("Location: index.php?error=Sorry! There is no exams to register");
+    header("Location: exaexam_reg.php?error=Sorry! There is no exams to register");
     exit();
 }
 
@@ -110,6 +111,23 @@ function setSelected($fieldName, $fieldValue) {
 
 </head>
 <body class="bg-slate-200" id="exam">
+    <?php if (isset($_GET['error'])) { ?>
+        <div class="exam-false fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
+            <form class="card h-40 w-1/2 flex flex-col items-center justify-around gap-7" action="index.php" method="POST">
+                <p class="text-center"><?php echo $_GET['error'] ?></p>
+                <input class="btn fill-btn" type="submit" value="OK" name="ok">
+            </form>
+        </div>
+    <?php } elseif (isset($_GET['success'])) { ?>
+        <div class="exam-false fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
+            <form class="card h-40 w-1/2 flex flex-col items-center justify-around gap-7" action="index.php" method="POST">
+                <p class="text-center text-green-700"><?php echo $_GET['success'] ?></p>
+                <input class="btn fill-btn !bg-green-700" type="submit" value="OK" name="ok">
+            </form>
+        </div>
+    <?php } ?>
+
+
     <nav class="w-full h-[15vh] min-h-fit drop-shadow-md bg-white fixed top-0 left-0">
         <div class="w-10/12 h-full m-auto flex items-center justify-between">
             <a href="index.php">
@@ -182,7 +200,7 @@ function setSelected($fieldName, $fieldValue) {
                             exit();
                         }
                     } else {
-                        header("Location: index.php?error=Something-went-wrong");
+                        header("Location: exam_reg.php?error=Something-went-wrong");
                         exit();
                     }
 
@@ -257,11 +275,10 @@ function setSelected($fieldName, $fieldValue) {
                                 $stud_exam_reg_sql = "INSERT INTO stud_exam_reg(exam_id, stud_regNo, indexNo, level, combId, type, reg_date) VALUES($exam_id, '$regNo', '$indexNo', $level, $combination, '$type', '$date')";
                                 $stud_exam_reg_query = mysqli_query($con, $stud_exam_reg_sql);
 
-                        if (!$stud_exam_reg_query) {
-                            header("Location: index.php?error=Something-went-wrong");
-                            exit();
-                        }
-
+                                if (!$stud_exam_reg_query) {
+                                    header("Location: exam_reg.php?error=Something-went-wrong");
+                                    exit();
+                                }
                                 $regId = mysqli_insert_id($con);
                                 $inserted = true;
 
@@ -282,10 +299,8 @@ function setSelected($fieldName, $fieldValue) {
                                 }
                             } else {
                                 header("Location: index.php?error=You are already registered for the same level, type, and exam.<br>You can edit your existing registration through the menu");
+
                             }
-
-
-
                         }
                     }
                 }
@@ -440,6 +455,7 @@ function setSelected($fieldName, $fieldValue) {
         userMenu.classList.toggle('-translate-y-full');
         userMenu.classList.toggle('lg:translate-x-full');
     }
+
 </script>
 <?php if(!(isset($_POST['step']) && $_POST['step']==1)){ ?>
 <script>
@@ -498,3 +514,4 @@ function setSelected($fieldName, $fieldValue) {
         window.history.replaceState(null, null, window.location.href);
     }
 </script>
+

@@ -34,15 +34,15 @@ require_once("../../config/adminName.php");
 </head>
 
 
-<body  class="bg-gray-200">
+<body  class="bg-gray-200 sm:text-xs xl:text-sm 2xl:text-base">
 
 <?php
     $rpath = "../";
     require_once("../navbar.php")
 ?>
 
-<div id="nextSibling" class="transition-all ml-[300px] h-screen flex items-center justify-center">
-    <div class="card">
+<div id="nextSibling" class="transition-all ml-[300px] h-auto flex items-center justify-center py-20">
+    <div class="card drop-shadow-xl">
         <?php
         $error =array();
         if (isset($_GET['page'])) {

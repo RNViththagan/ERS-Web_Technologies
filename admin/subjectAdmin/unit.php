@@ -27,77 +27,91 @@ $unitlist = mysqli_query($con, $sql);
 ?>
 
 
-<link rel="stylesheet" type="text/css" href="../../assets/css/style_admin_student.css">
-<h1>Unit Management</h1>
+<div class="flex flex-col items-center justify-around gap-5">
+    <h1 class="title">Unit Management</h1>
+    
+    <div class="flex items-center gap-5 mt-5">
+        <form  id="searchform" action="index.php?page=units" method="post" class="flex items-center gap-5">
+            <div class="search-bar w-96 h-10 border-2 border-gray-500 rounded-full flex items-center gap-5 px-5">
+                <i class="bi bi-search"></i>
+                <input type="text" name="searchkey" placeholder="Search Here" value="<?php echo (isset($searchkey)) ? $searchkey : "" ?>" class="outline-none h-full w-full" required>
+            </div>
+            <button class="btn fill-btn" type="submit" name="search">Search</button>
+        </form>
+        <a href="index.php?page=units">
+            <button id="add" class="btn outline-btn">Reset</button>
+        </a>
 
-<form  id="searchform"  action="index.php?page=units" method="post">
-    <input type="text" name="searchkey" value="<?php echo (isset($searchkey)) ? $searchkey : "" ?>" required>
-    <button type="submit" name="search">Search</button>
-</form>
-<a href="index.php?page=units">
-    <button id="add" class="btn outline-btn"> Reset</button>
-</a>
+    </div>
 
-
-<a href="index.php?page=addUnit">
-    <button id="add"> Add</button>
-</a>
-
-
-<table>
-    <tr>
-        <th>Unit Id</th>
-        <th>Unit Code</th>
-        <th>Name</th>
-        <th>Subject</th>
-        <th>Level</th>
-        <th>Academic Year</th>
-        <th>Action</th>
-    </tr>
-    <?php
-    if (mysqli_num_rows($unitlist) > 0) {
-    while ($row = mysqli_fetch_assoc($unitlist)) {
-        ?>
-        <tr>
-            <td><?php echo $row['unitId']; ?></td>
-            <td><?php echo $row['unitCode']; ?></td>
-            <td><?php echo $row['name']; ?></td>
-            <td><?php echo $row['subject']; ?></td>
-            <td><?php echo $row['level']; ?></td>
-            <td><?php echo $row['acYearAdded']; ?></td>
-            <td>
-                <button onclick="edit('<?php echo $row['unitId']; ?>')">Edit</button>
-            </td>
+    
+    
+    
+    <a href="index.php?page=addUnit">
+        <button id="add" class="btn fill-btn">Add New Unit</button>
+    </a>
+    
+    
+    <table class="w-11/12 mt-5 text-center">
+        <tr class="h-12 bg-blue-100 font-semibold">
+            <th>Unit Id</th>
+            <th>Unit<br>Code</th>
+            <th>Name</th>
+            <th>Subject</th>
+            <th>Level</th>
+            <th>Academic<br>Year</th>
+            <th>Action</th>
         </tr>
         <?php
-    }
-    } else {
-        echo "<tr>
-                 <td colspan='7'>No record found</td>
-              </tr>
-                                    ";
-    }
+        if (mysqli_num_rows($unitlist) > 0) {
+        while ($row = mysqli_fetch_assoc($unitlist)) {
+            ?>
+            <tr class="h-12 odd:bg-blue-50">
+                <td><?php echo $row['unitId']; ?></td>
+                <td><?php echo $row['unitCode']; ?></td>
+                <td><?php echo $row['name']; ?></td>
+                <td><?php echo $row['subject']; ?></td>
+                <td><?php echo $row['level']; ?></td>
+                <td><?php echo $row['acYearAdded']; ?></td>
+                <td>
+                    <button onclick="edit('<?php echo $row['unitId']; ?>')" class="btn outline-btn !py-1 !px-3">Edit</button>
+                </td>
+            </tr>
+            <?php
+        }
+        } else {
+            echo "<tr class='h-12 odd:bg-blue-50'>
+                     <td colspan='7'>No record found</td>
+                  </tr>
+                                        ";
+        }
+        ?>
+    </table>
+
+    <div class="w-1/2 flex items-center justify-around mt-10">
+    <?php
+        $prev_page = $current_page - 1;
+        $next_page = $current_page + 1;
+
+        echo "<br>";
+        if ($prev_page > 0) {
+            echo "<button onclick='pagechange($prev_page)' class='btn outline-btn'>< Previous</button>";
+        }
+
+        $count_result = mysqli_query($con, $forcount);
+        $total_records = $count_result->num_rows;
+
+        $total_pages = ceil($total_records / $records_per_page);
+
+        if ($next_page <= $total_pages) {
+            echo "<button onclick='pagechange($next_page)' class='btn outline-btn'>Next ></button>";
+        }
     ?>
-</table>
+    </div>
 
-<?php
-    $prev_page = $current_page - 1;
-    $next_page = $current_page + 1;
+</div>
 
-    echo "<br>";
-    if ($prev_page > 0) {
-        echo "<button onclick='pagechange($prev_page)'>Previous</button>";
-    }
 
-    $count_result = mysqli_query($con, $forcount);
-    $total_records = $count_result->num_rows;
-
-    $total_pages = ceil($total_records / $records_per_page);
-
-    if ($next_page <= $total_pages) {
-        echo "<button onclick='pagechange($next_page)'>Next</button>";
-    }
-?>
 
 
 <script>
