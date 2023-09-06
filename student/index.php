@@ -335,8 +335,8 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                     <?php
                     if($exreg){?>
                         <a href="exam_reg.php" class="btn outline-btn w-1/2 mt-7 text-xs lg:text-base">Register for a new Exam</a>
-                    <?php }
-                    
+                    <?php }/*
+
                     $examDetailsSQL = "SELECT *
                         FROM `exam_reg`
                         WHERE `status` = 'closed'
@@ -350,9 +350,9 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                     if ($examDetails) {
                         if (mysqli_num_rows($examDetails) != 0) {
                             $examID = $exam['exam_id']; ?>
-                            <a href='../reg_list.php?id=<?php echo $examID ?>' class='btn outline-btn w-1/2 mt-7 text-xs lg:text-base'>View registered list</a>;
+                            <a href='../reg_list.php?exam_id=<?php echo $examID ?>' class='btn outline-btn w-1/2 mt-7 text-xs lg:text-base'>View registered list</a>;
                         <?php }
-                    } ?> 
+                    } */?>
 
                 </div>
             <?php } ?> 
