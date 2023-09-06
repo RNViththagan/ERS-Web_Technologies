@@ -14,7 +14,7 @@ $limit = " LIMIT $offset, $records_per_page";
 $searchOp = "";
 if (isset($_POST['search'])) {
     $searchkey = $_POST['searchkey'];
-    $searchOp = " unitCode LIKE '%$searchkey%' or name LIKE '%$searchkey%'";
+    $searchOp = " unitCode LIKE '%$searchkey%' or name LIKE '%$searchkey%' or subject LIKE '%$searchkey%'";
     if ($searchOp != "") {
         $sql .= " Where " . $searchOp;
     }
@@ -29,7 +29,7 @@ $unitlist = mysqli_query($con, $sql);
 
 <div class="flex flex-col items-center justify-around gap-5">
     <h1 class="title">Unit Management</h1>
-    
+
     <div class="flex items-center gap-5 mt-5">
         <form  id="searchform" action="index.php?page=units" method="post" class="flex items-center gap-5">
             <div class="search-bar w-96 h-10 border-2 border-gray-500 rounded-full flex items-center gap-5 px-5">
@@ -44,13 +44,9 @@ $unitlist = mysqli_query($con, $sql);
 
     </div>
 
-    
-    
-    
     <a href="index.php?page=addUnit">
         <button id="add" class="btn fill-btn">Add New Unit</button>
     </a>
-    
     
     <table class="w-11/12 mt-5 text-center">
         <tr class="h-12 bg-blue-100 font-semibold">
@@ -88,6 +84,7 @@ $unitlist = mysqli_query($con, $sql);
         ?>
     </table>
 
+
     <div class="w-1/2 flex items-center justify-around mt-10">
     <?php
         $prev_page = $current_page - 1;
@@ -97,10 +94,17 @@ $unitlist = mysqli_query($con, $sql);
         if ($prev_page > 0) {
             echo "<button onclick='pagechange($prev_page)' class='btn outline-btn'>< Previous</button>";
         }
+        echo "<br>";
+        if ($prev_page > 0) {
+            echo "<button onclick='pagechange($prev_page)' class='btn outline-btn'>< Previous</button>";
+        }
 
         $count_result = mysqli_query($con, $forcount);
         $total_records = $count_result->num_rows;
+        $count_result = mysqli_query($con, $forcount);
+        $total_records = $count_result->num_rows;
 
+        $total_pages = ceil($total_records / $records_per_page);
         $total_pages = ceil($total_records / $records_per_page);
 
         if ($next_page <= $total_pages) {

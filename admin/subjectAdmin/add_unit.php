@@ -33,6 +33,7 @@
 
 
 
+
 <div class="flex flex-col items-center justify-around gap-5">
     <h1 class="title">Add Unit</h1>
     <form action="" method="post" class="w-10/12 flex flex-col items-center gap-5 mt-5">
@@ -61,7 +62,7 @@
 
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
-                        echo "<option value='" . $row["subject"] ."' >" . $row["subject"] . "</option>";    
+                        echo "<option value='" . $row["subject"] ."' >" . $row["subject"] . "</option>";
                     }
                 }
             ?>

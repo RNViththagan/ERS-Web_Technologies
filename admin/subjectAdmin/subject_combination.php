@@ -62,6 +62,7 @@ $subarr .= "];";
 ?>
 
 
+
 <div class="flex flex-col items-center justify-around gap-5">
     <h1 class="title">Subject Combinations</h1>
     <div class="form-container">
@@ -144,11 +145,13 @@ $subarr .= "];";
         for (let i = 1; i <= generatedSubjects; i++) {
             const div = document.createElement('div');
             div.className = "flex items-center gap-4";
+            div.className = "flex items-center gap-4";
             const label = document.createElement('label');
             label.textContent = `Subject ${i}: `;
 
             const dropdown = document.createElement('select');
             dropdown.name = `subject${i}`;
+            dropdown.className = "w-56 border border-gray-400 rounded-full py-2 px-5 outline-none focus:border-blue-500";
             dropdown.className = "w-56 border border-gray-400 rounded-full py-2 px-5 outline-none focus:border-blue-500";
 
             for (let j = 0; j < subjects.length; j++) {
