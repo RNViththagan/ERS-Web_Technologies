@@ -178,14 +178,13 @@ $stdlist = mysqli_query($con, $sql);
 
 
 
-
+<div class="w-1/2 flex items-center justify-around mt-10">
 <?php
 $prev_page = $current_page - 1;
 $next_page = $current_page + 1;
 
-    echo "<br>";
     if ($prev_page > 0) {
-        echo "<button  onclick='pagechange($prev_page)'>Previous</button>";
+        echo "<button onclick='pagechange($prev_page)' class='btn outline-btn'>< Previous</button>";
     }
 
 
@@ -195,9 +194,10 @@ $next_page = $current_page + 1;
     $total_pages = ceil($total_records / $records_per_page);
 
     if ($next_page <= $total_pages) {
-        echo "<button onclick='pagechange($next_page)'>Next</button>";
+        echo "<button onclick='pagechange($next_page)' class='btn outline-btn'>Next ></button>";
     }
     ?>
+</div>
 
 
 </div>
