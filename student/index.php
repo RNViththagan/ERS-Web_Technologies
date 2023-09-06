@@ -96,7 +96,7 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
     src="https://kit.fontawesome.com/5ce4b972fd.js"
     crossorigin="anonymous"></script>
 </head>
-<body class=" bg-gray-50 sm:text-xs xl:text-sm 2xl:text-base sm:text-xs xl:text-sm 2xl:text-base" id="student">
+<body class=" bg-gray-50 sm:text-xs xl:text-sm 2xl:text-base" id="student">
     <nav class="w-full h-[15vh] min-h-fit drop-shadow-md bg-white fixed top-0 left-0">
         <div class="w-10/12 h-full m-auto flex items-center justify-between">
             <a href="index.php">
@@ -334,8 +334,26 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                     </table>
                     <?php
                     if($exreg){?>
-                    <a href="exam_reg.php" class="btn outline-btn w-1/2 mt-7 text-xs lg:text-base">Register for a new Exam</a>
-                    <?php }?>
+                        <a href="exam_reg.php" class="btn outline-btn w-1/2 mt-7 text-xs lg:text-base">Register for a new Exam</a>
+                    <?php }
+                    
+                    $examDetailsSQL = "SELECT *
+                        FROM `exam_reg`
+                        WHERE `status` = 'closed'
+                        AND (`academic_year`, `semester`) = (
+                            SELECT MAX(`academic_year`), MAX(`semester`)
+                            FROM `exam_reg`
+                        )";
+                    $examDetails = mysqli_query($con, $examDetailsSQL);
+                    $exam = mysqli_fetch_assoc($examDetails);
+
+                    if ($examDetails) {
+                        if (mysqli_num_rows($examDetails) != 0) {
+                            $examID = $exam['exam_id']; ?>
+                            <a href='../reg_list.php?id=<?php echo $examID ?>' class='btn outline-btn w-1/2 mt-7 text-xs lg:text-base'>View registered list</a>;
+                        <?php }
+                    } ?> 
+
                 </div>
             <?php } ?> 
 
