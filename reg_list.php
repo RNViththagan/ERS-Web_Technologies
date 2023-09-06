@@ -37,15 +37,13 @@ function setSelected($fieldName, $fieldValue) {
                         $type = $_POST['type'];
                         $examID = $_POST['exam_id'];
                     }
-
-                    $userDataSQL = "SELECT ser.stud_regNo as regNo, ser.regId, ser.indexNo, s.title, s.nameWithInitial, c.combinationName, ru.exam_unit_id
+                    //echo $examID;
+                    $userDataSQL = "SELECT ser.combId,ser.stud_regNo as regNo, ser.regId, ser.indexNo, s.title, s.nameWithInitial, c.combinationName
             FROM `stud_exam_reg` ser
-            INNER JOIN `reg_units` ru ON ser.regId = ru.regId
             INNER JOIN `student` s ON ser.stud_regNo = s.regNo
             INNER JOIN `combination` c ON ser.combId = c.combinationID
-            WHERE ser.level = '$level' AND ser.type = '$type' AND exam_id = $examID
-            GROUP BY c.combinationName
-            ORDER BY c.combinationName ASC;";
+            WHERE ser.level = $level AND ser.type = '$type' AND exam_id = $examID
+            ORDER BY c.combinationID ASC;";
 
                     $userDataResult = mysqli_query($con, $userDataSQL);
                     //$userData = mysqli_fetch_assoc($userDataResult);
@@ -158,9 +156,9 @@ function setSelected($fieldName, $fieldValue) {
                         ?>
                     </table>
 
-                    <?php if (isset($_SESSION['role'])) { ?>
+                    <?php if (false && isset($_SESSION['role'])) { ?>
                         <a href="#" class="btn fill-btn !bg-green-500">Download as a Excel sheet</a>
-                    <?php } elseif (isset($_SESSION['userid'])) { ?>
+                    <?php } elseif (false && isset($_SESSION['userid'])) { ?>
                         <a href="#" class="btn fill-btn!bg-green-500">Download as a PDF</a>
                 <?php }
                 } ?>
