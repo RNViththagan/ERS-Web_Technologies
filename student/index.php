@@ -139,6 +139,7 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
         </div>
     <?php } ?>
 
+
     <div class="body-sec my-[20vh]">
         <div class="container m-auto">
             <div class="card w-11/12 m-auto grid grid-rows-[30%_70%] lg:grid-cols-[30%_1%_69%] ">
@@ -326,10 +327,28 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                     </table>
                     <?php
                     if($exreg){?>
-                    <a href="exam_reg.php" class="btn outline-btn w-1/2 mt-7 text-xs lg:text-base">Register for a new Exam</a>
-                    <?php }?>
+                        <a href="exam_reg.php" class="btn outline-btn w-1/2 mt-7 text-xs lg:text-base">Register for a new Exam</a>
+                    <?php }/*
+
+                    $examDetailsSQL = "SELECT *
+                        FROM `exam_reg`
+                        WHERE `status` = 'closed'
+                        AND (`academic_year`, `semester`) = (
+                            SELECT MAX(`academic_year`), MAX(`semester`)
+                            FROM `exam_reg`
+                        )";
+                    $examDetails = mysqli_query($con, $examDetailsSQL);
+                    $exam = mysqli_fetch_assoc($examDetails);
+
+                    if ($examDetails) {
+                        if (mysqli_num_rows($examDetails) != 0) {
+                            $examID = $exam['exam_id']; ?>
+                            <a href='../reg_list.php?exam_id=<?php echo $examID ?>' class='btn outline-btn w-1/2 mt-7 text-xs lg:text-base'>View registered list</a>;
+                        <?php }
+                    } */?>
+
                 </div>
-            <?php } ?> 
+            <?php } ?>
         </div>
     </div>
 

@@ -61,7 +61,7 @@ require_once("../config/postSender.php");
 
 
 <div id="nextSibling" class="transition-all ml-[300px] h-auto flex items-center justify-center py-20">
-    <div class="card drop-shadow-xl">
+    <div class="card drop-shadow-xl <?php if (isset($_GET['page']) && ($_GET['page'] === "viewReg")) echo "overflow-y-auto" ?>">
         <?php
         // print_r($_POST);
         // echo "<br>";
@@ -69,6 +69,9 @@ require_once("../config/postSender.php");
         if (isset($_GET['page'])) {
             if ($_GET['page'] === "listAdmins") {
                 include("list_admins.php");
+            }
+            else if ($_GET['page'] === "viewReg") {
+                include("viewReg.php");
             }
             else if ($_GET['page'] === "viewAdmin") {
                if(isset($_POST['adminId']))

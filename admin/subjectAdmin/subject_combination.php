@@ -62,6 +62,7 @@ $subarr .= "];";
 ?>
 
 
+
 <div class="flex flex-col items-center justify-around gap-5">
     <h1 class="title">Subject Combinations</h1>
     <div class="form-container">
