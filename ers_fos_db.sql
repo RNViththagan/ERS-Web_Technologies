@@ -43,7 +43,7 @@ INSERT INTO `admin` (`email`, `password`, `name`, `role`, `status`) VALUES
 ('admin_master@nexus.com', '$2y$10$DWDHkfoxdQr/RHb7sdiaMeIy./lOZmFBQcOZaTedLFxTTB1xu.TEi', 'Viththagan', 'Admin_Master', 'active'),
 ('asintha1997@gmail.com', '$2y$10$pIZwkWacf0tf2p0UxzazRuPlRM.rvB4qKHdFSJ.jaxZqf0lTlt1SS', 'Asintha', 'Admin_Student', 'active'),
 ('stud_admin1@nexus.com', '$2y$10$IUzrF9GhBdTzDXXbmxA19.XZuxKo9le3hETfrRsqKG35goK4w1npS', 'Student admin 1', 'Admin_Student', 'active'),
-('subj_admin1@nexus.com', '$2y$10$6IniUusMCkDLxZFhTVWyL.Nk0BBkFuzzLUzSCdFOqy32NexOPRNvi', 'Asintha', 'Admin_Subject', 'inactive'),
+('subj_admin1@nexus.com', '$2y$10$6IniUusMCkDLxZFhTVWyL.Nk0BBkFuzzLUzSCdFOqy32NexOPRNvi', 'Asintha', 'Admin_Subject', 'active'),
 ('subj_admin2@nexus.com', '$2y$10$7v728eNqfjD61XwpVjLwvO/o4cNMvUmDW7QeqluimnhJsGNSzaqt.', 'Shankar', 'Admin_Subject', 'active'),
 ('viththagan@nexus.com', '$2y$10$HrF7DQS3U0xzZ5Xaom37LO4EAWXBK9zhhPBOsD.YqeIMvE4.kHgyG', 'viththagan', 'Admin_Subject', 'active');
 
@@ -128,6 +128,18 @@ INSERT INTO `combination_subjects` (`combinationID`, `subject`) VALUES
 (3, 'BOT'),
 (3, 'CHE'),
 (3, 'FSC'),
+(4, 'BOT'),
+(4, 'CHE'),
+(4, 'ZOO'),
+(5, 'CHE'),
+(5, 'FSC'),
+(5, 'ZOO'),
+(7, 'AMM'),
+(7, 'CHE'),
+(7, 'CSC'),
+(8, 'AMM'),
+(8, 'CSC'),
+(8, 'PHY'),
 (9, 'AMM'),
 (9, 'CSC'),
 (9, 'STA'),
@@ -145,19 +157,7 @@ INSERT INTO `combination_subjects` (`combinationID`, `subject`) VALUES
 (13, 'PMM'),
 (14, 'AMM'),
 (14, 'CHE'),
-(14, 'PMM'),
-(4, 'BOT'),
-(4, 'CHE'),
-(4, 'ZOO'),
-(5, 'CHE'),
-(5, 'FSC'),
-(5, 'ZOO'),
-(7, 'AMM'),
-(7, 'CHE'),
-(7, 'CSC'),
-(8, 'AMM'),
-(8, 'CSC'),
-(8, 'PHY');
+(14, 'PMM');
 
 -- --------------------------------------------------------
 
@@ -216,7 +216,87 @@ INSERT INTO `reg_units` (`regId`, `exam_unit_id`) VALUES
 (16, 24),
 (16, 25),
 (17, 26),
-(17, 27);
+(17, 27),
+(18, 48),
+(18, 50),
+(18, 53),
+(18, 54),
+(18, 55),
+(18, 63),
+(18, 64),
+(18, 65),
+(19, 48),
+(19, 50),
+(19, 53),
+(19, 54),
+(19, 55),
+(19, 63),
+(19, 64),
+(19, 65),
+(20, 48),
+(20, 50),
+(20, 58),
+(20, 59),
+(20, 63),
+(20, 64),
+(20, 65),
+(21, 48),
+(21, 50),
+(21, 58),
+(21, 59),
+(21, 63),
+(21, 64),
+(21, 65),
+(22, 48),
+(22, 50),
+(22, 58),
+(22, 59),
+(22, 63),
+(22, 64),
+(22, 65),
+(23, 48),
+(23, 50),
+(23, 53),
+(23, 54),
+(23, 55),
+(23, 58),
+(23, 59),
+(24, 48),
+(24, 50),
+(24, 53),
+(24, 54),
+(24, 55),
+(24, 58),
+(24, 59),
+(25, 48),
+(25, 50),
+(25, 53),
+(25, 54),
+(25, 55),
+(25, 58),
+(25, 59),
+(26, 53),
+(26, 54),
+(26, 55),
+(26, 58),
+(26, 59),
+(26, 63),
+(26, 64),
+(26, 65),
+(27, 53),
+(27, 54),
+(27, 55),
+(27, 58),
+(27, 59),
+(27, 63),
+(27, 64),
+(27, 65),
+(28, 31),
+(28, 32),
+(28, 33),
+(28, 38),
+(28, 39),
+(28, 41);
 
 -- --------------------------------------------------------
 
@@ -250,7 +330,8 @@ INSERT INTO `student` (`regNo`, `title`, `nameWithInitial`, `fullName`, `distric
 ('2020/CSC/027', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/028', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/033', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('2020/CSC/046', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/CSC/046', 'Mr', 'RPAU Karunarathna', 'Asintha  udeshitha', 'Kegalle', '0728581211', '1234567890', 'Andoluwa', 'Andoluwa', '2020CSC046.png'),
+('2020/CSC/050', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/051', 'Mr', 'R.N.Viththagan', 'Roy Nesarajah Viththagan', 'Jaffna', '0771234567', '0123456789', 'Jaffna', 'Jaffna', '2020CSC051.jpg'),
 ('2020/CSC/052', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/055', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -258,6 +339,7 @@ INSERT INTO `student` (`regNo`, `title`, `nameWithInitial`, `fullName`, `distric
 ('2020/CSC/061', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/065', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/066', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/CSC/067', 'Mr', 'W.R.Deshitha', 'Wathukarage Ravidu deshitha', 'Ratnapura', '+9471918846', '-', 'Dumbara Manana, Rathnapura.', ' ', 'blankProfile.png'),
 ('2020/CSC/074', 'Mr', 'P.Saarukesan', 'Premkumar Saarukesan', 'Batticaloa', '0764722514', '0652054047', 'Chenkalady', 'Kandaramadam', '2020CSC074.jpg'),
 ('2020/CSC/075', NULL, '', '', '', '', '', '', '', NULL),
 ('2020/SB/001', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -330,6 +412,7 @@ INSERT INTO `student_check` (`regNo`, `email`, `password`, `status`, `verificati
 ('2020/CSC/028', 'lahiruishan400@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
 ('2020/CSC/033', 'sankavimohan2000@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
 ('2020/CSC/046', 'audeshitha@gmail.com', '$2y$10$IK1KYlGrrxEToFExo2It2OdClNukZTqXVd0Fg4cuyBDv7XNWt3ERi', 'active', 0, 'verified'),
+('2020/CSC/050', 'nimantha.rathnayaka1999@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
 ('2020/CSC/051', 'viththagan1999@gmail.com', '$2y$10$43cjXmjEzaBbdy5aNR/LquaQqXrqVU9r/Hj4tcshbN9UUHhNlCzIO', 'active', 0, 'verified'),
 ('2020/CSC/052', '52csc20@test.com', NULL, 'unregistered', NULL, 'not_verified'),
 ('2020/CSC/055', 'sathasivamnerujan35@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
@@ -337,6 +420,7 @@ INSERT INTO `student_check` (`regNo`, `email`, `password`, `status`, `verificati
 ('2020/CSC/061', 'vimalanthushani1122@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
 ('2020/CSC/065', 'vieronicka27@gmail.com', '$2y$10$NO9stDEgF3lkVlDNTxc4d.BSlqGWzGsU9YvmmN8fWnee56JWy9DGa', 'active', 0, 'verified'),
 ('2020/CSC/066', 'v.sayanishan.sv@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
+('2020/CSC/067', 'ravindudeshitha01@gmail.com', '$2y$10$1hY8ugQrggwX/NMYb40cIO1Knl6F9nSWT/IgeVI/jNmnZmmpYZUQK', 'active', 0, 'verified'),
 ('2020/CSC/074', 'saaru27kesan@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
 ('2020/CSC/075', 'anathansinega@gmail.com', '$2y$10$dD8TJUyT0mj8GpJkP9CAQOtBFzBzDxjxi3brvsX0Cca.CfKhgpsbC', 'active', 0, 'verified'),
 ('2020/SB/001', '2020SB001@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
@@ -350,6 +434,7 @@ INSERT INTO `student_check` (`regNo`, `email`, `password`, `status`, `verificati
 ('2020/SB/020', 'student@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
 ('2020/SB/035', '2020SB035@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
 ('2020/SB/038', '2020SB038@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2020/SB/081', 'js.shapnika@gmail.com', '$2y$10$iusdS7HsFHvm9OCyNP9fcuW2m954X9lrIPD33ZvAdMpnhkyz8L7Jm', 'active', 0, 'verified'),
 ('2020/SB/091', '2020SB091@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
 ('2020/SP/001', '2020SP001@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
 ('2020/SP/002', '2020SP002@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
@@ -370,7 +455,6 @@ INSERT INTO `student_check` (`regNo`, `email`, `password`, `status`, `verificati
 ('2020/SP/044', '2020SP044@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
 ('2020/SP/047', '2020SP047@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
 ('2020/SP/059', '2020SP059@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
-('2020/SB/081', 'js.shapnika@gmail.com', '$2y$10$iusdS7HsFHvm9OCyNP9fcuW2m954X9lrIPD33ZvAdMpnhkyz8L7Jm', 'active', 0, 'verified'),
 ('2020/SP/068', 'theekshy27@gmail.com', '$2y$10$9IvVe6SXBRE3Pz5qtBvCJ.Evj4fKjN2aJjA4UOPdStrfnNRepRVVq', 'active', 0, 'verified'),
 ('2020/SP/070', '2020SP070@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
 ('2020/SP/092', '2020SP092@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
@@ -406,8 +490,18 @@ INSERT INTO `stud_exam_reg` (`regId`, `exam_id`, `stud_regNo`, `indexNo`, `level
 (13, 2, '2020/CSC/046', 'S1212', 2, 1, 'proper', '2023-09-05'),
 (14, 2, '2021/CSC/080', 'S11749', 1, 1, 'proper', '2023-09-05'),
 (15, 2, '2020/CSC/007', 'S11228', 1, 1, 'proper', '2023-09-05'),
-(16, 2, '2020/CSC/046', 'S1212', 1, 1, 'proper', '2023-09-05'),
-(17, 2, '2020/CSC/074', 'S11289', 1, 11, 'proper', '2023-09-05');
+(17, 2, '2020/CSC/074', 'S11289', 1, 11, 'proper', '2023-09-05'),
+(18, 2, '2020/SB/020', 'S11309', 2, 3, 'proper', '2023-09-06'),
+(19, 2, '2020/SB/091', 'S11373', 2, 3, 'proper', '2023-09-06'),
+(20, 2, '2020/SB/001', 'S11293', 2, 4, 'proper', '2023-09-06'),
+(21, 2, '2020/SB/008', ' S11298', 2, 4, 'proper', '2023-09-06'),
+(22, 2, '2020/SB/010', 'S11299', 2, 4, 'proper', '2023-09-06'),
+(23, 2, '2020/SB/002', 'S11294', 2, 5, 'proper', '2023-09-06'),
+(24, 2, '2020/SB/005', 'S11296', 2, 5, 'proper', '2023-09-06'),
+(25, 2, '2020/SB/006', 'S11297', 2, 5, 'proper', '2023-09-06'),
+(26, 2, '2020/SB/012', 'S11301', 2, 2, 'proper', '2023-09-06'),
+(27, 2, '2020/SB/014', 'S11303', 2, 2, 'proper', '2023-09-06'),
+(28, 2, '2020/CSC/051', 's11267', 2, 1, 'proper', '2023-09-06');
 
 -- --------------------------------------------------------
 
@@ -458,10 +552,10 @@ INSERT INTO `unit` (`unitId`, `unitCode`, `name`, `subject`, `level`, `acYearAdd
 (1, 'CSC101S3', 'Foundations of Computer Science', 'CSC - Direct Intake', 1, 2017),
 (2, 'CSC102S3', 'Computer Programming I', 'CSC - Direct Intake', 1, 2017),
 (3, 'CSC103S3', 'Introduction to Computer Systems', 'CSC - Direct Intake', 1, 2017),
-(4, 'CSC102G3', 'CSC102G3', 'CSC', 1, 2017),
-(5, 'CSC104G2', 'CSC104G2', 'CSC', 1, 2017),
-(6, 'PMM103G3', 'PMM103G3', 'PMM', 1, 2017),
-(7, 'PMM104G2', 'PMM104G2', 'PMM', 1, 2017),
+(4, 'CSC102G3', ' Computer Programming I', 'CSC', 1, 2017),
+(5, 'CSC104G2', 'Design of Algorithms', 'CSC', 1, 2017),
+(6, 'PMM103G3', 'Foundations of Mathematics', 'PMM', 1, 2017),
+(7, 'PMM104G2', 'Calculus', 'PMM', 1, 2017),
 (8, 'AMM103G3', 'AMM103G3', 'AMM', 1, 2017),
 (9, 'AMM104G2', 'AMM104G2', 'AMM', 1, 2017),
 (10, 'STA103G3', 'STA103G3', 'STA', 1, 2017),
@@ -680,7 +774,7 @@ ALTER TABLE `unit_sub_exam`
 -- AUTO_INCREMENT for table `admin_details`
 --
 ALTER TABLE `admin_details`
-  MODIFY `adminId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `adminId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `combination`
@@ -692,25 +786,25 @@ ALTER TABLE `combination`
 -- AUTO_INCREMENT for table `exam_reg`
 --
 ALTER TABLE `exam_reg`
-  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `stud_exam_reg`
 --
 ALTER TABLE `stud_exam_reg`
-  MODIFY `regId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `regId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `unit`
 --
 ALTER TABLE `unit`
-  MODIFY `unitId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `unitId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT for table `unit_sub_exam`
 --
 ALTER TABLE `unit_sub_exam`
-  MODIFY `exam_unit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `exam_unit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- Constraints for dumped tables
