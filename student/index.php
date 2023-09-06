@@ -122,7 +122,6 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
         </div>   
     </nav>
 
-        
 
     <?php if (isset($_GET['error'])) { ?>
         <div class="exam-false fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
