@@ -46,7 +46,6 @@ $errors = array();
 $units = array();
 $regNo = $_SESSION['userid'];
 
-
 $selectSQL = "SELECT * FROM student WHERE regNo = '$regNo';";
 $selectQuery = mysqli_query($con, $selectSQL);
 $user = mysqli_fetch_assoc($selectQuery);
@@ -57,7 +56,7 @@ $examDetails = mysqli_query($con, $examDetailsSQL);
 $exam = mysqli_fetch_assoc($examDetails);
 $exam_id = $exam['exam_id'];
 if (mysqli_num_rows($examDetails) == 0) {
-    header("Location: exaexam_reg.php?error=Sorry! There is no exams to register");
+    header("Location: index.php?error=Sorry! There is no exams to register");
     exit();
 }
 
@@ -200,7 +199,7 @@ function setSelected($fieldName, $fieldValue) {
                             exit();
                         }
                     } else {
-                        header("Location: exam_reg.php?error=Something-went-wrong");
+                        header("Location: index.php?error=Something-went-wrong");
                         exit();
                     }
 
@@ -275,10 +274,11 @@ function setSelected($fieldName, $fieldValue) {
                                 $stud_exam_reg_sql = "INSERT INTO stud_exam_reg(exam_id, stud_regNo, indexNo, level, combId, type, reg_date) VALUES($exam_id, '$regNo', '$indexNo', $level, $combination, '$type', '$date')";
                                 $stud_exam_reg_query = mysqli_query($con, $stud_exam_reg_sql);
 
-                                if (!$stud_exam_reg_query) {
-                                    header("Location: exam_reg.php?error=Something-went-wrong");
-                                    exit();
-                                }
+                        if (!$stud_exam_reg_query) {
+                            header("Location: index.php?error=Something-went-wrong");
+                            exit();
+                        }
+
                                 $regId = mysqli_insert_id($con);
                                 $inserted = true;
 
@@ -301,6 +301,9 @@ function setSelected($fieldName, $fieldValue) {
                                 header("Location: index.php?error=You are already registered for the same level, type, and exam.<br>You can edit your existing registration through the menu");
 
                             }
+
+
+
                         }
                     }
                 }
@@ -455,7 +458,6 @@ function setSelected($fieldName, $fieldValue) {
         userMenu.classList.toggle('-translate-y-full');
         userMenu.classList.toggle('lg:translate-x-full');
     }
-
 </script>
 <?php if(!(isset($_POST['step']) && $_POST['step']==1)){ ?>
 <script>
@@ -514,4 +516,3 @@ function setSelected($fieldName, $fieldValue) {
         window.history.replaceState(null, null, window.location.href);
     }
 </script>
-

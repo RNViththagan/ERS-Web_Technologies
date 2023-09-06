@@ -3,7 +3,7 @@
 $hostname = "localhost";
 $username = 'root';
 $password = '';
-$dbname = 'ers_db';
+$dbname = 'ers_fos_db';
 
 $con = mysqli_connect($hostname, $username, $password, $dbname);
 
