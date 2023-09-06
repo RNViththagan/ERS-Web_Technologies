@@ -64,10 +64,6 @@ require_once("../config/postSender.php");
 <div id="nextSibling" class="transition-all ml-[300px] h-auto flex items-center justify-center py-20">
     <div class = "card drop-shadow-xl">
         <?php
-//        print_r($_POST);
-//        echo "<br>";
-//        print_r($_GET);
-
         if ($_SESSION['role'] == "Admin_Student") {
             if(isset($_GET['page'])){
                 if($_GET['page'] === "stud"){

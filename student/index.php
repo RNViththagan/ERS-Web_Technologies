@@ -18,21 +18,10 @@ elseif (isset($_SESSION['role'])) {
 include("../config/connect.php");
 $errors = array();
 $regNo = $_SESSION['userid'];
-$selectSQL = "SELECT * FROM student WHERE regNo = '$regNo';";
-$selectQuery = mysqli_query($con, $selectSQL);
-$user = mysqli_fetch_assoc($selectQuery);
 
-$title = isset($user["title"]) ? $user["title"] : "";
-$fullName = isset($user["fullName"]) ? $user["fullName"] : "";
-$nameWithInitial = isset($user["nameWithInitial"]) ? $user["nameWithInitial"] : "";
-$email = isset($user["email"]) ? $user["email"] : "";
-// $index = isset($user["indexNumber"]) ? $user["indexNumber"] : "";
-$userDistrict = isset($user["district"]) ? $user["district"] : "";
-$mobileNo = isset($user["mobileNo"]) ? $user["mobileNo"] : "";
-$landlineNo = isset($user["landlineNo"]) ? $user["landlineNo"] : "";
-$home_address = isset($user["homeAddress"]) ? $user["homeAddress"] : "";
-$jaffna_address = isset($user["addressInJaffna"]) ? $user["addressInJaffna"] : "";
-$profile_img = isset($user['profile_img']) ? $user['profile_img'] : "blankProfile.png";
+// if (isset($_POST['deleteConfirm'])) {
+
+// }
 
 if (isset($_POST["submit"]))  {
     $title= $_POST["title"];
@@ -69,6 +58,22 @@ if (isset($_POST["submit"]))  {
 
 }
 
+
+$selectSQL = "SELECT * FROM student WHERE regNo = '$regNo';";
+$selectQuery = mysqli_query($con, $selectSQL);
+$user = mysqli_fetch_assoc($selectQuery);
+
+$title = isset($user["title"]) ? $user["title"] : "";
+$fullName = isset($user["fullName"]) ? $user["fullName"] : "";
+$nameWithInitial = isset($user["nameWithInitial"]) ? $user["nameWithInitial"] : "";
+$email = isset($user["email"]) ? $user["email"] : "";
+// $index = isset($user["indexNumber"]) ? $user["indexNumber"] : "";
+$userDistrict = isset($user["district"]) ? $user["district"] : "";
+$mobileNo = isset($user["mobileNo"]) ? $user["mobileNo"] : "";
+$landlineNo = isset($user["landlineNo"]) ? $user["landlineNo"] : "";
+$home_address = isset($user["homeAddress"]) ? $user["homeAddress"] : "";
+$jaffna_address = isset($user["addressInJaffna"]) ? $user["addressInJaffna"] : "";
+$profile_img = isset($user['profile_img']) ? $user['profile_img'] : "blankProfile.png";
 
 $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', 'Badulla', 'Batticaloa', 'Gampaha', 'Hambantota', 'Jaffna', 'Kalutara', 'Kegalle', 'Kilinochchi', 'Kurunegala', 'Mannar', 'Matale', 'Matara', 'Moneragala', 'Mullativu', 'Nuwara Eliya', 'Polonnaruwa', 'Puttalam', 'Ratnapura', 'Trincomalee', 'Vavuniya'];
 
@@ -122,6 +127,7 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
         </div>   
     </nav>
 
+        
 
     <?php if (isset($_GET['error'])) { ?>
         <div class="exam-false fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
@@ -138,6 +144,7 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
             </form>
         </div>
     <?php } ?>
+
 
     <div class="body-sec my-[20vh]">
         <div class="container m-auto">
@@ -279,6 +286,7 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                             <th class="font-semibold border-gray-100 border-x-2">Semester</th>
                             <th class="font-semibold border-gray-100 border-x-2 ">Subject<br>Combination</th>
                             <th <?php if($exreg) echo "colspan=2"?> class="font-semibold">Action</th>
+
                         </thead>
                         <tbody class="text-center ">
                             <?php
@@ -348,6 +356,9 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
 
                 </div>
             <?php } ?> 
+
+
+            
         </div>
     </div>
 

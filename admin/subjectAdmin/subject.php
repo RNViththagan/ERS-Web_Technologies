@@ -29,7 +29,7 @@
     $sublist = mysqli_query($con, $sql);
 
 
-?>
+    ?>
 
 
 <div class="flex flex-col items-center justify-around gap-5">
