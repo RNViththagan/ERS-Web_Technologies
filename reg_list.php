@@ -21,7 +21,7 @@ function setSelected($fieldName, $fieldValue) {
 
                 <?php
                 if ($form == "select") {
-                    $examID = $_GET['exam_id'];
+                    $examID = $aExamID;
 
                     $sql = "SELECT * FROM `exam_reg` WHERE exam_id = '$examID'";
                     $result = mysqli_query($con, $sql);

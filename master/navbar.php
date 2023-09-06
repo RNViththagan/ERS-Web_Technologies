@@ -50,7 +50,7 @@
       <?php if(isset($curExam)){?>
           <a
                   id="dashboardLink"
-                  href="index.php?page=viewReg"
+                  href="<?php echo $rpath;?>index.php?page=viewReg"
                   class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
               <i class="bi bi-pencil-square text-xl"></i>
               <span class="transition-all">View Registrations</span>
