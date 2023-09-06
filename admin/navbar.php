@@ -1,4 +1,3 @@
-
 <nav
   id="navBar"
   class="fixed top-0 bottom-0 lg:left-0 py-5 px-7 w-[300px] bg-white drop-shadow-sm transition-all">
@@ -51,6 +50,7 @@
             <i class="bi bi-list-nested text-xl"></i>
             <span class="transition-all">Subjects</span>
         </a>
+        <a
         <a
             id="dashboardLink"
             href="index.php?page=subComb"
