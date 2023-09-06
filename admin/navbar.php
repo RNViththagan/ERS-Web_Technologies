@@ -55,7 +55,7 @@
             id="dashboardLink"
             href="index.php?page=subComb"
             class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
-            <i class="bi bi-list-nested text-xl"></i>
+            <i class="bi bi-intersect text-xl"></i>
             <span class="transition-all">Subject combination</span>
             </a>
         <a
@@ -129,8 +129,6 @@
     }
   }
 
-  dashLinks.addEventListener("click", function () {
-    this.classList.add("active");
-  });
+
 </script>
 
