@@ -536,7 +536,29 @@ INSERT INTO `unit` (`unitId`, `unitCode`, `name`, `subject`, `level`, `acYearAdd
 (79, 'AMM201G3', 'Mathematical Methods', 'AMM', 2, 2017),
 (80, 'AMM202G2', 'Fluid Dynamics', 'AMM', 2, 2017),
 (81, 'AMM203G3', 'Linear Programming', 'AMM', 2, 2017),
-(82, 'AMM204G2', 'Linear Algebra and Analytic Geometry', 'AMM', 2, 2017);
+(82, 'AMM204G2', 'Linear Algebra and Analytic Geometry', 'AMM', 2, 2017),
+(83, 'CSC302G2', 'CSC302G2', 'CSC', 3, 2017),
+(84, 'CSC304G3', 'CSC304G3', 'CSC304G3', 3, 2017),
+(85, 'PMM303G3', 'PMM303G3', 'PMM', 3, 2017),
+(86, 'PMM304G2', 'PMM304G2', 'PMM', 3, 2017),
+(87, 'AMM303G2', 'AMM303G2', 'AMM', 3, 2017),
+(88, 'AMM304G2', 'AMM304G2', 'AMM', 3, 2017),
+(89, 'AMM305G2', 'AMM305G2', 'AMM', 3, 2017),
+(90, 'STA303G2', 'STA303G2', 'STA', 3, 2017),
+(91, 'STA304G2', 'STA304G2', 'STA', 3, 2017),
+(92, 'STA305G2', 'STA305G2', 'STA', 3, 2017),
+(93, 'PHY301G2', 'PHY301G2', 'PHY', 3, 2017),
+(94, 'PHY303G3', 'PHY303G3', 'PHY', 3, 2017),
+(95, 'PHY305G2', 'PHY305G2', 'PHY', 3, 2017),
+(96, 'CSC301M3', 'CSC301M3', 'CSCM', 3, 2017),
+(97, 'CSC303M3', 'CSC303M3', 'CSCM', 3, 2017),
+(98, 'CSC304M3', 'CSC304M3', 'CSCM', 3, 2017),
+(99, 'CSC306M3', 'CSC306M3', 'CSCM', 3, 2017),
+(100, 'CSC307M3', 'CSC307M3', 'CSCM', 3, 2017),
+(101, 'MMT301M3', 'MMT301M3', 'MMT', 3, 2017),
+(102, 'MMT304M3', 'MMT304M3', 'MMT', 3, 2017),
+(103, 'MMT306M3', 'MMT307M2', 'MMT', 3, 2017);
+
 
 -- --------------------------------------------------------
 
