@@ -39,6 +39,23 @@
       <i class="bi bi-pencil-square text-xl"></i>
       <span class="transition-all">Exams</span>
     </a>
+      <?php
+      $getCurrentExam = "SELECT * FROM exam_reg WHERE status = 'closed'";
+      $result = mysqli_query($con, $getCurrentExam);
+
+      if ($result->num_rows > 0) {
+          $curExam = mysqli_fetch_assoc($result);
+      }
+      ?>
+      <?php if(isset($curExam)){?>
+          <a
+                  id="dashboardLink"
+                  href="index.php?page=viewReg"
+                  class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
+              <i class="bi bi-pencil-square text-xl"></i>
+              <span class="transition-all">View Registrations</span>
+          </a>
+      <?php } ?>
 
     <a
       id="dashboardLink"

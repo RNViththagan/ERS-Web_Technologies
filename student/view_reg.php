@@ -110,9 +110,14 @@ if(isset($_POST['regId'])) {
         </ul>
     </div>
 </nav>
-
+<div class="body-sec my-[20vh]">
+    <div class="container m-auto">
+        <div class="card w-11/12 m-auto overflow-x-auto overflow-y-auto ">
 
         <?php include("../reg_list.php")?>
+        </div>
+    </div>
+</div>
 
 
 </body>

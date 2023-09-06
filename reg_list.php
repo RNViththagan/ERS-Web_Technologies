@@ -18,9 +18,7 @@ function setSelected($fieldName, $fieldValue) {
 
 
 
-    <div class="body-sec my-[20vh]">
-        <div class="container m-auto">
-            <div class="card w-11/12 m-auto">
+
                 <?php
                 if ($form == "select") {
                     $examID = $_GET['exam_id'];
@@ -78,7 +76,7 @@ function setSelected($fieldName, $fieldValue) {
                 <?php function displayForm($row) {
                     global $examID;
                     ?>
-                    <form action="reg_list.php" method="post">
+                    <form action="" method="post">
                         <div class="detail-row !w-full">
                             <input type="hidden" name="exam_id" value="<?php echo $examID?>">
                             <label class="hidden lg:block" for="type">Type: <span class="text-red-500">*</span></label>

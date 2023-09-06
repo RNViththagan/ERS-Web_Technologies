@@ -70,6 +70,9 @@ require_once("../config/postSender.php");
             if ($_GET['page'] === "listAdmins") {
                 include("list_admins.php");
             }
+            else if ($_GET['page'] === "viewReg") {
+                include("viewReg.php");
+            }
             else if ($_GET['page'] === "viewAdmin") {
                if(isset($_POST['adminId']))
                     include("viewAdmin.php");
