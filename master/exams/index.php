@@ -38,7 +38,7 @@ require_once("../../config/adminName.php");
 
 <?php
     $rpath = "../";
-    require_once("../navbar.php")
+    include("../navbar.php")
 ?>
 
 <div id="nextSibling" class="transition-all ml-[300px] h-auto flex items-center justify-center py-20">

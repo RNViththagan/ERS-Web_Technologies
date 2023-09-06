@@ -61,7 +61,7 @@ require_once("../config/postSender.php");
 
 
 <div id="nextSibling" class="transition-all ml-[300px] h-auto flex items-center justify-center py-20">
-    <div class="card drop-shadow-xl">
+    <div class="card drop-shadow-xl <?php if (isset($_GET['page']) && ($_GET['page'] === "viewReg")) echo "overflow-y-auto" ?>">
         <?php
         // print_r($_POST);
         // echo "<br>";
