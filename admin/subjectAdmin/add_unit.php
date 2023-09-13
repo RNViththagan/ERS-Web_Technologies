@@ -83,7 +83,7 @@
             <label for="acYear">Academic Year: </label>
             <input type="text" name="acYear" class="col-span-2 w-full h-full border border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" required>
         </div>
-        
+
         <div class="w-full grid grid-cols-2 items-center h-10 gap-10 mt-5">
             <input type="button" value="< Back" onclick="history.back()" class="btn outline-btn">
             <input type="submit" name="submit" value="Add" class="btn fill-btn">

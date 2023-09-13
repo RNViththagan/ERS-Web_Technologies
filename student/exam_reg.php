@@ -301,6 +301,9 @@ function setSelected($fieldName, $fieldValue) {
                                 header("Location: index.php?error=You are already registered for the same level, type, and exam.<br>You can edit your existing registration through the menu");
 
                             }
+
+
+
                         }
                     }
                 }
@@ -455,7 +458,6 @@ function setSelected($fieldName, $fieldValue) {
         userMenu.classList.toggle('-translate-y-full');
         userMenu.classList.toggle('lg:translate-x-full');
     }
-
 </script>
 <?php if(!(isset($_POST['step']) && $_POST['step']==1)){ ?>
 <script>
@@ -514,4 +516,3 @@ function setSelected($fieldName, $fieldValue) {
         window.history.replaceState(null, null, window.location.href);
     }
 </script>
-
