@@ -63,7 +63,7 @@ require_once("../../config/adminName.php");
                 echo "<h1>error </h1>" . $con->error;
                 include("exam_edit.php");
             } else
-                include "exam_mgmt.php";
+                header("Location:../exams");
 
 
         } else if (isset($_POST['add_exm'])) {

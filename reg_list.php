@@ -51,10 +51,15 @@ function setSelected($fieldName, $fieldValue) {
                     $type = mysqli_real_escape_string($con, $type);
                     $level = (int)$level; // Assuming level is an integer
 
-                    $coursesSQL = "SELECT usem.unitId, u.unitCode
-                FROM unit_sub_exam usem
-                INNER JOIN unit u ON u.unitId = usem.unitId
-                WHERE usem.exam_id = $examID AND usem.type = '$type' AND u.level = $level ORDER BY u.unitCode";
+                    $coursesSQL = "SELECT DISTINCT usem.unitId, u.unitCode
+                        FROM unit_sub_exam usem
+                        INNER JOIN unit u ON u.unitId = usem.unitId
+                        INNER JOIN combination_subjects cs ON cs.subject = u.subject
+                        WHERE usem.exam_id = $examID
+                          AND usem.type = '$type'
+                          AND u.level = $level
+                        ORDER BY cs.combinationID, u.unitCode";
+
 
 
                     $coursesListResult = mysqli_query($con, $coursesSQL);
@@ -106,15 +111,15 @@ function setSelected($fieldName, $fieldValue) {
                     global $con;?>
                     <table class="w-11/12 mx-auto mt-8 rounded-lg text-xs lg:text-base">
                         <thead class="bg-blue-100 h-20 lg:h-32">
-                        <th class="font-semibold">No.</th>
-                            <th class="font-semibold border-gray-100 border-x-2">Reg No.</th>
-                            <th class="font-semibold border-gray-100 border-x-2"><Index No.</th>
-                            <th class="font-semibold border-gray-100 border-x-2">title</th>
-                            <th class="font-semibold border-gray-100 border-x-2">Name with initials</th>
-                            <th class="font-semibold border-gray-100 border-x-2">Combination</th>
+                        <th class="font-semibold px-2">No.</th>
+                            <th class="font-semibold border-gray-100 border-x-2 px-8">Reg No</th>
+                            <th class="font-semibold border-gray-100 border-x-2 px-8">Index No</th>
+                            <th class="font-semibold border-gray-100 border-x-2 px-8">Title</th>
+                            <th class="font-semibold border-gray-100 border-x-2 px-8">Name with initials</th>
+                            <th class="font-semibold border-gray-100 border-x-2 px-8">Combination</th>
                             <?php
                                 foreach ($courseColumns as $course) {
-                                    echo "<th class=\"font-semibold border-gray-100 border-x-2 transform -rotate-90\">$course[1]</th>";
+                                    echo "<th class=\"font-semibold border-gray-100 border-x-2 -rotate-90 \">$course[1]</th>";
                                 }
                             ?>
                             
