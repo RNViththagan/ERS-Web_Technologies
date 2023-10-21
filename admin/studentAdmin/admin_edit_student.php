@@ -46,7 +46,7 @@ if (isset($_POST['save'])) {
         $homeAddress = $_POST["homeAddress"];
         $addressInJaffna = $_POST["addressInJaffna"];
 
-        $query = "UPDATE student INNER JOIN student_check ON student.regNo = student_check.regNo SET student_check.regNo = '$newRegNo', student_check.email = '$email', student_check.status = '$status', student.fullName = '$fullName', student.nameWithInitial = '$nameWithInitial', student.district = '$district', student.mobileNo = '$mobileNo', student.landlineNo = '$landlineNo', student.homeAddress = '$homeAddress', student.addressInJaffna = '$addressInJaffna' WHERE student.regNo = '" . $regNo . "'";
+        $query = "UPDATE student INNER JOIN student_check ON student.regNo = student_check.regNo SET student.regNo = '$newRegNo' ,student_check.regNo = '$newRegNo', student_check.email = '$email', student_check.status = '$status', student.fullName = '$fullName', student.nameWithInitial = '$nameWithInitial', student.district = '$district', student.mobileNo = '$mobileNo', student.landlineNo = '$landlineNo', student.homeAddress = '$homeAddress', student.addressInJaffna = '$addressInJaffna' WHERE student.regNo = '" . $regNo . "'";
         $result = mysqli_query($con, $query);
 
         if ($result) {
