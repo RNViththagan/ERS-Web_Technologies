@@ -154,7 +154,7 @@ function setSelected($fieldName, $fieldValue) {
         </div>
     </nav>
 
-    <div class="w-1/2 mx-auto mt-[22vh] mb-20">
+    <div class="w-11/12 lg:w-1/2 mx-auto mt-[22vh] mb-20">
         <div class="card ">
             <div class="w-11/12 mx-auto h-fit">
 
@@ -339,11 +339,11 @@ function setSelected($fieldName, $fieldValue) {
                             <?php foreach ($selectedUnits as $unitId) { ?>
                                 <input type="hidden" name="units[]" value="<?php echo $unitId; ?>" />
                             <?php } ?>
-                            <div class="detail-row !w-full">
+                            <div class="detail-row !flex lg:!grid !w-full">
                                 <label class="hidden lg:block" for="indexNo">Index Number: <span class="text-red-500">*</span></label>
                                 <input class="inputs tracking-wider" type="text" name="indexNo" value="<?php setValue("indexNo") ?>" placeholder="Index Number (SXXXXX)" required />
                             </div>
-                            <div class="detail-row !w-full">
+                            <div class="detail-row !flex lg:!grid !w-full">
                                 <label class="hidden lg:block" for="type">Type: <span class="text-red-500">*</span></label>
                                 <select class="inputs" id="type" name="type"  required>
                                     <option value="select" <?php setSelected('type', 'select') ?> disabled selected>Select Type</option>
@@ -351,7 +351,7 @@ function setSelected($fieldName, $fieldValue) {
                                     <option value="repeat" <?php setSelected('type', 'repeat') ?>>Repeat</option>
                                 </select>
                             </div>
-                            <div class="detail-row !w-full">
+                            <div class="detail-row !flex lg:!grid !w-full">
                                 <label class="hidden lg:block" for="level">Level: <span class="text-red-500">*</span></label>
                                 <select class="inputs" id="level" name="level" required>
                                     <option value="select" <?php setSelected('level', 'select') ?> disabled selected>Select Level</option>
@@ -361,7 +361,7 @@ function setSelected($fieldName, $fieldValue) {
                                     <option value="4" <?php setSelected('level', 4) ?>>Level 4</option>
                                 </select>
                             </div>
-                            <div class="detail-row !w-full">
+                            <div class="detail-row !flex lg:!grid !w-full">
                                 <label class="hidden lg:block" for="combination">Subject Combination: <span class="text-red-500">*</span></label>
                                 <select class="inputs" id="combination" name="combination" required>
                                     <option value="select" disabled selected>Select Combination</option>
@@ -427,9 +427,9 @@ function setSelected($fieldName, $fieldValue) {
                                 $unitId = $unit['unitId'];
                                 $isChecked = in_array($unitId, $selectedUnits);
                                 ?>
-                                <div class="grid grid-cols-3">
-                                    <label class="font-[400] col-span-2" for="<?php echo "unit_$count" ?>"><?php echo $unit['name'] ?></label>
-                                    <input class="border-blue-500" type="checkbox" name="units[]" value="<?php echo $unitId ?>" id="<?php echo "unit_$count" ?>" <?php if ($isChecked) echo "checked"; ?> />
+                                <div class="w-full flex items-center justify-between">
+                                    <label class="font-[400] text-xs lg:text-sm" for="<?php echo "unit_$count" ?>"><?php echo $unit['name'] ?></label>
+                                    <input class="border-blue-500 w-5" type="checkbox" name="units[]" value="<?php echo $unitId ?>" id="<?php echo "unit_$count" ?>" <?php if ($isChecked) echo "checked"; ?> />
                                 </div>
                                 <?php
                             }
