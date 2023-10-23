@@ -46,7 +46,6 @@ $errors = array();
 $units = array();
 $regNo = $_SESSION['userid'];
 
-
 $selectSQL = "SELECT * FROM student WHERE regNo = '$regNo';";
 $selectQuery = mysqli_query($con, $selectSQL);
 $user = mysqli_fetch_assoc($selectQuery);
@@ -57,7 +56,7 @@ $examDetails = mysqli_query($con, $examDetailsSQL);
 $exam = mysqli_fetch_assoc($examDetails);
 $exam_id = $exam['exam_id'];
 if (mysqli_num_rows($examDetails) == 0) {
-    header("Location: exaexam_reg.php?error=Sorry! There is no exams to register");
+    header("Location: index.php?error=Sorry! There is no exams to register");
     exit();
 }
 
@@ -155,7 +154,7 @@ function setSelected($fieldName, $fieldValue) {
         </div>
     </nav>
 
-    <div class="w-11/12 lg:w-1/2 mx-auto mt-[22vh] mb-20">
+    <div class="w-1/2 mx-auto mt-[22vh] mb-20">
         <div class="card ">
             <div class="w-11/12 mx-auto h-fit">
 
@@ -200,7 +199,7 @@ function setSelected($fieldName, $fieldValue) {
                             exit();
                         }
                     } else {
-                        header("Location: exam_reg.php?error=Something-went-wrong");
+                        header("Location: index.php?error=Something-went-wrong");
                         exit();
                     }
 
@@ -275,10 +274,11 @@ function setSelected($fieldName, $fieldValue) {
                                 $stud_exam_reg_sql = "INSERT INTO stud_exam_reg(exam_id, stud_regNo, indexNo, level, combId, type, reg_date) VALUES($exam_id, '$regNo', '$indexNo', $level, $combination, '$type', '$date')";
                                 $stud_exam_reg_query = mysqli_query($con, $stud_exam_reg_sql);
 
-                                if (!$stud_exam_reg_query) {
-                                    header("Location: exam_reg.php?error=Something-went-wrong");
-                                    exit();
-                                }
+                        if (!$stud_exam_reg_query) {
+                            header("Location: index.php?error=Something-went-wrong");
+                            exit();
+                        }
+
                                 $regId = mysqli_insert_id($con);
                                 $inserted = true;
 
@@ -301,6 +301,9 @@ function setSelected($fieldName, $fieldValue) {
                                 header("Location: index.php?error=You are already registered for the same level, type, and exam.<br>You can edit your existing registration through the menu");
 
                             }
+
+
+
                         }
                     }
                 }
@@ -336,11 +339,11 @@ function setSelected($fieldName, $fieldValue) {
                             <?php foreach ($selectedUnits as $unitId) { ?>
                                 <input type="hidden" name="units[]" value="<?php echo $unitId; ?>" />
                             <?php } ?>
-                            <div class="detail-row !flex lg:!grid !w-full">
+                            <div class="detail-row !w-full">
                                 <label class="hidden lg:block" for="indexNo">Index Number: <span class="text-red-500">*</span></label>
                                 <input class="inputs tracking-wider" type="text" name="indexNo" value="<?php setValue("indexNo") ?>" placeholder="Index Number (SXXXXX)" required />
                             </div>
-                            <div class="detail-row !flex lg:!grid !w-full">
+                            <div class="detail-row !w-full">
                                 <label class="hidden lg:block" for="type">Type: <span class="text-red-500">*</span></label>
                                 <select class="inputs" id="type" name="type"  required>
                                     <option value="select" <?php setSelected('type', 'select') ?> disabled selected>Select Type</option>
@@ -348,7 +351,7 @@ function setSelected($fieldName, $fieldValue) {
                                     <option value="repeat" <?php setSelected('type', 'repeat') ?>>Repeat</option>
                                 </select>
                             </div>
-                            <div class="detail-row !flex lg:!grid !w-full">
+                            <div class="detail-row !w-full">
                                 <label class="hidden lg:block" for="level">Level: <span class="text-red-500">*</span></label>
                                 <select class="inputs" id="level" name="level" required>
                                     <option value="select" <?php setSelected('level', 'select') ?> disabled selected>Select Level</option>
@@ -358,7 +361,7 @@ function setSelected($fieldName, $fieldValue) {
                                     <option value="4" <?php setSelected('level', 4) ?>>Level 4</option>
                                 </select>
                             </div>
-                            <div class="detail-row !flex lg:!grid !w-full">
+                            <div class="detail-row !w-full">
                                 <label class="hidden lg:block" for="combination">Subject Combination: <span class="text-red-500">*</span></label>
                                 <select class="inputs" id="combination" name="combination" required>
                                     <option value="select" disabled selected>Select Combination</option>
@@ -424,9 +427,9 @@ function setSelected($fieldName, $fieldValue) {
                                 $unitId = $unit['unitId'];
                                 $isChecked = in_array($unitId, $selectedUnits);
                                 ?>
-                                <div class="w-full flex items-center justify-between">
-                                    <label class="font-[400] text-xs lg:text-sm" for="<?php echo "unit_$count" ?>"><?php echo $unit['name'] ?></label>
-                                    <input class="border-blue-500 w-5" type="checkbox" name="units[]" value="<?php echo $unitId ?>" id="<?php echo "unit_$count" ?>" <?php if ($isChecked) echo "checked"; ?> />
+                                <div class="grid grid-cols-3">
+                                    <label class="font-[400] col-span-2" for="<?php echo "unit_$count" ?>"><?php echo $unit['name'] ?></label>
+                                    <input class="border-blue-500" type="checkbox" name="units[]" value="<?php echo $unitId ?>" id="<?php echo "unit_$count" ?>" <?php if ($isChecked) echo "checked"; ?> />
                                 </div>
                                 <?php
                             }
@@ -455,7 +458,6 @@ function setSelected($fieldName, $fieldValue) {
         userMenu.classList.toggle('-translate-y-full');
         userMenu.classList.toggle('lg:translate-x-full');
     }
-
 </script>
 <?php if(!(isset($_POST['step']) && $_POST['step']==1)){ ?>
 <script>
@@ -514,4 +516,3 @@ function setSelected($fieldName, $fieldValue) {
         window.history.replaceState(null, null, window.location.href);
     }
 </script>
-

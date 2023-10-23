@@ -82,7 +82,7 @@ $subarr .= "];";
                        placeholder="Number of Subjects" class="w-56 border border-gray-400 rounded-full py-2 px-5 outline-none focus:border-blue-500" required>
                 <button type="button" id="generateButton" class="btn fill-btn">Generate</button>
             </div>
-    
+
             <div id="dropdownContainer" class="mt-2 flex flex-col gap-2">
                 <!-- Dropdowns will be generated here -->
             </div>
@@ -100,7 +100,7 @@ $subarr .= "];";
         <?php
         $getCombinationsQuery = "SELECT * FROM combination";
         $combinations = mysqli_query($con, $getCombinationsQuery);
-    
+
         while ($combination = mysqli_fetch_assoc($combinations)) {
             echo "<tr class='h-10 odd:bg-blue-50'>";
             echo "<td>" . $combination['combinationID'] . "</td>";
@@ -109,11 +109,8 @@ $subarr .= "];";
         }
         ?>
     </table>
-    
+
 </div>
-
-
-
 <script>
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
@@ -145,13 +142,11 @@ $subarr .= "];";
         for (let i = 1; i <= generatedSubjects; i++) {
             const div = document.createElement('div');
             div.className = "flex items-center gap-4";
-            div.className = "flex items-center gap-4";
             const label = document.createElement('label');
             label.textContent = `Subject ${i}: `;
 
             const dropdown = document.createElement('select');
             dropdown.name = `subject${i}`;
-            dropdown.className = "w-56 border border-gray-400 rounded-full py-2 px-5 outline-none focus:border-blue-500";
             dropdown.className = "w-56 border border-gray-400 rounded-full py-2 px-5 outline-none focus:border-blue-500";
 
             for (let j = 0; j < subjects.length; j++) {

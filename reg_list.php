@@ -18,31 +18,10 @@ function setSelected($fieldName, $fieldValue) {
 
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link
-        rel="shortcut icon"
-        href="../assets/img/logo/ERS_logo_icon.ico"
-        type="image/x-icon" />
-    <title>ERS | Registered List</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script
-    src="https://kit.fontawesome.com/5ce4b972fd.js"
-    crossorigin="anonymous"></script>
-</head>
-<body>
-    <div class="body-sec my-[20vh]">
-        <div class="container m-auto">
-            <div class="card w-11/12 m-auto">
+
                 <?php
                 if ($form == "select") {
-                    $examID = $_GET['exam_id'];
+                    $examID = $aExamID;
 
                     $sql = "SELECT * FROM `exam_reg` WHERE exam_id = '$examID'";
                     $result = mysqli_query($con, $sql);
@@ -72,10 +51,15 @@ function setSelected($fieldName, $fieldValue) {
                     $type = mysqli_real_escape_string($con, $type);
                     $level = (int)$level; // Assuming level is an integer
 
-                    $coursesSQL = "SELECT usem.unitId, u.unitCode
-                FROM unit_sub_exam usem
-                INNER JOIN unit u ON u.unitId = usem.unitId
-                WHERE usem.exam_id = $examID AND usem.type = '$type' AND u.level = $level ORDER BY u.unitCode";
+                    $coursesSQL = "SELECT DISTINCT usem.unitId, u.unitCode
+                        FROM unit_sub_exam usem
+                        INNER JOIN unit u ON u.unitId = usem.unitId
+                        INNER JOIN combination_subjects cs ON cs.subject = u.subject
+                        WHERE usem.exam_id = $examID
+                          AND usem.type = '$type'
+                          AND u.level = $level
+                        ORDER BY cs.combinationID, u.unitCode";
+
 
 
                     $coursesListResult = mysqli_query($con, $coursesSQL);
@@ -97,7 +81,7 @@ function setSelected($fieldName, $fieldValue) {
                 <?php function displayForm($row) {
                     global $examID;
                     ?>
-                    <form action="reg_list.php" method="post">
+                    <form action="" method="post">
                         <div class="detail-row !w-full">
                             <input type="hidden" name="exam_id" value="<?php echo $examID?>">
                             <label class="hidden lg:block" for="type">Type: <span class="text-red-500">*</span></label>
@@ -127,15 +111,15 @@ function setSelected($fieldName, $fieldValue) {
                     global $con;?>
                     <table class="w-11/12 mx-auto mt-8 rounded-lg text-xs lg:text-base">
                         <thead class="bg-blue-100 h-20 lg:h-32">
-                        <th class="font-semibold">No.</th>
-                            <th class="font-semibold border-gray-100 border-x-2">Reg No.</th>
-                            <th class="font-semibold border-gray-100 border-x-2"><Index No.</th>
-                            <th class="font-semibold border-gray-100 border-x-2">title</th>
-                            <th class="font-semibold border-gray-100 border-x-2">Name with initials</th>
-                            <th class="font-semibold border-gray-100 border-x-2">Combination</th>
+                        <th class="font-semibold px-2">No.</th>
+                            <th class="font-semibold border-gray-100 border-x-2 px-8">Reg No</th>
+                            <th class="font-semibold border-gray-100 border-x-2 px-8">Index No</th>
+                            <th class="font-semibold border-gray-100 border-x-2 px-8">Title</th>
+                            <th class="font-semibold border-gray-100 border-x-2 px-8">Name with initials</th>
+                            <th class="font-semibold border-gray-100 border-x-2 px-8">Combination</th>
                             <?php
                                 foreach ($courseColumns as $course) {
-                                    echo "<th class=\"font-semibold border-gray-100 border-x-2 transform -rotate-90\">$course[1]</th>";
+                                    echo "<th class=\"font-semibold border-gray-100 border-x-2 -rotate-90 \">$course[1]</th>";
                                 }
                             ?>
                             
@@ -184,8 +168,7 @@ function setSelected($fieldName, $fieldValue) {
             </div>
         </div>
     </div>
-</body>
-</html>
+
 
 
 <script>

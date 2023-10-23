@@ -21,11 +21,11 @@ if (isset($_POST['filter'])) {
     if ($role != "none")
         $filterOp .= " role LIKE '$role%'";
     if ($dept != "none") {
-        if ($filterOp != "") $filterOp .= " And ";
+        if ($filterOp != "") $filterOp .= " AND ";
         $filterOp .= " department LIKE '%$dept%'";
     }
     if ($status != "none") {
-        if ($filterOp != "") $filterOp .= " And ";
+        if ($filterOp != "") $filterOp .= " AND ";
         $filterOp .= " status = '$status'";
     }
 }
@@ -34,9 +34,9 @@ if ($filterOp != "") $get_admins .= " And " . $filterOp;
 $searchOp = "";
 if (isset($_POST['search'])) {
     $search_key = $_POST['search_key'];
-    $searchOp = " admin.email like '%$search_key%' or name like '%$search_key%' or department like '%$search_key%'";
+    $searchOp = " admin.email like '%$search_key%' OR name like '%$search_key%' OR department like '%$search_key%'";
     if ($searchOp != "") {
-        $get_admins .= " And " . $searchOp;
+        $get_admins .= " AND (" . $searchOp.")";
     }
 }
 $forcount =$get_admins;

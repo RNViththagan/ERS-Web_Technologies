@@ -15,6 +15,7 @@ if (isset($_POST['unit_subjects'])) {
                                 WHERE unit_sub_exam.exam_id = $exam_id
                                         AND subject = '$subject'
                                         AND type = '$type'
+                                AND level = '$level'
                             );";
 
     if (!mysqli_query($con, $delete_query)) {

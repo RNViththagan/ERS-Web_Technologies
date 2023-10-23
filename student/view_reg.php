@@ -84,7 +84,7 @@ if(isset($_POST['regId'])) {
 <?php } ?>
 
 
-<nav class="w-full h-[15vh] min-h-fit drop-shadow-md bg-white fixed top-0 left-0">
+<nav class="w-full h-[15vh] min-h-fit drop-shadow-md bg-white fixed top-0 left-0 z-10">
     <div class="w-10/12 h-full m-auto flex items-center justify-between">
         <a href="index.php">
             <img src="../assets/img/logo/ERS_logo.gif" alt="logo" class="w-28 align-middle">
@@ -110,9 +110,14 @@ if(isset($_POST['regId'])) {
         </ul>
     </div>
 </nav>
-
+<div class="body-sec my-[20vh]">
+    <div class="container m-auto">
+        <div class="card w-11/12 m-auto overflow-x-auto overflow-y-auto ">
 
         <?php include("../reg_list.php")?>
+        </div>
+    </div>
+</div>
 
 
 </body>

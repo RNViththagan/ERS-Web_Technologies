@@ -43,25 +43,10 @@ require_once("../config/postSender.php");
     require_once("navbar.php")
 ?>
 
-<?php if (isset($_GET['error'])) { ?>
-    <div class="exam-false fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-        <form class="card h-40 w-1/2 flex flex-col items-center justify-around gap-7" action="index.php<?php echo (isset($_GET['page']))?"?page=".$_GET['page']:""?>" method="POST">
-            <p class="text-center"><?php echo $_GET['error'] ?></p>
-            <input class="btn fill-btn" type="submit" value="OK" name="ok">
-        </form>
-    </div>
-<?php } elseif (isset($_GET['success'])) { ?>
-    <div class="exam-false fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-        <form class="card h-40 w-1/2 flex flex-col items-center justify-around gap-7" action="index.php<?php echo (isset($_GET['page']))?"?page=".$_GET['page']:""?>" method="POST">
-            <p class="text-center text-green-700"><?php echo $_GET['success'] ?></p>
-            <input class="btn fill-btn !bg-green-700" type="submit" value="OK" name="ok">
-        </form>
-    </div>
-<?php } ?>
 
 
 <div id="nextSibling" class="transition-all ml-[300px] h-auto flex items-center justify-center py-20">
-    <div class="card drop-shadow-xl">
+    <div class="card drop-shadow-xl <?php if (isset($_GET['page']) && ($_GET['page'] === "viewReg")) echo "overflow-y-auto" ?>">
         <?php
         // print_r($_POST);
         // echo "<br>";
@@ -69,6 +54,9 @@ require_once("../config/postSender.php");
         if (isset($_GET['page'])) {
             if ($_GET['page'] === "listAdmins") {
                 include("list_admins.php");
+            }
+            else if ($_GET['page'] === "viewReg") {
+                include("viewReg.php");
             }
             else if ($_GET['page'] === "viewAdmin") {
                if(isset($_POST['adminId']))
@@ -97,6 +85,23 @@ require_once("../config/postSender.php");
         ?>
     </div>
 </div>
+
+<?php if (isset($_GET['error'])) { ?>
+    <div class="exam-false fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
+        <form class="card h-40 w-1/2 flex flex-col items-center justify-around gap-7" action="index.php<?php echo (isset($_GET['page']))?"?page=".$_GET['page']:""?>" method="POST">
+            <p class="text-center"><?php echo $_GET['error'] ?></p>
+            <input class="btn fill-btn" type="submit" value="OK" name="ok">
+        </form>
+    </div>
+<?php } elseif (isset($_GET['success'])) { ?>
+    <div class="exam-false fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
+        <form class="card h-40 w-1/2 flex flex-col items-center justify-around gap-7" action="index.php<?php echo (isset($_GET['page']))?"?page=".$_GET['page']:""?>" method="POST">
+            <p class="text-center text-green-700"><?php echo $_GET['success'] ?></p>
+            <input class="btn fill-btn !bg-green-700" type="submit" value="OK" name="ok">
+        </form>
+    </div>
+<?php } ?>
+
 
 </body>
 </html>
