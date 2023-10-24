@@ -69,9 +69,10 @@ if (isset($_POST['submit'])) {
             <label for="email">Email: </label>
             <input type="email" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" name="email" required>
         </div>
-        <div class="w-full grid grid-cols-3 items-center h-10 gap-5 mt-5 mb-10">
+        <div class="w-full grid grid-cols-3 items-center h-10 gap-5 mt-5 mb-2">
             <input type="button" value="< Back" onclick="history.back()" class="btn outline-btn">
             <input type="submit" class="col-span-2 w-full btn fill-btn" name="submit" value="Register">
         </div>
+        <a href="index.php?page=bulk" class="w-full btn outline-btn !text-green-600 !border-green-500 !bg-white hover:!bg-green-500 hover:!text-white">Bulk Upload</a>
     </form>
 </div>
