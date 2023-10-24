@@ -40,6 +40,23 @@
           <i class="bi bi-people-fill text-xl"></i>
           <span class="transition-all">Students</span>
         </a>
+        <?php
+        $getCurrentExam = "SELECT * FROM exam_reg WHERE status = 'draft'";
+        $result = mysqli_query($con, $getCurrentExam);
+
+        if ($result->num_rows > 0) {
+            $curExam = mysqli_fetch_assoc($result);
+        }
+        ?>
+        <?php if(isset($curExam)){?>
+            <a
+                    id="dashboardLink"
+                    href="index.php?page=addIndex"
+                    class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
+                <i class="bi bi-pencil-square text-xl"></i>
+                <span class="transition-all">Add Index Numbers</span>
+            </a>
+        <?php } ?>
     <?php } ?>
 
     <?php if ($_SESSION['role'] == "Admin_Subject") {?>
@@ -50,7 +67,6 @@
             <i class="bi bi-list-nested text-xl"></i>
             <span class="transition-all">Subjects</span>
         </a>
-        <a
         <a
             id="dashboardLink"
             href="index.php?page=subComb"

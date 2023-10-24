@@ -11,9 +11,11 @@ Then open the project file in composer teminal. (open the composer terminal and 
 then type `composer install` to install the neccesary libraries and packages. </br>
 
 Then enable these extensions in your `php.ini` file (`C:\xampp\php`).</br>
-<ol><li>extension=gd</li><li>extension=fileinfo</li><li>extension=zip</li></ol></br></br>
+
+<ol><li>extension=gd</li><li>extension=fileinfo</li><li>extension=zip</li></ol></br>
 
 To enable this, you have to do the following:</br>
+
 <ol>
 <li>located the file `c:/xampp/php/php`</li>
 <li>open the file</li>
