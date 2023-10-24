@@ -2,8 +2,8 @@
 
 Once you clone this repository you need to install the comsoper software. <a href="https://getcomposer.org/download/">Click here to download</a>
 </br>
-
-Then open the project file in composer teminal. (open the terminal and then `cd C:/xampp/htdocs/ERS-Web_Technologies` and then enter).</br>
+if you dont download `vendor` folder, then folow the bellow step. otherwise skip this step and do the next one:
+Then open the project file in composer teminal. (open the composer terminal and then `cd C:/xampp/htdocs/ERS-Web_Technologies` and then enter).</br>
 then type `composer install` to install the neccesary libraries and packages. </br>
 
 If there is any error while doing any of these steps make sure you enable <ol><li>extension=gd</li><li>extension=fileinfo</li><li>extension=zip</li></ol> in your php.ini file. (`C:\xampp\php`)
