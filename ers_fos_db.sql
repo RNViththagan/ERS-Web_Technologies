@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 05, 2023 at 11:14 PM
+-- Generation Time: Oct 25, 2023 at 11:06 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -40,10 +40,10 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`email`, `password`, `name`, `role`, `status`) VALUES
-('admin_master@nexus.com', '$2y$10$DWDHkfoxdQr/RHb7sdiaMeIy./lOZmFBQcOZaTedLFxTTB1xu.TEi', 'Viththagan', 'Admin_Master', 'active'),
+('admin_master@nexus.com', '$2y$10$DWDHkfoxdQr/RHb7sdiaMeIy./lOZmFBQcOZaTedLFxTTB1xu.TEi', 'Master', 'Admin_Master', 'active'),
 ('asintha1997@gmail.com', '$2y$10$pIZwkWacf0tf2p0UxzazRuPlRM.rvB4qKHdFSJ.jaxZqf0lTlt1SS', 'Asintha', 'Admin_Student', 'active'),
 ('stud_admin1@nexus.com', '$2y$10$IUzrF9GhBdTzDXXbmxA19.XZuxKo9le3hETfrRsqKG35goK4w1npS', 'Student admin 1', 'Admin_Student', 'active'),
-('subj_admin1@nexus.com', '$2y$10$6IniUusMCkDLxZFhTVWyL.Nk0BBkFuzzLUzSCdFOqy32NexOPRNvi', 'Asintha', 'Admin_Subject', 'active'),
+('subj_admin1@nexus.com', '$2y$10$6IniUusMCkDLxZFhTVWyL.Nk0BBkFuzzLUzSCdFOqy32NexOPRNvi', 'Visithan', 'Admin_Subject', 'active'),
 ('subj_admin2@nexus.com', '$2y$10$7v728eNqfjD61XwpVjLwvO/o4cNMvUmDW7QeqluimnhJsGNSzaqt.', 'Shankar', 'Admin_Subject', 'active'),
 ('viththagan@nexus.com', '$2y$10$HrF7DQS3U0xzZ5Xaom37LO4EAWXBK9zhhPBOsD.YqeIMvE4.kHgyG', 'viththagan', 'Admin_Subject', 'active');
 
@@ -68,9 +68,9 @@ CREATE TABLE `admin_details` (
 --
 
 INSERT INTO `admin_details` (`adminId`, `email`, `title`, `fullName`, `department`, `mobileNo`, `profile_img`) VALUES
-(1, 'admin_master@nexus.com', 'Mr', 'Roy Nesarajah Viththagan', 'Computer Science', 771234567, '1.jpg'),
-(2, 'stud_admin1@nexus.com', '', 'John cena', 'CSC', NULL, NULL),
-(3, 'subj_admin1@nexus.com', 'Mr', 'Subject Admin One', 'DCS', 774589852, '3.jpg'),
+(1, 'admin_master@nexus.com', 'Mr', 'Master', 'FoS', 771234567, '1.jpg'),
+(2, 'stud_admin1@nexus.com', 'Mr', 'Thileepan T', 'CSC', 2147483647, 'blankProfile.png'),
+(3, 'subj_admin1@nexus.com', 'Mr', 'Visithan', 'DCS', 774589852, '3.jpg'),
 (4, 'viththagan@nexus.com', '', NULL, NULL, NULL, NULL),
 (5, 'subj_admin2@nexus.com', '', '', 'Bio', NULL, NULL),
 (6, 'asintha1997@gmail.com', '', 'Asintha udeshitha', 'Student', 703833130, NULL);
@@ -180,7 +180,52 @@ CREATE TABLE `exam_reg` (
 
 INSERT INTO `exam_reg` (`exam_id`, `academic_year`, `semester`, `status`, `closing_date`, `date_created`) VALUES
 (1, '2020', '1', 'hidden', '2023-08-28', '2023-08-28'),
-(2, '2020', '2', 'registration', '2023-09-30', '2023-09-01');
+(2, '2020', '2', 'draft', '2023-09-14', '2023-09-01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exam_stud_index`
+--
+
+CREATE TABLE `exam_stud_index` (
+  `exam_id` int(11) NOT NULL,
+  `regNo` varchar(12) NOT NULL,
+  `indexNo` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `exam_stud_index`
+--
+
+INSERT INTO `exam_stud_index` (`exam_id`, `regNo`, `indexNo`) VALUES
+(2, '2020/CSC/007', 'S11228'),
+(2, '2020/CSC/033', 'S11251'),
+(2, '2020/CSC/051', 'S11267'),
+(2, '2020/CSC/074', 'S11287'),
+(2, '2020/SB/001', 'S11293'),
+(2, '2020/SB/002', 'S11294'),
+(2, '2020/SB/005', 'S11296'),
+(2, '2020/SB/006', 'S11297'),
+(2, '2020/SB/008', 'S11298'),
+(2, '2020/SB/010', 'S11299'),
+(2, '2020/SB/012', 'S11301'),
+(2, '2020/SB/014', 'S11303'),
+(2, '2020/SB/020', 'S11309'),
+(2, '2020/SB/091', 'S11373'),
+(2, '2020/SP/007', 'S11032'),
+(2, '2020/SP/009', 'S11034'),
+(2, '2020/SP/015', 'S11040'),
+(2, '2020/SP/017', 'S11042'),
+(2, '2020/SP/018', 'S11043'),
+(2, '2020/SP/041', 'S11057'),
+(2, '2020/SP/044', 'S11060'),
+(2, '2020/SP/070', 'S11075'),
+(2, '2020/SP/092', 'S11089'),
+(2, '2020/SP/121', 'S11108'),
+(2, '2020/SP/145', 'SP19030'),
+(2, '2020/SP/170', 'S11145'),
+(2, '2021/CSC/080', 'S11749');
 
 -- --------------------------------------------------------
 
@@ -198,19 +243,10 @@ CREATE TABLE `reg_units` (
 --
 
 INSERT INTO `reg_units` (`regId`, `exam_unit_id`) VALUES
-(13, 1),
 (14, 2),
 (14, 21),
 (14, 24),
 (14, 25),
-(15, 2),
-(15, 21),
-(15, 22),
-(15, 23),
-(15, 24),
-(15, 25),
-(17, 26),
-(17, 27),
 (18, 48),
 (18, 50),
 (18, 53),
@@ -285,12 +321,6 @@ INSERT INTO `reg_units` (`regId`, `exam_unit_id`) VALUES
 (27, 63),
 (27, 64),
 (27, 65),
-(28, 31),
-(28, 32),
-(28, 33),
-(28, 38),
-(28, 39),
-(28, 41),
 (29, 48),
 (29, 50),
 (29, 76),
@@ -375,7 +405,33 @@ INSERT INTO `reg_units` (`regId`, `exam_unit_id`) VALUES
 (40, 73),
 (40, 74),
 (40, 76),
-(40, 78);
+(40, 78),
+(42, 31),
+(42, 32),
+(42, 33),
+(42, 38),
+(42, 39),
+(43, 31),
+(43, 32),
+(43, 33),
+(43, 38),
+(43, 39),
+(43, 40),
+(43, 41),
+(44, 31),
+(44, 32),
+(44, 33),
+(44, 38),
+(44, 39),
+(44, 40),
+(44, 41),
+(45, 31),
+(45, 32),
+(45, 33),
+(45, 38),
+(45, 39),
+(45, 40),
+(45, 41);
 
 -- --------------------------------------------------------
 
@@ -406,9 +462,10 @@ INSERT INTO `student` (`regNo`, `title`, `nameWithInitial`, `fullName`, `distric
 ('2019/SP/178', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/007', 'Mr', 'C. R. B. Nilwakka', 'Chamod Rashmika Bandara Nilwakka', 'Kandy', '0772684933', '0779472689', 'No 4/56, Matale Rd, Wattegama.', 'Duvarakai, vamas lane, palali Rd, kondavil.', '2020CSC007.jpg'),
 ('2020/CSC/010', 'Ms', 'G.Dharshika', 'Dharshika Gnanaseelan', 'Kandy', '0767106659', '0812235149', '21/12B Riverdale Road, Anniwatta, Kandy.', '21/12B Riverdale Road, Anniwatta, Kandy.', 'blankProfile.png'),
+('2020/CSC/017', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/027', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/028', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-('2020/CSC/033', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2020/CSC/033', 'Ms', 'M.Sankavi', 'Mohan Sankavi', 'Vavuniya', '0716041059', 'N/A', 'No 7, NHDA Quarters, SLRC Lane, Park Road, Vavuniya.', 'Infront of Technical College, Brown Road, Jaffna.', '2020CSC033.jpg'),
 ('2020/CSC/046', 'Mr', 'RPAU Karunarathna', 'Asintha  udeshitha', 'Kegalle', '0728581211', '1234567890', 'Andoluwa', 'Andoluwa', '2020CSC046.png'),
 ('2020/CSC/050', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/CSC/051', 'Mr', 'R.N.Viththagan', 'Roy Nesarajah Viththagan', 'Jaffna', '0771234567', '0123456789', 'Jaffna', 'Jaffna', '2020CSC051.jpg'),
@@ -460,6 +517,7 @@ INSERT INTO `student` (`regNo`, `title`, `nameWithInitial`, `fullName`, `distric
 ('2020/SP/143', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/SP/145', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2020/SP/170', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('2021/CSC/028', NULL, '', '', '', '', '', '', '', NULL),
 ('2021/CSC/080', 'Ms', 'J. Varsha', 'Varsha Jeyarajalingam', 'Colombo', '0768766755', '0112363600', '12-3/2, Collingwood Place, Colombo-06.', '1082, K.K.S Road, Kokuvil, Jaffna', '2021CSC080.png');
 
 -- --------------------------------------------------------
@@ -487,9 +545,10 @@ INSERT INTO `student_check` (`regNo`, `email`, `password`, `status`, `verificati
 ('2019/SP/178', '178sp19@test.com', NULL, 'unregistered', NULL, 'not_verified'),
 ('2020/CSC/007', 'cnilwakka@gmail.com', '$2y$10$f64XVozpm4azju5H1fdZKe1QFSLr/U2QWLwojsETCK12/IHniPI9W', 'active', 0, 'verified'),
 ('2020/CSC/010', 'dharshikagnanaseelan4@gmail.com', '$2y$10$ewPtbft5YqpV6qkGcZjSL.s/hwCgiQjnYLOUjNRisKD9DLP7pHLhe', 'active', 0, 'verified'),
+('2020/CSC/017', 'kasunlakmal9821@gmail.com', '$2y$10$fVrs03BwAHRTou6ljZx5nOrMcMV0c30YI87gvIwmVaBg9gFUym2T2', 'unregistered', 936663, 'not_verified'),
 ('2020/CSC/027', 'kgobi24lk@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
-('2020/CSC/028', 'lahiruishan400@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
-('2020/CSC/033', 'sankavimohan2000@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
+('2020/CSC/028', 'lahiruishan400@gmail.com', '$2y$10$VOZ9Qtc5/AaVMQls8FKSOOUk0ujsoDHJIk4ZRBrsfUZF/CGEh/B5u', 'active', 0, 'verified'),
+('2020/CSC/033', 'sankavimohan2000@gmail.com', '$2y$10$vCwvApVHm39xjDlAvQtIlOpLYz1DsP0t2gx82RJI9kem7qIfUclHS', 'active', 0, 'verified'),
 ('2020/CSC/046', 'audeshitha@gmail.com', '$2y$10$IK1KYlGrrxEToFExo2It2OdClNukZTqXVd0Fg4cuyBDv7XNWt3ERi', 'active', 0, 'verified'),
 ('2020/CSC/050', 'nimantha.rathnayaka1999@gmail.com', NULL, 'unregistered', NULL, 'not_verified'),
 ('2020/CSC/051', 'viththagan1999@gmail.com', '$2y$10$43cjXmjEzaBbdy5aNR/LquaQqXrqVU9r/Hj4tcshbN9UUHhNlCzIO', 'active', 0, 'verified'),
@@ -542,6 +601,7 @@ INSERT INTO `student_check` (`regNo`, `email`, `password`, `status`, `verificati
 ('2020/SP/143', '2020SP143@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
 ('2020/SP/145', '2020SB145@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
 ('2020/SP/170', '2020SP170@gmail.com', '$2y$10$1SqgzSYrm/51NsExtP4cMOLbMk8CZFSij5NcusNmbnqENN3G9AyMO', 'active', 0, 'verified'),
+('2021/CSC/028', '2021CSC028@gmail.com', '$2y$10$fdxz.kjCMMdxLrhCYZSZjO6T8.w4ZuXRja8Giouo6LLsIaMEd28dO', 'active', 0, 'verified'),
 ('2021/CSC/080', 'varujeya@gmail.com', '$2y$10$ruNdUYfduFryNF3/X902i.8dglkW8jbUDgEqCens.3ub0vvLRGDfm', 'active', 0, 'verified');
 
 -- --------------------------------------------------------
@@ -554,45 +614,44 @@ CREATE TABLE `stud_exam_reg` (
   `regId` int(11) NOT NULL,
   `exam_id` int(11) NOT NULL,
   `stud_regNo` varchar(12) NOT NULL,
-  `indexNo` varchar(10) NOT NULL,
   `level` int(11) NOT NULL,
   `combId` int(11) NOT NULL,
   `type` enum('proper','repeat') NOT NULL,
-  `reg_date` DATE DEFAULT '2020-01-01'
+  `reg_date` date DEFAULT '2020-01-01'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `stud_exam_reg`
 --
 
-INSERT INTO `stud_exam_reg` (`regId`, `exam_id`, `stud_regNo`, `indexNo`, `level`, `combId`, `type`, `reg_date`) VALUES
-(13, 2, '2020/CSC/046', 'S1212', 2, 1, 'proper', '2023-09-05'),
-(14, 2, '2021/CSC/080', 'S11749', 1, 1, 'proper', '2023-09-05'),
-(15, 2, '2020/CSC/007', 'S11228', 1, 1, 'proper', '2023-09-05'),
-(17, 2, '2020/CSC/074', 'S11289', 1, 11, 'proper', '2023-09-05'),
-(18, 2, '2020/SB/020', 'S11309', 2, 3, 'proper', '2023-09-06'),
-(19, 2, '2020/SB/091', 'S11373', 2, 3, 'proper', '2023-09-06'),
-(20, 2, '2020/SB/001', 'S11293', 2, 4, 'proper', '2023-09-06'),
-(21, 2, '2020/SB/008', ' S11298', 2, 4, 'proper', '2023-09-06'),
-(22, 2, '2020/SB/010', 'S11299', 2, 4, 'proper', '2023-09-06'),
-(23, 2, '2020/SB/002', 'S11294', 2, 5, 'proper', '2023-09-06'),
-(24, 2, '2020/SB/005', 'S11296', 2, 5, 'proper', '2023-09-06'),
-(25, 2, '2020/SB/006', 'S11297', 2, 5, 'proper', '2023-09-06'),
-(26, 2, '2020/SB/012', 'S11301', 2, 2, 'proper', '2023-09-06'),
-(27, 2, '2020/SB/014', 'S11303', 2, 2, 'proper', '2023-09-06'),
-(28, 2, '2020/CSC/051', 's11267', 2, 1, 'proper', '2023-09-06'),
-(29, 2, '2020/SP/145', 'SP19030', 2, 6, 'proper', '2023-09-06'),
-(30, 2, '2020/SP/009', 'S11034', 2, 6, 'proper', '2023-09-06'),
-(31, 2, '2020/SP/070', 'S11075', 2, 8, 'proper', '2023-09-06'),
-(32, 2, '2020/SP/121', ' S11108', 2, 8, 'proper', '2023-09-06'),
-(33, 2, '2020/SP/170', 'S11145', 2, 8, 'proper', '2023-09-06'),
-(34, 2, '2020/SP/044', 'S11060', 2, 10, 'proper', '2023-09-06'),
-(35, 2, '2020/SP/092', 'S11089', 2, 10, 'proper', '2023-09-06'),
-(36, 2, '2020/SP/007', 'S11032', 2, 12, 'proper', '2023-09-06'),
-(37, 2, '2020/SP/015', 'S11040', 2, 12, 'proper', '2023-09-06'),
-(38, 2, '2020/SP/017', ' S11042', 2, 12, 'proper', '2023-09-06'),
-(39, 2, '2020/SP/018', ' S11043', 2, 12, 'proper', '2023-09-06'),
-(40, 2, '2020/SP/041', 'S11057', 2, 12, 'proper', '2023-09-06');
+INSERT INTO `stud_exam_reg` (`regId`, `exam_id`, `stud_regNo`, `level`, `combId`, `type`, `reg_date`) VALUES
+(14, 2, '2021/CSC/080', 1, 1, 'proper', '2023-09-05'),
+(18, 2, '2020/SB/020', 2, 3, 'proper', '2023-09-06'),
+(19, 2, '2020/SB/091', 2, 3, 'proper', '2023-09-06'),
+(20, 2, '2020/SB/001', 2, 4, 'proper', '2023-09-06'),
+(21, 2, '2020/SB/008', 2, 4, 'proper', '2023-09-06'),
+(22, 2, '2020/SB/010', 2, 4, 'proper', '2023-09-06'),
+(23, 2, '2020/SB/002', 2, 5, 'proper', '2023-09-06'),
+(24, 2, '2020/SB/005', 2, 5, 'proper', '2023-09-06'),
+(25, 2, '2020/SB/006', 2, 5, 'proper', '2023-09-06'),
+(26, 2, '2020/SB/012', 2, 2, 'proper', '2023-09-06'),
+(27, 2, '2020/SB/014', 2, 2, 'proper', '2023-09-06'),
+(29, 2, '2020/SP/145', 2, 6, 'proper', '2023-09-06'),
+(30, 2, '2020/SP/009', 2, 6, 'proper', '2023-09-06'),
+(31, 2, '2020/SP/070', 2, 8, 'proper', '2023-09-06'),
+(32, 2, '2020/SP/121', 2, 8, 'proper', '2023-09-06'),
+(33, 2, '2020/SP/170', 2, 8, 'proper', '2023-09-06'),
+(34, 2, '2020/SP/044', 2, 10, 'proper', '2023-09-06'),
+(35, 2, '2020/SP/092', 2, 10, 'proper', '2023-09-06'),
+(36, 2, '2020/SP/007', 2, 12, 'proper', '2023-09-06'),
+(37, 2, '2020/SP/015', 2, 12, 'proper', '2023-09-06'),
+(38, 2, '2020/SP/017', 2, 12, 'proper', '2023-09-06'),
+(39, 2, '2020/SP/018', 2, 12, 'proper', '2023-09-06'),
+(40, 2, '2020/SP/041', 2, 12, 'proper', '2023-09-06'),
+(42, 2, '2020/CSC/074', 2, 1, 'proper', '2023-09-06'),
+(43, 2, '2020/CSC/007', 2, 1, 'proper', '2023-09-07'),
+(44, 2, '2020/CSC/033', 2, 1, 'proper', '2023-09-08'),
+(45, 2, '2020/CSC/051', 2, 1, 'proper', '2023-09-13');
 
 -- --------------------------------------------------------
 
@@ -742,12 +801,21 @@ CREATE TABLE `unit_sub_exam` (
 --
 
 INSERT INTO `unit_sub_exam` (`exam_unit_id`, `exam_id`, `unitId`, `type`) VALUES
-(15, 2, 31, 'proper'),
-(16, 2, 32, 'proper'),
-(17, 2, 33, 'proper'),
-(18, 2, 38, 'proper'),
-(19, 2, 39, 'proper'),
-(20, 2, 41, 'proper'),
+(90, 2, 2, 'proper'),
+(103, 2, 6, 'proper'),
+(104, 2, 7, 'proper'),
+(91, 2, 21, 'proper'),
+(94, 2, 22, 'proper'),
+(95, 2, 23, 'proper'),
+(93, 2, 24, 'proper'),
+(92, 2, 25, 'proper'),
+(98, 2, 31, 'proper'),
+(97, 2, 32, 'proper'),
+(96, 2, 33, 'proper'),
+(99, 2, 38, 'proper'),
+(102, 2, 39, 'proper'),
+(101, 2, 40, 'proper'),
+(100, 2, 41, 'proper'),
 (21, 2, 43, 'proper'),
 (22, 2, 44, 'proper'),
 (23, 2, 45, 'proper'),
@@ -809,11 +877,17 @@ ALTER TABLE `exam_reg`
   ADD UNIQUE KEY `academic_year` (`academic_year`,`semester`);
 
 --
+-- Indexes for table `exam_stud_index`
+--
+ALTER TABLE `exam_stud_index`
+  ADD PRIMARY KEY (`exam_id`,`regNo`),
+  ADD KEY `exam_stud_index_ibfk_2` (`regNo`);
+
+--
 -- Indexes for table `reg_units`
 --
 ALTER TABLE `reg_units`
-  ADD PRIMARY KEY (`regId`,`exam_unit_id`),
-  ADD KEY `exam_unit_id` (`exam_unit_id`);
+  ADD PRIMARY KEY (`regId`,`exam_unit_id`);
 
 --
 -- Indexes for table `student`
@@ -833,7 +907,7 @@ ALTER TABLE `student_check`
 --
 ALTER TABLE `stud_exam_reg`
   ADD PRIMARY KEY (`regId`),
-  ADD UNIQUE KEY `exam_id` (`exam_id`,`stud_regNo`,`indexNo`,`level`,`combId`,`type`),
+  ADD UNIQUE KEY `exam_id` (`exam_id`,`stud_regNo`,`level`,`combId`,`type`) USING BTREE,
   ADD KEY `stud_regNo` (`stud_regNo`),
   ADD KEY `combId` (`combId`);
 
@@ -878,25 +952,25 @@ ALTER TABLE `combination`
 -- AUTO_INCREMENT for table `exam_reg`
 --
 ALTER TABLE `exam_reg`
-  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `exam_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `stud_exam_reg`
 --
 ALTER TABLE `stud_exam_reg`
-  MODIFY `regId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `regId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `unit`
 --
 ALTER TABLE `unit`
-  MODIFY `unitId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
+  MODIFY `unitId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `unit_sub_exam`
 --
 ALTER TABLE `unit_sub_exam`
-  MODIFY `exam_unit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `exam_unit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
 
 --
 -- Constraints for dumped tables
@@ -916,11 +990,17 @@ ALTER TABLE `combination_subjects`
   ADD CONSTRAINT `combination_subjects_ibfk_2` FOREIGN KEY (`subject`) REFERENCES `subject` (`subject`);
 
 --
+-- Constraints for table `exam_stud_index`
+--
+ALTER TABLE `exam_stud_index`
+  ADD CONSTRAINT `exam_stud_index_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `exam_reg` (`exam_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `exam_stud_index_ibfk_2` FOREIGN KEY (`regNo`) REFERENCES `student_check` (`regNo`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `reg_units`
 --
 ALTER TABLE `reg_units`
-  ADD CONSTRAINT `reg_units_ibfk_1` FOREIGN KEY (`exam_unit_id`) REFERENCES `unit_sub_exam` (`unitId`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `reg_units_ibfk_2` FOREIGN KEY (`regId`) REFERENCES `stud_exam_reg` (`regId`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `reg_units_ibfk_1` FOREIGN KEY (`regId`) REFERENCES `stud_exam_reg` (`regId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `student`
@@ -932,22 +1012,7 @@ ALTER TABLE `student`
 -- Constraints for table `stud_exam_reg`
 --
 ALTER TABLE `stud_exam_reg`
-  ADD CONSTRAINT `stud_exam_reg_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `exam_reg` (`exam_id`),
-  ADD CONSTRAINT `stud_exam_reg_ibfk_2` FOREIGN KEY (`stud_regNo`) REFERENCES `student_check` (`regNo`),
-  ADD CONSTRAINT `stud_exam_reg_ibfk_3` FOREIGN KEY (`combId`) REFERENCES `combination` (`combinationID`);
-
---
--- Constraints for table `unit`
---
-ALTER TABLE `unit`
-  ADD CONSTRAINT `unit_ibfk_1` FOREIGN KEY (`subject`) REFERENCES `subject` (`subject`);
-
---
--- Constraints for table `unit_sub_exam`
---
-ALTER TABLE `unit_sub_exam`
-  ADD CONSTRAINT `unit_sub_exam_ibfk_1` FOREIGN KEY (`unitId`) REFERENCES `unit` (`unitId`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `unit_sub_exam_ibfk_2` FOREIGN KEY (`exam_id`) REFERENCES `exam_reg` (`exam_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `stud_exam_reg_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `exam_reg` (`exam_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
