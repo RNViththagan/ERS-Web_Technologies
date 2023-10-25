@@ -37,7 +37,7 @@
     // Initialize an array to store columns
     $columnArray = array();
     $courseColumns = array();
-    $columnArray = ['No.','Reg No','Index No','Title','Name with initials','HCombination']; // Default columns
+    $columnArray = ['No.','Reg No','Index No','Title','Name with initials','Combination']; // Default columns
 
     // Fetch all rows and store the unitCode values in the $columnArray array
     while ($row = mysqli_fetch_assoc($coursesListResult)) {
