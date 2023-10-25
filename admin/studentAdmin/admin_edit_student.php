@@ -23,12 +23,12 @@ if (isset($_POST['regNo'])) {
     $editable = false;
     if (isset($exam)) {
         $examID = $exam['exam_id'];
-        $indexSelect=", exam_stud_index.indexNo ";
+        $indexSelect = ", exam_stud_index.indexNo ";
         $indexQuery = " LEFT JOIN `exam_stud_index` ON exam_stud_index.regNo = student.regNo AND `exam_id` = $examID";
         $editable = ($exam['status'] == "draft" or $exam['status'] == "registration") ? true : false;
     }
 
-    $query = "SELECT student.*, student_check.*".$indexSelect." FROM student INNER JOIN student_check ON student.regNo = student_check.regNo " . $indexQuery . " WHERE student.regNo = '" . $regNo . "'";
+    $query = "SELECT student.*, student_check.*" . $indexSelect . " FROM student INNER JOIN student_check ON student.regNo = student_check.regNo " . $indexQuery . " WHERE student.regNo = '" . $regNo . "'";
     $result = mysqli_query($con, $query);
     $row = mysqli_fetch_assoc($result);
     if ($row['indexNo'] != "") {
@@ -51,11 +51,20 @@ if (isset($_POST['save'])) {
             $msg['error'] = "Registration No already exists!";
         }
     }
+    $email = $_POST["email"];
+    $oldEmail = $row['email'];
+    if ($email != $oldEmail) {
+        $test_new_regNo = $query = "SELECT * FROM student_check WHERE email = '" . $email . "'";
+        $check_res = mysqli_query($con, $test_new_regNo);
+        if ($check_res->num_rows != 0) {
+            $msg['error'] = "Email already exists!";
+        }
+    }
+
     if (count($msg) == 0) {
         $status = $_POST['status'];
         $indexNo = $_POST['indexNo'];
-        $newindexNo = $_POST['newindexNo'];
-        $email = $_POST["email"];
+        $newindexNo = ($editable) ? $_POST['newindexNo'] : null;
         $fullName = $_POST["fullName"];
         $nameWithInitial = $_POST["nameWithInitial"];
         $district = $_POST["district"];
@@ -64,11 +73,11 @@ if (isset($_POST['save'])) {
         $homeAddress = $_POST["homeAddress"];
         $addressInJaffna = $_POST["addressInJaffna"];
 
-        $query = "UPDATE student INNER JOIN student_check ON student.regNo = student_check.regNo SET student.regNo = '$newRegNo' ,student_check.regNo = '$newRegNo', student_check.email = '$email', student_check.status = '$status', student.fullName = '$fullName', student.nameWithInitial = '$nameWithInitial', student.district = '$district', student.mobileNo = '$mobileNo', student.landlineNo = '$landlineNo', student.homeAddress = '$homeAddress', student.addressInJaffna = '$addressInJaffna' WHERE student.regNo = '" . $regNo . "'";
+        $query = "UPDATE student INNER JOIN student_check ON student.regNo = student_check.regNo SET student_check.regNo = '$newRegNo', student_check.email = '$email', student_check.status = '$status', student.fullName = '$fullName', student.nameWithInitial = '$nameWithInitial', student.district = '$district', student.mobileNo = '$mobileNo', student.landlineNo = '$landlineNo', student.homeAddress = '$homeAddress', student.addressInJaffna = '$addressInJaffna' WHERE student.regNo = '" . $regNo . "'";
         $result = mysqli_query($con, $query);
 
         if ($result) {
-            if ($indexNo != $newindexNo) {
+            if ($editable and $indexNo != $newindexNo) {
                 $test_new_indexNo = $query = "SELECT * FROM exam_stud_index WHERE indexNo = '" . $newindexNo . "'";
                 $check_res = mysqli_query($con, $test_new_indexNo);
                 if ($check_res->num_rows != 0) {
