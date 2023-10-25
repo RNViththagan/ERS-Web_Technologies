@@ -26,7 +26,7 @@ if (isset($_POST['upload'])) {
     $dataColCount = count($sheetdata[0]);
     $regnoIndex = 0;
     $emailIndex = 0;
-    for ($i=0; $i < $dataColCount; $i++) { 
+    for ($i=0; $i < $dataColCount; $i++) {
         if ($sheetdata[0][$i] === $regno) {
             $regnoIndex = $i;
         } else if ($sheetdata[0][$i] === $email) {
@@ -35,7 +35,7 @@ if (isset($_POST['upload'])) {
     }
     if ($dataRowCount > 1) {
         $data = array();
-        for ($i=1; $i < $dataRowCount; $i++) { 
+        for ($i=1; $i < $dataRowCount; $i++) {
             $regNo = $sheetdata[$i][$regnoIndex];
             $email = $sheetdata[$i][$emailIndex];
             $data[] = array(
@@ -45,9 +45,10 @@ if (isset($_POST['upload'])) {
         }
     }
     $msgs["Invalid Registration No (XXXX/XXX/XXX)"] =0;
-    $msgs["registration no or email already added!"] =0;
+    $msgs["Registration No or email already added!"] =0;
     $msgs["Successfully added!"] =0;
     $msgs["error!"]=0;
+
 
     foreach ($data as $user) {
         $regNo = $user['regNo'];
@@ -62,7 +63,7 @@ if (isset($_POST['upload'])) {
     
             if (mysqli_num_rows(mysqli_query($con, $query))) {
 
-                $msgs["registration no or email already added!"]++;
+                $msgs["Registration No or email already added!"]++;
             } else {
                 $query = "INSERT INTO student_check (regNo,email) values('$regNo','$email')";
                 if (!mysqli_query($con, $query)) {
