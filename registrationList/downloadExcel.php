@@ -8,7 +8,11 @@
     $examID = mysqli_real_escape_string($con, $_GET['examID']);
     $type = mysqli_real_escape_string($con, $_GET['type']);
     $level = (int)$_GET['level']; // Assuming level is an integer
-    $fileName = $type."_level_".$level;
+    $fileName = "LEVEL ".$level."G-".$level."S ". strtoupper($type);
+    if($level == 3)
+        $fileName = "LEVEL ".$level."G-".$level."M-".$level."S ". strtoupper($type);
+    if($level == 4)
+        $fileName = "LEVEL ".$level."M-".$level."S ". strtoupper($type);
 
     header('Content-Type: application/vnd.ms-excel');
     header("Content-Disposition: attachment;filename=$fileName.xlsx");
