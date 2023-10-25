@@ -47,7 +47,44 @@ require_once("../config/postSender.php");
 <div id="nextSibling" class="transition-all ml-[300px] h-auto flex items-center justify-center py-20">
     <div class = "card drop-shadow-xl">
         <?php
-//        print_r($_POST);
+
+
+        $query = "SELECT * FROM `exam_reg` WHERE `status`='draft' OR `status`='registration'";
+        $result = mysqli_query($con, $query);
+
+        if (mysqli_num_rows($result)) {
+            $row = mysqli_fetch_assoc($result);
+            $examID = $row['exam_id'];
+
+            $query = "SELECT * FROM `exam_stud_index` WHERE `regNo`= '$regNo' AND `exam_id` = $examID";
+            $result = mysqli_query($con, $query);
+
+            if (mysqli_num_rows($result)) {
+                $row = mysqli_fetch_assoc($result);
+                $indexNo = $row['indexNo'];
+            } else {
+                $indexNo = null;
+            }
+        } else {
+            $query = "SELECT * FROM `exam_reg` WHERE `status`='closed' OR `status`='hidden' ORDER BY `date_created` DESC LIMIT 1";
+            $result = mysqli_query($con, $query);
+            $row = mysqli_fetch_assoc($result);
+            $examID = $row['exam_id'];
+
+            $query = "SELECT * FROM `exam_stud_index` WHERE `regNo`= '$regNo' AND `exam_id` = $examID";
+            $result = mysqli_query($con, $query);
+
+            if (mysqli_num_rows($result)) {
+                $row = mysqli_fetch_assoc($result);
+                $indexNo = $row['indexNo'];
+            } else {
+                $indexNo = null;
+            }
+        }
+
+
+
+        //        print_r($_POST);
 //        echo "<br>";
 //        print_r($_GET);
 

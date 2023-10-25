@@ -31,11 +31,12 @@ if ($form == "DisplayList" || isset($_POST['DisplayList'])) {
         $examID = $_POST['exam_id'];
     }
     //echo $examID;
-    $userDataSQL = "SELECT ser.combId,ser.stud_regNo as regNo, ser.regId, ser.indexNo, s.title, s.nameWithInitial, c.combinationName
+    $userDataSQL = "SELECT ser.combId,ser.stud_regNo as regNo, ser.regId, esi.indexNo, s.title, s.nameWithInitial, c.combinationName
             FROM `stud_exam_reg` ser
             INNER JOIN `student` s ON ser.stud_regNo = s.regNo
+            INNER JOIN `exam_stud_index` esi ON esi.regNo = s.regNo AND ser.exam_id = esi.exam_id
             INNER JOIN `combination` c ON ser.combId = c.combinationID
-            WHERE ser.level = $level AND ser.type = '$type' AND exam_id = $examID
+            WHERE ser.level = $level AND ser.type = '$type' AND ser.exam_id = $examID
             ORDER BY c.combinationID ASC;";
 
     $userDataResult = mysqli_query($con, $userDataSQL);
