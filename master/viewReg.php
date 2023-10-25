@@ -12,6 +12,6 @@ $aExamID= $curExam['exam_id'];
 $form ="select";
 ?>
 
-<?php include("../reg_list.php") ?>
+<?php include("../registrationList/reg_list.php") ?>
 
 

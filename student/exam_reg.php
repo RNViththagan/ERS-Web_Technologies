@@ -309,7 +309,12 @@ function setSelected($fieldName, $fieldValue) {
                 }
 
                 function displayStep1() {
-                    global $combinationList, $_POST, $examUnitId;
+                    global $combinationList, $_POST, $examUnitId, $exam, $regNo;
+                    //repeat exam registration validation
+                    $stud_year = substr($regNo,0,4);
+                    $exam_year = $exam['academic_year'];
+                    $can_repeat =(($exam_year - $stud_year) < 7);
+
                     if(isset($_POST['units']))
                         $selectedUnits = $_POST['units'];
                     else if($GLOBALS['edit']){
@@ -348,7 +353,9 @@ function setSelected($fieldName, $fieldValue) {
                                 <select class="inputs" id="type" name="type"  required>
                                     <option value="select" <?php setSelected('type', 'select') ?> disabled selected>Select Type</option>
                                     <option value="proper" <?php setSelected('type', 'proper') ?>>Proper</option>
+                                    <?php if($can_repeat){?>
                                     <option value="repeat" <?php setSelected('type', 'repeat') ?>>Repeat</option>
+                                    <?php } ?>
                                 </select>
                             </div>
                             <div class="detail-row !w-full">
