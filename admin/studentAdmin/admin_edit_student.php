@@ -19,6 +19,40 @@ $msg=array();
 
 if (isset($_POST['regNo'])) {
     $regNo = $_POST['regNo'];
+
+    $query = "SELECT * FROM `exam_reg` WHERE `status`='draft' OR `status`='registration'";
+    $currentExamResult = mysqli_query($con, $query);
+
+    if (mysqli_num_rows($currentExamResult)) {
+        $row = mysqli_fetch_assoc($currentExamResult);
+        $examID = $row['exam_id'];
+
+        $query = "SELECT * FROM `exam_stud_index` WHERE `regNo`= '$regNo' AND `exam_id` = $examID";
+        $result = mysqli_query($con, $query);
+
+        if (mysqli_num_rows($result)) {
+            $row = mysqli_fetch_assoc($result);
+            $indexNo = $row['indexNo'];
+        } else {
+            $indexNo = null;
+        }
+    } else {
+        $query = "SELECT * FROM `exam_reg` WHERE `status`='closed' OR `status`='hidden' ORDER BY `date_created` DESC LIMIT 1";
+        $result = mysqli_query($con, $query);
+        $row = mysqli_fetch_assoc($result);
+        $examID = $row['exam_id'];
+
+        $query = "SELECT * FROM `exam_stud_index` WHERE `regNo`= '$regNo' AND `exam_id` = $examID";
+        $result = mysqli_query($con, $query);
+
+        if (mysqli_num_rows($result)) {
+            $row = mysqli_fetch_assoc($result);
+            $indexNo = $row['indexNo'];
+        } else {
+            $indexNo = null;
+        }
+    }
+
     $query = "SELECT * FROM student INNER JOIN student_check ON student.regNo = student_check.regNo WHERE student.regNo = '" . $regNo . "'";
     $result = mysqli_query($con, $query);
     $row = mysqli_fetch_assoc($result);
@@ -50,6 +84,9 @@ if (isset($_POST['save'])) {
         $result = mysqli_query($con, $query);
 
         if ($result) {
+            $query = "INSERT INTO exam_stud_index(exam_id,regNo,indexNo) values('$exam_id','$newRegNo','$indexNo')";
+            mysqli_query($con, $query);
+
             mysqli_close($con);
             echo '<script> view("' . $newRegNo . '");</script>';
 
@@ -85,6 +122,10 @@ if (isset($_POST['save'])) {
             <label for="newRegNo">Registration No:</label>
             <input type="text" name="newRegNo" value="<?php echo $row['regNo']; ?>" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" />
             <input type="hidden" name="regNo" value="<?php echo $row['regNo']; ?>"/>
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <label for="indexNo">Index No:</label>
+            <input type="text" name="indexNo" value="<?php echo ($indexNo) ? $indexNo : ""; ?>" placeholder="Index Number" class="col-span-2 w-full h-full border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500 disabled:opacity-50" <?php echo (mysqli_num_rows($currentExamResult)) ? "" : "disabled" ?> />
         </div>
         <div class="w-full grid grid-cols-3 items-center h-10">
             <label for="status">Status:</label>
