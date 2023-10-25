@@ -53,8 +53,8 @@ if (isset($_POST['upload'])) {
     $msgs["error!"] = 0;
 
     foreach ($data as $user) {
-        $regNo = $user['regNo'];
-        $indexNo = $user['indexNo'];
+        $regNo = trim($user['regNo']);
+        $indexNo = trim($user['indexNo']);
 
         // Check the name validation
         $regNoPattern = '/^\d{4}\/[A-Z]+\/\d{3}$/';
