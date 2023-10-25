@@ -4,8 +4,15 @@ $current_page = isset($_GET['no']) ? intval($_GET['no']) : 1;
 $records_per_page = 10;
 $offset = ($current_page - 1) * $records_per_page;
 
+$indexSelect="";
+$indexQuery="";
+if(isset($exam)){
+    $examID = $exam['exam_id'];
+    $indexSelect=", exam_stud_index.indexNo ";
+    $indexQuery = " LEFT JOIN exam_stud_index ON exam_stud_index.regNo = student_check.regNo AND exam_stud_index.exam_id = $examID";
+}
 
-$sql = "SELECT * FROM student INNER JOIN student_check ON student.regNo = student_check.regNo";
+$sql = "SELECT student.*, student_check.*".$indexSelect." FROM student INNER JOIN student_check ON student.regNo = student_check.regNo".$indexQuery;
 $limit = " LIMIT $offset, $records_per_page";
 $order =" ORDER BY CAST(SUBSTRING_INDEX(student.regNo, '/', 1) AS UNSIGNED) DESC,
   SUBSTRING_INDEX(SUBSTRING_INDEX(student.regNo, '/', 2), '/', -1),
@@ -45,6 +52,8 @@ $searchOp = "";
 if (isset($_POST['search'])) {
     $searchkey = $_POST['searchkey'];
     $searchOp = " student.regNo LIKE '%$searchkey%' or student.nameWithInitial LIKE '%$searchkey%'";
+    if(isset($exam))
+        $searchOp .=  " or exam_stud_index.indexNo LIKE '%$searchkey%'";
     if ($searchOp != "") {
         $sql .= " Where " . $searchOp;
     }
@@ -151,6 +160,9 @@ $stdlist = mysqli_query($con, $sql);
         <tr class="h-12 bg-blue-100 font-semibold">
             <th>Reg No</th>
             <th>Name</th>
+            <?php if(isset($exam)){?>
+                <th>Index No</th>
+            <?php }?>
             <th>Status</th>
             <th>Action</th>
         </tr>
@@ -162,6 +174,9 @@ $stdlist = mysqli_query($con, $sql);
                 <td><?php echo $row['regNo']; ?></td>
                 <td><?php echo ($row['title'] != "") ? $row['title'] . ". " : "";
                     echo $row['nameWithInitial']; ?></td>
+                <?php if(isset($exam)){?>
+                    <td><?php echo $row['indexNo']; ?></td>
+                <?php }?>
                 <td class="<?php echo ($row['status'] == 'active') ? 'text-green-600' : 'text-red-400'; ?>"><?php echo $row['status']; ?></td>
                 <td>
                     <button onclick="view('<?php echo $row['regNo']; ?>')" class="btn outline-btn !py-1">View</button>
