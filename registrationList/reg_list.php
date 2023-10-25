@@ -109,8 +109,8 @@ function setSelected($fieldName, $fieldValue) {
 
     <div class="flex flex-col gap-y-1 items-center">
     <?php if (isset($_SESSION['role'])) { ?>
-        <a href="<?php echo $_SERVER['DOCUMENT_ROOT'] ."/registrationList/downloadExcel.php?level=$level&type=$type&examID=$examID" ?>" target="_blank" class="btn outline-btn !text-green-600 !border-green-500 !bg-white hover:!bg-green-500 hover:!text-white">Download as a Excel sheet</a>
-    <?php } elseif (isset($_SESSION['userid'])) { ?>
+        <a href="<?php echo "../registrationList/downloadExcel.php?level=$level&type=$type&examID=$examID" ?>" target="_blank" class="btn outline-btn !text-green-600 !border-green-500 !bg-white hover:!bg-green-500 hover:!text-white">Download as a Excel sheet</a>
+    <?php } elseif (false && isset($_SESSION['userid'])) { ?>
         <a href="#" class="btn fill-btn!bg-green-500">Download as a PDF</a>
     <?php } ?>
 
