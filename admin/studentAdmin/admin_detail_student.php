@@ -1,9 +1,46 @@
 <?php
 if (isset($_POST['regNo'])) {
     $regNo = $_POST['regNo'];
+
+    $query = "SELECT * FROM `exam_reg` WHERE `status`='draft' OR `status`='registration'";
+    $result = mysqli_query($con, $query);
+
+    if (mysqli_num_rows($result)) {
+        $row = mysqli_fetch_assoc($result);
+        $examID = $row['exam_id'];
+
+        $query = "SELECT * FROM `exam_stud_index` WHERE `regNo`= '$regNo' AND `exam_id` = $examID";
+        $result = mysqli_query($con, $query);
+
+        if (mysqli_num_rows($result)) {
+            $row = mysqli_fetch_assoc($result);
+            $indexNo = $row['indexNo'];
+        } else {
+            $indexNo = null;
+        }
+    } else {
+        $query = "SELECT * FROM `exam_reg` WHERE `status`='closed' OR `status`='hidden' ORDER BY `date_created` DESC LIMIT 1";
+        $result = mysqli_query($con, $query);
+        $row = mysqli_fetch_assoc($result);
+        $examID = $row['exam_id'];
+        
+        $query = "SELECT * FROM `exam_stud_index` WHERE `regNo`= '$regNo' AND `exam_id` = $examID";
+        $result = mysqli_query($con, $query);
+
+        if (mysqli_num_rows($result)) {
+            $row = mysqli_fetch_assoc($result);
+            $indexNo = $row['indexNo'];
+        } else {
+            $indexNo = null;
+        }
+    }
+
+    
+
     $query = "SELECT * FROM student INNER JOIN student_check ON student.regNo = student_check.regNo WHERE student.regNo = '".$regNo."'";
     $result = mysqli_query($con, $query);
     $row = mysqli_fetch_assoc($result);
+
 }
 
 ?>
@@ -16,6 +53,10 @@ if (isset($_POST['regNo'])) {
         <div class="w-full grid grid-cols-3 items-center h-10">
             <h4>Registration No:</h4>
             <p class="text-gray-600"> <?php echo $row['regNo']; ?> </p>
+        </div>
+        <div class="w-full grid grid-cols-3 items-center h-10">
+            <h4>Index No:</h4>
+            <p class="text-gray-600"> <?php echo ($indexNo) ? $indexNo : "---"; ?> </p>
         </div>
         <div class="w-full grid grid-cols-3 items-center h-10">
             <h4>Status:</h4>

@@ -60,6 +60,17 @@ if (mysqli_num_rows($examDetails) == 0) {
     exit();
 }
 
+// getting the index number
+$query = "SELECT * FROM `exam_stud_index` WHERE `regNo`= '$regNo' AND `exam_id` = $exam_id";
+$result = mysqli_query($con, $query);
+
+if (mysqli_num_rows($result)) {
+    $row = mysqli_fetch_assoc($result);
+    $indexNo = $row['indexNo'];
+} else {
+    $indexNo = "Contact the Dean office";
+}
+
 $selectSQL1 = "SELECT * FROM combination";
 $combinationList = mysqli_query($con, $selectSQL1);
 
@@ -309,7 +320,7 @@ function setSelected($fieldName, $fieldValue) {
                 }
 
                 function displayStep1() {
-                    global $combinationList, $_POST, $examUnitId;
+                    global $combinationList, $_POST, $examUnitId, $indexNo;
                     if(isset($_POST['units']))
                         $selectedUnits = $_POST['units'];
                     else if($GLOBALS['edit']){
@@ -341,7 +352,7 @@ function setSelected($fieldName, $fieldValue) {
                             <?php } ?>
                             <div class="detail-row !w-full">
                                 <label class="hidden lg:block" for="indexNo">Index Number: <span class="text-red-500">*</span></label>
-                                <input class="inputs tracking-wider" type="text" name="indexNo" value="<?php setValue("indexNo") ?>" placeholder="Index Number (SXXXXX)" required />
+                                <input class="inputs tracking-wider disabled:opacity-60" type="text" name="indexNo" value="<?php echo $indexNo ?>" disabled />
                             </div>
                             <div class="detail-row !w-full">
                                 <label class="hidden lg:block" for="type">Type: <span class="text-red-500">*</span></label>
