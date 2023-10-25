@@ -320,16 +320,12 @@ function setSelected($fieldName, $fieldValue) {
                 }
 
                 function displayStep1() {
-<<<<<<< HEAD
-                    global $combinationList, $_POST, $examUnitId, $indexNo;
-=======
                     global $combinationList, $_POST, $examUnitId, $exam, $regNo, $indexNo;
                     //repeat exam registration validation
                     $stud_year = substr($regNo,0,4);
                     $exam_year = $exam['academic_year'];
                     $can_repeat =(($exam_year - $stud_year) < 7);
 
->>>>>>> 12e87f8b8c920a88beb7d96996ad4a51d77aeb8e
                     if(isset($_POST['units']))
                         $selectedUnits = $_POST['units'];
                     else if($GLOBALS['edit']){
