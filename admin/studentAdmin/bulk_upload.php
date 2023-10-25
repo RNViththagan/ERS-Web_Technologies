@@ -26,7 +26,7 @@ if (isset($_POST['upload'])) {
     $dataColCount = count($sheetdata[0]);
     $regnoIndex = 0;
     $emailIndex = 0;
-    for ($i=0; $i < $dataColCount; $i++) { 
+    for ($i=0; $i < $dataColCount; $i++) {
         if ($sheetdata[0][$i] === $regno) {
             $regnoIndex = $i;
         } else if ($sheetdata[0][$i] === $email) {
@@ -35,7 +35,7 @@ if (isset($_POST['upload'])) {
     }
     if ($dataRowCount > 1) {
         $data = array();
-        for ($i=1; $i < $dataRowCount; $i++) { 
+        for ($i=1; $i < $dataRowCount; $i++) {
             $regNo = $sheetdata[$i][$regnoIndex];
             $email = $sheetdata[$i][$emailIndex];
             $data[] = array(
@@ -44,6 +44,11 @@ if (isset($_POST['upload'])) {
             );
         }
     }
+    $msgs["Invalid Registration No (XXXX/XXX/XXX)"] =0;
+    $msgs["Registration No or email already added!"] =0;
+    $msgs["Successfully added!"] =0;
+    $msgs["error!"]=0;
+
 
     foreach ($data as $user) {
         $regNo = $user['regNo'];
@@ -52,26 +57,21 @@ if (isset($_POST['upload'])) {
         // Check the name validation
         $regNoPattern = '/^\d{4}\/[A-Z]+\/\d{3}$/';
         if (!preg_match($regNoPattern, $regNo)) {
-            $msg[0] = "Invalid Registration No (XXXX/XXX/XXX)";
-            $msg[1] = "text-red-500";
+            $msgs["Invalid Registration No (XXXX/XXX/XXX)"]++;
         } else {
             $query = "SELECT * from student_check where regNo ='$regNo' or email ='$email'";
     
             if (mysqli_num_rows(mysqli_query($con, $query))) {
-    
-                $msg[0] = "registration no or email already added!";
-                $msg[1] = "text-red-500";
+
+                $msgs["Registration No or email already added!"]++;
             } else {
                 $query = "INSERT INTO student_check (regNo,email) values('$regNo','$email')";
                 if (!mysqli_query($con, $query)) {
-    
-                    $msg[0] = "error!";
-                    $msg[1] = "text-red-500";
+                    $msgs["error!"]++;
                 } else {
                     $query = "INSERT INTO student (regNo) values('$regNo')";
                     mysqli_query($con, $query);
-                    $msg[0] = "Successfully added!";
-                    $msg[1] = "text-green-500";
+                    $msgs["Successfully added!"]++;
                 }
             }
         }        
@@ -88,8 +88,19 @@ if (isset($_POST['upload'])) {
     <p class="mb-5 text-center tracking-wider font-normal">Please add the relevant column names for the registration number and email.</p>
     <form action="" method="post" class="w-full flex flex-col items-center gap-5" enctype="multipart/form-data">
         <?php
-        if (isset($msg)) {
-            echo "<b class='" . $msg[1] . "'>" . $msg[0] . "</b>";
+
+        if (isset($msgs)) {
+            foreach ($msgs as $msg => $val){
+                $cls = "text-red-500";
+                if($msg !="Successfully added!" && $val==0)
+                    continue;
+                if($msg =="Successfully added!")
+                    $cls = "text-green-500";
+
+                echo "<b class='" . $cls . "'>" . "$msg : $val". "</b>";
+            }
+
+
         }
         ?>
 

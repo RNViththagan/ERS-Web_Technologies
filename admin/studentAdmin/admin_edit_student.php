@@ -53,6 +53,40 @@ if (isset($_POST['regNo'])) {
         }
     }
 
+
+    $query = "SELECT * FROM `exam_reg` WHERE `status`='draft' OR `status`='registration'";
+    $currentExamResult = mysqli_query($con, $query);
+
+    if (mysqli_num_rows($currentExamResult)) {
+        $row = mysqli_fetch_assoc($currentExamResult);
+        $examID = $row['exam_id'];
+
+        $query = "SELECT * FROM `exam_stud_index` WHERE `regNo`= '$regNo' AND `exam_id` = $examID";
+        $result = mysqli_query($con, $query);
+
+        if (mysqli_num_rows($result)) {
+            $row = mysqli_fetch_assoc($result);
+            $indexNo = $row['indexNo'];
+        } else {
+            $indexNo = null;
+        }
+    } else {
+        $query = "SELECT * FROM `exam_reg` WHERE `status`='closed' OR `status`='hidden' ORDER BY `date_created` DESC LIMIT 1";
+        $result = mysqli_query($con, $query);
+        $row = mysqli_fetch_assoc($result);
+        $examID = $row['exam_id'];
+
+        $query = "SELECT * FROM `exam_stud_index` WHERE `regNo`= '$regNo' AND `exam_id` = $examID";
+        $result = mysqli_query($con, $query);
+
+        if (mysqli_num_rows($result)) {
+            $row = mysqli_fetch_assoc($result);
+            $indexNo = $row['indexNo'];
+        } else {
+            $indexNo = null;
+        }
+    }
+
     $query = "SELECT * FROM student INNER JOIN student_check ON student.regNo = student_check.regNo WHERE student.regNo = '" . $regNo . "'";
     $result = mysqli_query($con, $query);
     $row = mysqli_fetch_assoc($result);
@@ -80,7 +114,7 @@ if (isset($_POST['save'])) {
         $homeAddress = $_POST["homeAddress"];
         $addressInJaffna = $_POST["addressInJaffna"];
 
-        $query = "UPDATE student INNER JOIN student_check ON student.regNo = student_check.regNo SET student_check.regNo = '$newRegNo', student_check.email = '$email', student_check.status = '$status', student.fullName = '$fullName', student.nameWithInitial = '$nameWithInitial', student.district = '$district', student.mobileNo = '$mobileNo', student.landlineNo = '$landlineNo', student.homeAddress = '$homeAddress', student.addressInJaffna = '$addressInJaffna' WHERE student.regNo = '" . $regNo . "'";
+        $query = "UPDATE student INNER JOIN student_check ON student.regNo = student_check.regNo SET student.regNo = '$newRegNo' ,student_check.regNo = '$newRegNo', student_check.email = '$email', student_check.status = '$status', student.fullName = '$fullName', student.nameWithInitial = '$nameWithInitial', student.district = '$district', student.mobileNo = '$mobileNo', student.landlineNo = '$landlineNo', student.homeAddress = '$homeAddress', student.addressInJaffna = '$addressInJaffna' WHERE student.regNo = '" . $regNo . "'";
         $result = mysqli_query($con, $query);
 
         if ($result) {

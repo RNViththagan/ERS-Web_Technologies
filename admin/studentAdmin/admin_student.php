@@ -7,6 +7,9 @@ $offset = ($current_page - 1) * $records_per_page;
 
 $sql = "SELECT * FROM student INNER JOIN student_check ON student.regNo = student_check.regNo";
 $limit = " LIMIT $offset, $records_per_page";
+$order =" ORDER BY CAST(SUBSTRING_INDEX(student.regNo, '/', 1) AS UNSIGNED) DESC,
+  SUBSTRING_INDEX(SUBSTRING_INDEX(student.regNo, '/', 2), '/', -1),
+  CAST(SUBSTRING_INDEX(student.regNo, '/', -1) AS UNSIGNED)";
 
 
 $year = "";
@@ -48,6 +51,7 @@ if (isset($_POST['search'])) {
 }
 
 $forcount = $sql;
+$sql .=$order;
 $sql .= $limit;
 $stdlist = mysqli_query($con, $sql);
 
