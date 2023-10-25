@@ -75,8 +75,9 @@ require_once("../config/postSender.php");
                 }
                 else if($_GET['page'] === "addStud"){
                     include("studentAdmin/add_student.php");
-                }
-                else
+                } else if ($_GET['page'] === "bulk") {
+                    include("studentAdmin/bulk_upload.php");
+                } else
                     include("studentAdmin/stud_admin_dashboard.php");
             }
             else
