@@ -39,23 +39,23 @@
       <i class="bi bi-pencil-square text-xl"></i>
       <span class="transition-all">Exams</span>
     </a>
-      <?php
-      $getCurrentExam = "SELECT * FROM exam_reg WHERE status = 'closed'";
-      $result = mysqli_query($con, $getCurrentExam);
+    <?php
+    $getCurrentExam = "SELECT * FROM exam_reg WHERE status = 'closed'";
+    $result = mysqli_query($con, $getCurrentExam);
 
-      if ($result->num_rows > 0) {
-          $curExam = mysqli_fetch_assoc($result);
-      }
-      ?>
-      <?php if(isset($curExam)){?>
-          <a
-                  id="dashboardLink"
-                  href="<?php echo $rpath;?>index.php?page=viewReg"
-                  class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
-              <i class="bi bi-pencil-square text-xl"></i>
-              <span class="transition-all">View Registrations</span>
-          </a>
-      <?php } ?>
+    if ($result->num_rows > 0) {
+        $curExam = mysqli_fetch_assoc($result);
+    }
+    ?>
+    <?php if(isset($curExam)){?>
+        <a
+                id="dashboardLink"
+                href="<?php echo $rpath;?>index.php?page=viewReg"
+                class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
+            <i class="bi bi-pencil-square text-xl"></i>
+            <span class="transition-all">View Registrations</span>
+        </a>
+    <?php } ?>
 
     <a
       id="dashboardLink"
@@ -78,7 +78,7 @@
   <a
     id="profile-sec"
     href="<?php echo $rpath;?>index.php?page=profile"
-    class="fixed bottom-10 w-10/12 mx-auto bg-blue-200 rounded-xl flex items-center gap-3 py-1 px-4 cursor-pointer overflow-x-hidden">
+    class="fixed bottom-5 w-10/12 mx-auto bg-blue-200 rounded-xl flex items-center gap-3 py-1 px-4 cursor-pointer overflow-x-hidden">
       <i
         class="user-icon bi bi-person-fill text-2xl py-0.5 px-2 rounded-lg bg-white text-blue-600"></i>
       <div class="name-email leading-tight">
