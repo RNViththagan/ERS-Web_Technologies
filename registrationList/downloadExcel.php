@@ -18,11 +18,12 @@
     header("Content-Disposition: attachment;filename=$fileName.xlsx");
 
     //echo $examID;
-    $userDataSQL = "SELECT ser.combId,ser.stud_regNo as regNo, ser.regId, ser.indexNo, s.title, s.nameWithInitial, c.combinationName
+    $userDataSQL = "SELECT ser.combId,ser.stud_regNo as regNo, ser.regId, esi.indexNo, s.title, s.nameWithInitial, c.combinationName
         FROM `stud_exam_reg` ser
         INNER JOIN `student` s ON ser.stud_regNo = s.regNo
+        INNER JOIN `exam_stud_index` esi ON esi.regNo = s.regNo AND ser.exam_id = esi.exam_id
         INNER JOIN `combination` c ON ser.combId = c.combinationID
-        WHERE ser.level = $level AND ser.type = '$type' AND exam_id = $examID
+        WHERE ser.level = $level AND ser.type = '$type' AND ser.exam_id = $examID
         ORDER BY c.combinationID ASC;";
 
     $userDataResult = mysqli_query($con, $userDataSQL);
@@ -71,8 +72,8 @@
         ->setSubject("$type, level $level")
         ->setDescription("Students who registered for the $type, level $level exam");
 
-    
-    for ($i=0; $i < count($columnArray); $i++) { 
+
+    for ($i=0; $i < count($columnArray); $i++) {
         $activeWorksheet->setCellValue($ColumnIndexArray[$i].'1', $columnArray[$i]);
     }
 
@@ -85,7 +86,7 @@
         $activeWorksheet->setCellValue('D'.$rowNum, $user['title']);
         $activeWorksheet->setCellValue('E'.$rowNum, $user['nameWithInitial']);
         $activeWorksheet->setCellValue('F'.$rowNum, $user['combinationName']);
-        
+
         $regId = $user['regId'];
         $examUnitIds = array();
         $sql = "SELECT exam_unit_id FROM reg_units WHERE regId = $regId";
@@ -95,7 +96,7 @@
                 $examUnitIds[] = $row['exam_unit_id'];
             }
         }
-        
+
         $index=6;
         foreach ($courseColumns as $course) {
             $matchResult = (in_array($course[0], $examUnitIds)) ? 'P' : '-';
@@ -105,7 +106,7 @@
         $counter++;
         $rowNum++;
     }
-    
+
 
     $writer = new Xlsx($spreadsheet);
     $writer->save("php://output");
