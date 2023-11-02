@@ -78,7 +78,7 @@
   <a
     id="profile-sec"
     href="<?php echo $rpath;?>index.php?page=profile"
-    class="fixed bottom-10 w-10/12 mx-auto bg-blue-200 rounded-xl flex items-center gap-3 py-1 px-4 cursor-pointer overflow-x-hidden">
+    class="fixed bottom-5 w-10/12 mx-auto bg-blue-200 rounded-xl flex items-center gap-3 py-1 px-4 cursor-pointer overflow-x-hidden">
       <i
         class="user-icon bi bi-person-fill text-2xl py-0.5 px-2 rounded-lg bg-white text-blue-600"></i>
       <div class="name-email leading-tight">

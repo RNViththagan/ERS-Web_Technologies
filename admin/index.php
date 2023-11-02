@@ -92,6 +92,8 @@ require_once("navbar.php");
                     include("studentAdmin/bulk_upload.php");
                 } else if ($_GET['page'] === "addIndex") {
                     include("studentAdmin/add_index.php");
+                } else if ($_GET['page'] === "slips") {
+                    include("studentAdmin/payment_slips.php");
                 } else
                     include("studentAdmin/stud_admin_dashboard.php");
             } else

@@ -70,7 +70,7 @@ if (isset($_POST["submit"]))  {
 }
 
 
-$districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', 'Badulla', 'Batticaloa', 'Gampaha', 'Hambantota', 'Jaffna', 'Kalutara', 'Kegalle', 'Kilinochchi', 'Kurunegala', 'Mannar', 'Matale', 'Matara', 'Moneragala', 'Mullativu', 'Nuwara Eliya', 'Polonnaruwa', 'Puttalam', 'Ratnapura', 'Trincomalee', 'Vavuniya'];
+$districts = ['Select District', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', 'Badulla', 'Batticaloa', 'Gampaha', 'Hambantota', 'Jaffna', 'Kalutara', 'Kegalle', 'Kilinochchi', 'Kurunegala', 'Mannar', 'Matale', 'Matara', 'Moneragala', 'Mullativu', 'Nuwara Eliya', 'Polonnaruwa', 'Puttalam', 'Ratnapura', 'Trincomalee', 'Vavuniya'];
 
 ?>
 <!doctype html>
@@ -87,11 +87,15 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
     <title>ERS | Student</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" />
     <script
     src="https://kit.fontawesome.com/5ce4b972fd.js"
     crossorigin="anonymous"></script>
 </head>
 <body class=" bg-gray-50 sm:text-xs xl:text-sm 2xl:text-base" id="student">
+    <!-- //Navbar -->
     <nav class="w-full h-[15vh] min-h-fit drop-shadow-md bg-white fixed top-0 left-0">
         <div class="w-10/12 h-full m-auto flex items-center justify-between">
             <a href="index.php">
@@ -115,31 +119,31 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                 <div class="h-px w-3/4 bg-gray-300"></div>
                 <li class=""><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="index.php">Dashboard</a></li>
                 <div class="h-px w-3/4 bg-gray-300"></div>
-                <li class=""><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="#">Contact</a></li>
+                <li class=""><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="contact.php">Contact</a></li>
                 <div class="h-px w-3/4 bg-gray-300"></div>
                 <li class="mb-3 "><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="../logout.php">Logout</a></li>
             </ul>   
         </div>   
     </nav>
 
-
+    <!-- Displaying Notification -->
     <?php if (isset($_GET['error'])) { ?>
         <div class="exam-false fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-            <form class="card h-40 w-1/2 flex flex-col items-center justify-around gap-7" action="index.php" method="POST">
+            <form class="card h-40 w-10/12 lg:w-1/2 flex flex-col items-center justify-around gap-7" action="index.php" method="POST">
                 <p class="text-center"><?php echo $_GET['error'] ?></p>
                 <input class="btn fill-btn" type="submit" value="OK" name="ok">
             </form>
         </div>
     <?php } elseif (isset($_GET['success'])) { ?>
         <div class="exam-false fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-            <form class="card h-40 w-1/2 flex flex-col items-center justify-around gap-7" action="index.php" method="POST">
+            <form class="card h-40 w-10/12 lg:w-1/2 flex flex-col items-center justify-around gap-7" action="index.php" method="POST">
                 <p class="text-center text-green-700"><?php echo $_GET['success'] ?></p>
                 <input class="btn fill-btn !bg-green-700" type="submit" value="OK" name="ok">
             </form>
         </div>
     <?php } ?>
 
-
+    <!-- Body section -->
     <div class="body-sec my-[20vh]">
         <div class="container m-auto">
             <div class="card w-11/12 m-auto grid grid-rows-[30%_70%] lg:grid-cols-[30%_1%_69%] ">
@@ -153,14 +157,14 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                 <?php } else { ?>
                     <form action="index.php" method="POST" enctype="multipart/form-data">
                         <img class="mx-auto mb-5 w-[125px] h-[125px] rounded-full ring-4 ring-offset-4" src="../assets/uploads/<?php echo $profile_img; ?>" alt="user img">
-                        <input class="bg-blue-100 w-10/12 text-sm mt-5" type="file" name="fileImg" id="fileImg" accept=".jpg, .jpeg, .png">
+                        <input type="file" name="fileImg" id="fileImg" accept=".jpg, .jpeg, .png" class="w-10/12 mt-5 file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-[#5465ff] hover:file:bg-violet-100">
                 <?php } ?>
                 </div>
                 <div class="line hidden lg:block lg:w-px lg:h-[430px]"></div>
-                <div class ="student-details mt-5 lg:w-10/12 lg:mt-0 lg:h-fit text-sm lg:text-base">
+                <div class ="student-details mt-5 !w-full lg:w-10/12 lg:mt-0 lg:h-fit text-sm lg:text-base">
                     <?php if (isset($_GET['update'])) { ?>
                         <div class="mt-4 w-full h-full flex flex-col items-center justify-around lg:mt-0 lg:h-[750px]">
-                            <div class="detail-row ">
+                            <div class="detail-row my-1 !block lg:!grid">
                                 <label class="hidden lg:block"  for="title">Title: <span class="text-red-500">*</span></label>
                                 <select for="title" name="title" id="title" class="inputs w-full  border-2 border-gray-400 rounded-full px-5 outline-none focus:border-blue-500" >
                                     <option value="" selected disabled>Select Title</option>
@@ -170,51 +174,51 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                                 </select>
                             </div>
 
-                            <div class="detail-row">
+                            <div class="detail-row my-1 !block lg:!grid">
                                 <label class="hidden lg:block" for="fname">Full Name: <span class="text-red-500">*</span></label>
-                                <input class="inputs  w-full lg:w-1/2" type="text" id="fname" name="fname" value="<?php echo $fullName; ?>" required >
+                                <input class="inputs lg:placeholder:text-transparent  w-full lg:w-1/2" type="text" id="fname" name="fname" value="<?php echo $fullName; ?>" placeholder="Full Name" required >
                             </div>
 
-                            <div class="detail-row">
+                            <div class="detail-row my-1 !block lg:!grid">
                                 <label class="hidden lg:block" for="nameWithInitial">Name With Initials: <span class="text-red-500">*</span></label>
-                                <input class="inputs  w-full lg:w-1/2" type="text" id="nameWithInitial" name="nameWithInitial" value="<?php echo $nameWithInitial; ?>" required>
+                                <input class="inputs lg:placeholder:text-transparent  w-full lg:w-1/2" type="text" id="nameWithInitial" name="nameWithInitial" value="<?php echo $nameWithInitial; ?>" placeholder="Name wih Initial" required>
                             </div>
 
-                            <div class="detail-row">
+                            <div class="detail-row my-1 !block lg:!grid">
                                 <label class="hidden lg:block" for="regNo">Registration Number:</label>
-                                <input class="inputs  w-full lg:w-1/2" type="text" id="regNo" name="regNo" value="<?php echo $regNo; ?>" required disabled>
+                                <input class="inputs lg:placeholder:text-transparent  w-full lg:w-1/2" type="text" id="regNo" name="regNo" value="<?php echo $regNo; ?>" placeholder="Registration Number" required disabled>
                             </div>
 
-                            <div class="detail-row">
+                            <div class="detail-row my-1 !block lg:!grid">
                                 <label class="hidden lg:block" for="district">District: <span class="text-red-500">*</span></label>
-                                <select class="inputs " name="userDistrict" id="district"  required>
+                                <select class="inputs lg:placeholder:text-transparent " name="userDistrict" id="district"  required>
                                     <?php foreach ($districts as $district) {?>
                                         <option value="<?php echo $district;?>" <?php if ($district == $userDistrict) { echo "selected"; }?>><?php echo $district;?></option>
                                     <?php }?>
                                 </select>
                             </div>
 
-                            <div class="detail-row">
+                            <div class="detail-row my-1 !block lg:!grid">
                                 <label class="hidden lg:block" for="mobileNo">Mobile: <span class="text-red-500">*</span></label>
-                                <input class="inputs  w-full lg:w-1/2" type="tel" id="mobileNo" name="mobileNo" value="<?php echo $mobileNo; ?>" required>
+                                <input class="inputs lg:placeholder:text-transparent  w-full lg:w-1/2" type="tel" id="mobileNo" name="mobileNo" value="<?php echo $mobileNo; ?>" placeholder="Mobile Number" required>
                             </div>
 
-                            <div class="detail-row">
+                            <div class="detail-row my-1 !block lg:!grid">
                                 <label class="hidden lg:block" for="landlineNo">Landline: <span class="text-red-500">*</span></label>
-                                <input class="inputs  w-full lg:w-1/2" type="text" id="landlineNo" name="landlineNo" value="<?php echo $landlineNo; ?>" required>
+                                <input class="inputs lg:placeholder:text-transparent  w-full lg:w-1/2" type="text" id="landlineNo" name="landlineNo" value="<?php echo $landlineNo; ?>" placeholder="Landline Number" required>
                             </div>
 
-                            <div class="detail-row">
+                            <div class="detail-row my-1 !block lg:!grid">
                                 <label class="hidden lg:block" for="home_address">Home Address: <span class="text-red-500">*</span></label>
-                                <textarea class="inputs " id="home_address" name="home_address" rows="3" required><?php echo $home_address; ?></textarea>
+                                <textarea class="inputs lg:placeholder:text-transparent " id="home_address" name="home_address" rows="3" placeholder="Home Address" required><?php echo $home_address; ?></textarea>
                             </div>
                                             
-                            <div class="detail-row">
+                            <div class="detail-row my-1 !block lg:!grid">
                                 <label class="hidden lg:block" for="home_address">Current Address: <span class="text-red-500">*</span></label>
-                                <textarea class="inputs " id="jaffna_address" name="jaffna_address" rows="3" required><?php echo $jaffna_address; ?></textarea>
+                                <textarea class="inputs lg:placeholder:text-transparent " id="jaffna_address" name="jaffna_address" rows="3" placeholder="Cuurent Address" required><?php echo $jaffna_address; ?></textarea>
                             </div>
                                     
-                            <input class="inputs w-full lg:w-1/2 btn fill-btn" type="submit"  name ="submit" value="Update" class="btn fill-btn">
+                            <input class="inputs w-11/12 lg:w-1/2 btn fill-btn !my-4 lg:my-0" type="submit"  name ="submit" value="Update" class="btn fill-btn">
                                 
                         </div>    
                     </form>
@@ -270,61 +274,69 @@ $districts = ['Select', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradhapura', '
                 $exreg = (mysqli_num_rows($examDetails) != 0);
 
                 ?>
-                <div class="card mt-32 w-11/12 mx-auto flex flex-col items-center">
+                <div class="card mt-32 w-11/12 mx-auto flex flex-col items-center overflow-hidden">
                     <h2 class="font-extrabold text-center underline text-xl">Exam History</h2>
-                    <table class="w-11/12 mx-auto mt-8 rounded-lg text-xs lg:text-base">
-                        <thead class="bg-blue-100 h-6 lg:h-12">
-                            <th class="font-semibold">Date</th>
-                            <th class="font-semibold border-gray-100 border-x-2">Type</th>
-                            <th class="font-semibold border-gray-100 border-x-2">Level</th>
-                            <th class="font-semibold border-gray-100 border-x-2">Semester</th>
-                            <th class="font-semibold border-gray-100 border-x-2 ">Subject<br>Combination</th>
-                            <th <?php if($exreg) echo "colspan=2"?> class="font-semibold">Action</th>
-                        </thead>
-                        <tbody class="text-center ">
-                            <?php
-                                if (mysqli_num_rows($examQuery) > 0) {
-                                    while ($exam = $examQuery->fetch_assoc()) {
-                                        $regId = $exam['regId'];
-                                        $examID = $exam['exam_id'];
-                                        $date = $exam['reg_date'];
-                                        $type = strtoupper($exam['type']);
-                                        $level = $exam['level'];
-                                        $combID = $exam['combId'];
-                                        $sem = mysqli_fetch_assoc(mysqli_query($con, "SELECT semester FROM `exam_reg` WHERE exam_id = $examID"));
-                                        $semester = $sem['semester'];
-                                        $comb = mysqli_fetch_assoc(mysqli_query($con, "SELECT combinationName FROM `combination` WHERE combinationID = $combID"));
-                                        $combination = $comb['combinationName'];
-                                        $eState = $exam['exam_state'];
-                                        $btnName = ($eState=="closed")?"View":"Edit";
-                                        echo "
-                                        <tr class='h-12 even:bg-blue-50'>
-                                            <td>$date</td>
-                                            <td>$type</td>
-                                            <td>$level</td>
-                                            <td>$semester</td>
-                                            <td>$combination</td>
-                                            <td>
-                                                <button onclick=\"openReg('$regId','$eState')\" class=\"btn fill-btn !my-1 !mx-2\">$btnName</button>
-                                            </td>";
-                                        echo
-                                                ($exreg)?"
-                                            <td>
-                                                <button onclick=\"openReg('$regId','delete')\" class=\"btn fill-btn !bg-red-500 !my-1 !mx-3\">Delete</button>
-                                            </td>":"";
-                                        echo "</tr>
-                                        ";
-                                        } 
-                                } else { 
-                                    echo "
-                                        <tr class='h-10 even:bg-blue-50'>
-                                            <td colspan='7'>No record found</td>
-                                        </tr>
-                                    ";
-                                }
-                            ?>
-                        </tbody>
-                    </table>
+                    <div class="w-full mx-auto mt-8 overflow-x-hidden">
+                        <div class="w-full overflow-x-scroll lg:overflow-x-visible">
+                            <table class="w-full lg:w-11/12 mx-auto rounded-lg text-xs lg:text-base">
+                                <thead class="bg-blue-100 h-6 lg:h-12">
+                                    <th class="font-semibold px-3 w-36">Date</th>
+                                    <th class="font-semibold px-3 border-gray-100 border-x-2">Type</th>
+                                    <th class="font-semibold px-3 border-gray-100 border-x-2">Level</th>
+                                    <th class="font-semibold px-3 border-gray-100 border-x-2">Semester</th>
+                                    <th class="font-semibold px-3 border-gray-100 border-x-2 ">Subject<br>Combination</th>
+                                    <th <?php if($exreg) echo "colspan=2"?> class="font-semibold">Action</th>
+                                </thead>
+                                <tbody class="text-center ">
+                                    <?php
+                                        if (mysqli_num_rows($examQuery) > 0) {
+                                            while ($exam = $examQuery->fetch_assoc()) {
+                                                $regId = $exam['regId'];
+                                                $examID = $exam['exam_id'];
+                                                $date = $exam['reg_date'];
+                                                $type = strtoupper($exam['type']);
+                                                $level = $exam['level'];
+                                                $combID = $exam['combId'];
+                                                $sem = mysqli_fetch_assoc(mysqli_query($con, "SELECT semester FROM `exam_reg` WHERE exam_id = $examID"));
+                                                $semester = $sem['semester'];
+                                                $comb = mysqli_fetch_assoc(mysqli_query($con, "SELECT combinationName FROM `combination` WHERE combinationID = $combID"));
+                                                $combination = $comb['combinationName'];
+                                                $eState = $exam['exam_state'];
+                                                $btnName = ($eState=="closed")?"View":"Edit";
+                                                echo "
+                                                <tr class='h-12 even:bg-blue-50'>
+                                                    <td class=\"\">$date</td>
+                                                    <td class=\"\">$type</td>
+                                                    <td class=\"\">$level</td>
+                                                    <td class=\"\">$semester</td>
+                                                    <td class=\"\">$combination</td>
+                                                    <td>
+                                                        <button onclick=\"openReg('$regId','$eState')\" class=\"py-1 px-2 border-2 border-blue-500 rounded-md bg-white text-blue-500 hover:bg-blue-500 hover:text-white transition \">
+                                                        <i class=\"fa-solid fa-pencil\"></i>
+                                                        </button>
+                                                    </td>";
+                                                echo
+                                                        ($exreg)?"
+                                                    <td>
+                                                        <button onclick=\"openReg('$regId','delete')\" class=\"ml-2 py-1 px-2 border-2 border-red-500 rounded-md bg-white text-red-500 hover:bg-red-500 hover:text-white transition \">
+                                                            <i class=\"fa-solid fa-trash-can\"></i>
+                                                        </button>
+                                                    </td>":"";
+                                                echo "</tr>
+                                                ";
+                                                }
+                                        } else {
+                                            echo "
+                                                <tr class='h-10 even:bg-blue-50'>
+                                                    <td colspan='7'>No record found</td>
+                                                </tr>
+                                            ";
+                                        }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     <?php
                     if($exreg){?>
                         <a href="exam_reg.php" class="btn outline-btn w-1/2 mt-7 text-xs lg:text-base">Register for a new Exam</a>

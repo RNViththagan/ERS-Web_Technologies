@@ -123,14 +123,14 @@ function setSelected($fieldName, $fieldValue) {
 <body class="bg-slate-200" id="exam">
     <?php if (isset($_GET['error'])) { ?>
         <div class="exam-false fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-            <form class="card h-40 w-1/2 flex flex-col items-center justify-around gap-7" action="index.php" method="POST">
+            <form class="card h-40 w-10/12 lg:w-1/2 flex flex-col items-center justify-around gap-7" action="index.php" method="POST">
                 <p class="text-center"><?php echo $_GET['error'] ?></p>
                 <input class="btn fill-btn" type="submit" value="OK" name="ok">
             </form>
         </div>
     <?php } elseif (isset($_GET['success'])) { ?>
         <div class="exam-false fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center">
-            <form class="card h-40 w-1/2 flex flex-col items-center justify-around gap-7" action="index.php" method="POST">
+            <form class="card h-40 w-10/12 lg:w-1/2 flex flex-col items-center justify-around gap-7" action="index.php" method="POST">
                 <p class="text-center text-green-700"><?php echo $_GET['success'] ?></p>
                 <input class="btn fill-btn !bg-green-700" type="submit" value="OK" name="ok">
             </form>
@@ -158,14 +158,14 @@ function setSelected($fieldName, $fieldValue) {
                 <div class="h-px w-3/4 bg-gray-300"></div>
                 <li class=""><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="index.php">Dashboard</a></li>
                 <div class="h-px w-3/4 bg-gray-300"></div>
-                <li class=""><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="../contact.html">Contact</a></li>
+                <li class=""><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="contact.php">Contact</a></li>
                 <div class="h-px w-3/4 bg-gray-300"></div>
                 <li class="mb-3 "><a class="py-4 hover:text-blue-600 hover:font-bold hover:tracking-wide transition-all" href="../logout.php">Logout</a></li>
             </ul>
         </div>
     </nav>
 
-    <div class="w-1/2 mx-auto mt-[22vh] mb-20">
+    <div class="w-11/12 lg:w-1/2 mx-auto mt-[22vh] mb-20">
         <div class="card ">
             <div class="w-11/12 mx-auto h-fit">
 
@@ -236,7 +236,6 @@ function setSelected($fieldName, $fieldValue) {
                         if($editRegId){
 
                             $updateQuery = "UPDATE stud_exam_reg SET
-                                                indexNo = '$indexNo',
                                                 type = '$type',
                                                 level = $level,
                                                 combId = $combination,
@@ -282,7 +281,7 @@ function setSelected($fieldName, $fieldValue) {
                             }
 
                             if (mysqli_num_rows($result) == 0) {
-                                $stud_exam_reg_sql = "INSERT INTO stud_exam_reg(exam_id, stud_regNo, indexNo, level, combId, type, reg_date) VALUES($exam_id, '$regNo', '$indexNo', $level, $combination, '$type', '$date')";
+                                $stud_exam_reg_sql = "INSERT INTO stud_exam_reg(exam_id, stud_regNo, level, combId, type, reg_date) VALUES($exam_id, '$regNo', $level, $combination, '$type', '$date')";
                                 $stud_exam_reg_query = mysqli_query($con, $stud_exam_reg_sql);
 
                         if (!$stud_exam_reg_query) {
@@ -316,6 +315,10 @@ function setSelected($fieldName, $fieldValue) {
 
 
                         }
+
+                        displayStep3();
+                        // if ($type === "repeat") {
+                        // }
                     }
                 }
 
@@ -337,7 +340,7 @@ function setSelected($fieldName, $fieldValue) {
 
                     <div class="instructions mt-7 mb-16">
                         <p class="font-semibold">Read the following instructions carefully before filling this form ------ &gt; &gt; &gt;</p>
-                        <ol class="ml-7 my-4 list-decimal text-justify">
+                        <ol class="ml-4 lg:ml-7 my-4 list-decimal text-justify">
                             <li>Students are advised to use either an individual smartphone or personal computer to avoid technical errors.</li>
                             <li>Sign out from the Gmail account on your smartphone or PC if you have already signed-in. Then type your own Gmail  ID to login to this the Google form</li>
                             <li>Only one record will be accepted per email ID</li>
@@ -355,11 +358,11 @@ function setSelected($fieldName, $fieldValue) {
                             <?php foreach ($selectedUnits as $unitId) { ?>
                                 <input type="hidden" name="units[]" value="<?php echo $unitId; ?>" />
                             <?php } ?>
-                            <div class="detail-row !w-full">
+                            <div class="detail-row  my-1 !block lg:!grid !w-full">
                                 <label class="hidden lg:block" for="indexNo">Index Number: <span class="text-red-500">*</span></label>
                                 <input class="inputs tracking-wider disabled:opacity-60" type="text" name="indexNo" value="<?php echo $indexNo ?>" disabled />
                             </div>
-                            <div class="detail-row !w-full">
+                            <div class="detail-row  my-1 !block lg:!grid !w-full">
                                 <label class="hidden lg:block" for="type">Type: <span class="text-red-500">*</span></label>
                                 <select class="inputs" id="type" name="type"  required>
                                     <option value="select" <?php setSelected('type', 'select') ?> disabled selected>Select Type</option>
@@ -369,7 +372,7 @@ function setSelected($fieldName, $fieldValue) {
                                     <?php } ?>
                                 </select>
                             </div>
-                            <div class="detail-row !w-full">
+                            <div class="detail-row  my-1 !block lg:!grid !w-full">
                                 <label class="hidden lg:block" for="level">Level: <span class="text-red-500">*</span></label>
                                 <select class="inputs" id="level" name="level" required>
                                     <option value="select" <?php setSelected('level', 'select') ?> disabled selected>Select Level</option>
@@ -379,7 +382,7 @@ function setSelected($fieldName, $fieldValue) {
                                     <option value="4" <?php setSelected('level', 4) ?>>Level 4</option>
                                 </select>
                             </div>
-                            <div class="detail-row !w-full">
+                            <div class="detail-row  my-1 !block lg:!grid !w-full">
                                 <label class="hidden lg:block" for="combination">Subject Combination: <span class="text-red-500">*</span></label>
                                 <select class="inputs" id="combination" name="combination" required>
                                     <option value="select" disabled selected>Select Combination</option>
@@ -407,12 +410,12 @@ function setSelected($fieldName, $fieldValue) {
                     global $combinationList;
                     $count = 0;
                     ?>
-                    <div class="w-11/12 mx-auto">
+                    <div class="w-full lg:w-11/12 mx-auto">
                         <div>
                             <h3 class="font-bold lg:text-xl text-center text-gray-800">Select Units</h3>
                             <p class="text-center text-gray-500">Select course units you want to apply for the exam.</p>
                         </div>
-                        <form action="exam_reg.php" method="POST" class="mt-10 min-h-[350px] w-3/4 mx-auto flex flex-col justify-around">
+                        <form action="exam_reg.php" method="POST" class="mt-10 min-h-[350px] w-11/12 lg:w-3/4 mx-auto flex flex-col gap-y-5">
                             <input type="hidden" name="step" value="2" />
                             <?php if(isset($_POST['regId'])) echo "<input type='hidden' name='regId' value='".$_POST['regId']."' />" ?>
 
@@ -445,9 +448,9 @@ function setSelected($fieldName, $fieldValue) {
                                 $unitId = $unit['unitId'];
                                 $isChecked = in_array($unitId, $selectedUnits);
                                 ?>
-                                <div class="grid grid-cols-3">
+                                <div class="grid grid-cols-3 content-center">
                                     <label class="font-[400] col-span-2" for="<?php echo "unit_$count" ?>"><?php echo $unit['name'] ?></label>
-                                    <input class="border-blue-500" type="checkbox" name="units[]" value="<?php echo $unitId ?>" id="<?php echo "unit_$count" ?>" <?php if ($isChecked) echo "checked"; ?> />
+                                    <input class="border-blue-500 w-5 h-5 justify-self-end self-center" type="checkbox" name="units[]" value="<?php echo $unitId ?>" id="<?php echo "unit_$count" ?>" <?php if ($isChecked) echo "checked"; ?> />
                                 </div>
                                 <?php
                             }
@@ -459,8 +462,27 @@ function setSelected($fieldName, $fieldValue) {
                             </div>
                         </form>
                     </div>
-                <?php } ?>
+                <?php }
 
+
+                function displayStep3() { ?>
+                    <div class="mx-auto w-11/12">
+                        <div class="text-center">
+                            <h3 class="font-bold lg:text-xl text-gray-800">Payment Slip copies</h3>
+                            <p class="text-gray-500">Upload the soft copies of payment slip. File type should be <b>PDF</b> and it should <b>include both side of the slip</b>.</p>
+                        </div>
+                        <form action="exam_reg.php" method="POST" class="mt-10 min-h-[350px] w-3/4 mx-auto flex flex-col justify-around">
+                            <div class="detail-row !w-full">
+                                <label for="regno">Payment Slips: </label>
+                                <input type="file" class="col-span-2 w-full h-full file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-[#5465ff] hover:file:bg-violet-100" name="slipFile" required>
+                            </div>
+                            <div class="w-full flex items-center justify-around mt-5">
+                                <input class="btn outline-btn w-5/12" type="submit" name="submit" value="&lt; Back" />
+                                <input class="btn fill-btn w-5/12" type="submit" name="submit" value="Submit" />
+                            </div>
+                        </form>
+                    </div>
+                <?php } ?>
             </div>
         </div>
     </div>
