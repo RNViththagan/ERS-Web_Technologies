@@ -26,7 +26,6 @@ if(isset($_GET['edit']) && isset($_POST['regId'])){
     $regObj = mysqli_fetch_assoc($selectQuery);
     $regDetail['type'] = $regObj['type'];
     $regDetail['combination'] = $regObj['combId'];
-    $regDetail['indexNo'] = $regObj['indexNo'];
     $regDetail['level'] = $regObj['level'];
     $examUnitId =array();
     $sql = "SELECT exam_unit_id
@@ -170,20 +169,20 @@ function setSelected($fieldName, $fieldValue) {
             <div class="w-11/12 mx-auto h-fit">
 
                 <?php
-
                 if (isset($_POST["step"])) {
                     if ($_POST["step"] == '1') {
-                        processStep1();
+                            processStep1();
                     } else if ($_POST["step"] == '2') {
-                        processStep2();
+                            processStep2();
+                    }
+                    else if ($_POST["step"] == '3') {
+                        processStep3();
                     }
                 } else {
                     displayStep1();
                 }
-
                 function processStep1() {
-                    global $con, $units, $exam;
-
+                    global $con, $exam;
                     $exam_id = $exam['exam_id'];
                     $type = $_POST['type'];
                     $level = $_POST['level'];
@@ -219,13 +218,14 @@ function setSelected($fieldName, $fieldValue) {
 
                 function processStep2() {
                     if (isset($_POST["submit"]) and $_POST["submit"] == "< Back") {
-                        if(isset($_POST['units']))
-                            echo '<script>selectedUnits = ' . json_encode($_POST['units']) . ';</script>';
                         displayStep1();
-                    } else {
+                    }
+                    elseif ($_POST['submit'] == "Next >" && $_POST['type'] == "repeat") {
+                        displayStep3();
+                    }
+                    else {
                         global $con, $exam, $regNo;
                         $exam_id = $exam['exam_id'];
-                        $indexNo = mysqli_escape_string($con, $_POST['indexNo']);
                         $type = $_POST['type'];
                         $level = $_POST['level'];
                         $editRegId = (isset($_POST['regId']))?$_POST['regId']:false;
@@ -315,15 +315,171 @@ function setSelected($fieldName, $fieldValue) {
 
 
                         }
-
-                        displayStep3();
-                        // if ($type === "repeat") {
-                        // }
                     }
                 }
 
+                function processStep3() {
+                    global $con, $exam;
+                    if(isset($_FILES["slipFile"]["name"]) and $_FILES["slipFile"]["name"] != Null){
+                        $path = $_FILES['slipFile']['name'];
+                        $ext = pathinfo($path, PATHINFO_EXTENSION);
+                    }
+                    if(strtolower($ext) != "pdf"){
+                        global $slip_msg;
+                        $slip_msg = "Upload only pdf file!";
+                        displayStep3();
+                    }
+                    else if (isset($_POST["submit"]) and $_POST["submit"] == "< Back") {
+
+                        $exam_id = $exam['exam_id'];
+                        $type = $_POST['type'];
+                        $level = $_POST['level'];
+                        $combination = $_POST['combination'];
+
+                        $unitSQL = "
+                        SELECT DISTINCT u.unitId, u.unitCode, u.name
+                        FROM unit u
+                        INNER JOIN combination_subjects cs ON u.subject = cs.subject
+                        INNER JOIN unit_sub_exam usexam ON u.unitId = usexam.unitId
+                        WHERE cs.combinationID = $combination
+                        AND u.level = $level
+                        AND usexam.exam_id = $exam_id
+                        AND usexam.type = '$type';
+                    ";
+
+                        $unitsQueryResult = mysqli_query($con, $unitSQL);
+                        //$units = mysqli_fetch_assoc($unitsQueryResult);
+                        //print_r($unitsQueryResult->num_rows);
+                        // exit;
+                        if ($unitsQueryResult) {
+                            if (mysqli_num_rows($unitsQueryResult) == 0) {
+                                header("Location: index.php?error=No units were assign to this combination.");
+                                exit();
+                            }
+                        } else {
+                            header("Location: index.php?error=Something-went-wrong");
+                            exit();
+                        }
+                        displayStep2($unitsQueryResult);
+
+                    }else if(isset($_POST["submit"]) and $_POST["submit"] == "Submit") {
+                        global $con, $exam, $regNo;
+                        $exam_id = $exam['exam_id'];
+                        $type = $_POST['type'];
+                        $level = $_POST['level'];
+                        $editRegId = (isset($_POST['regId']))?$_POST['regId']:false;
+                        $combination = $_POST['combination'];
+                        $regUnits = $_POST['units'];
+                        $date =date('Y-m-d');
+
+                        if($editRegId){
+
+                            $updateQuery = "UPDATE stud_exam_reg SET
+                                                type = '$type',
+                                                level = $level,
+                                                combId = $combination,
+                                                reg_date = '$date'
+                                                WHERE regId = $editRegId";
+                            if(isset($_FILES["slipFile"]["name"]) and $_FILES["slipFile"]["name"] != Null){
+                                $src = $_FILES["slipFile"]["tmp_name"];
+                                $path = $_FILES['slipFile']['name'];
+                                $ext = pathinfo($path, PATHINFO_EXTENSION);
+                                $slipName = $editRegId.".".$ext;
+                                $target = "../assets/repeat_slips/" . $slipName;
+                                move_uploaded_file($src, $target);
+                            }
+
+                            if (mysqli_query($con, $updateQuery)) {
+
+                                $deleteQuery = "DELETE FROM reg_units WHERE regId = $editRegId";
+                                if (mysqli_query($con, $deleteQuery)) {
+                                    $inserted = true;
+                                    foreach ($regUnits as $unitId) {
+                                        $reg_units_sql = "INSERT INTO reg_units(regId, exam_unit_id) VALUES($editRegId, $unitId)";
+                                        $reg_units_query = mysqli_query($con, $reg_units_sql);
+
+                                        if (!$reg_units_query) {
+                                            $inserted = false;
+                                            break;
+                                        }
+                                    }
+                                    if ($inserted) {
+                                        header("Location: index.php?success=Exam registration successfully edited.");
+                                        exit();
+                                    } else {
+                                        header("Location: index.php?error=Exam registration editing failed. Please try again.");
+                                        exit();
+                                    }
+                                }else {
+                                    header("Location: index.php?error=Exam registration editing failed. Please try again.");
+                                    exit();
+                                }
+                            } else {
+                                header("Location: index.php?error=Exam registration editing failed. Please try again.");
+                                exit();
+                            }
+                        }else {
+                            $sql = "SELECT * FROM stud_exam_reg WHERE stud_regNo = '$regNo' AND level = '$level' AND type = '$type' AND exam_id = $exam_id";
+
+                            $result = mysqli_query($con, $sql);
+
+                            if (!$result) {
+                                die("Query failed: " . mysqli_error($con));
+                            }
+
+                            if (mysqli_num_rows($result) == 0) {
+                                $stud_exam_reg_sql = "INSERT INTO stud_exam_reg(exam_id, stud_regNo, level, combId, type, reg_date) VALUES($exam_id, '$regNo', $level, $combination, '$type', '$date')";
+                                $stud_exam_reg_query = mysqli_query($con, $stud_exam_reg_sql);
+
+                                if (!$stud_exam_reg_query) {
+                                    header("Location: index.php?error=Something-went-wrong");
+                                    exit();
+                                }
+
+                                $regId = mysqli_insert_id($con);
+                                $inserted = true;
+
+                                foreach ($regUnits as $unitId) {
+                                    $reg_units_sql = "INSERT INTO reg_units(regId, exam_unit_id) VALUES($regId, $unitId)";
+                                    $reg_units_query = mysqli_query($con, $reg_units_sql);
+
+                                    if (!$reg_units_query) {
+                                        $inserted = false;
+                                        break;
+                                    }
+                                }
+                                if(isset($_FILES["slipFile"]["name"]) and $_FILES["slipFile"]["name"] != Null){
+                                    $src = $_FILES["slipFile"]["tmp_name"];
+                                    $path = $_FILES['slipFile']['name'];
+                                    $ext = pathinfo($path, PATHINFO_EXTENSION);
+                                    $slipName = $regId.".".$ext;
+                                    $target = "../assets/repeat_slips/" . $slipName;
+                                    move_uploaded_file($src, $target);
+                                }
+
+                                if ($inserted) {
+                                    header("location: index.php?success=Successfully Registered.");
+                                } else {
+                                    header("Location: index.php?error=Something-went-wrong");
+                                }
+                            } else {
+                                header("Location: index.php?error=You are already registered for the same level, type, and exam.<br>You can edit your existing registration through the menu");
+
+                            }
+
+
+
+                        }
+                    }
+
+                }
+
                 function displayStep1() {
-                    global $combinationList, $_POST, $examUnitId, $exam, $regNo, $indexNo;
+                    global $combinationList, $_POST, $examUnitId, $exam, $regNo, $indexNo, $edit;
+                    if(isset($_POST['regId']) AND !isset($_POST['level'])){
+                        $_POST['level'] = $GLOBALS['regDetail']['level'];
+                        $_POST['type'] = $GLOBALS['regDetail']['type'];
+                    }
                     //repeat exam registration validation
                     $stud_year = substr($regNo,0,4);
                     $exam_year = $exam['academic_year'];
@@ -354,7 +510,12 @@ function setSelected($fieldName, $fieldValue) {
                         <h3 class="font-bold lg:text-xl text-center text-gray-800">Personal Details</h3>
                         <form action="exam_reg.php" method="POST" class="mt-10 h-[350px] flex flex-col justify-around" id="examForm">
                             <input type="hidden" name="step" value="1" />
-                            <?php if(isset($_POST['regId'])) echo "<input type='hidden' name='regId' value='".$_POST['regId']."' />" ?>
+                            <?php if(isset($_POST['regId'])) {
+                                echo "<input type='hidden' name='regId' value='" . $_POST['regId'] . "' />\n";
+                                echo "<input type='hidden' name='level' value='" . $_POST['level'] . "' />\n";
+                                echo "<input type='hidden' name='type' value='" . $_POST['type'] . "' />\n";
+                            }
+                            ?>
                             <?php foreach ($selectedUnits as $unitId) { ?>
                                 <input type="hidden" name="units[]" value="<?php echo $unitId; ?>" />
                             <?php } ?>
@@ -364,7 +525,7 @@ function setSelected($fieldName, $fieldValue) {
                             </div>
                             <div class="detail-row  my-1 !block lg:!grid !w-full">
                                 <label class="hidden lg:block" for="type">Type: <span class="text-red-500">*</span></label>
-                                <select class="inputs" id="type" name="type"  required>
+                                <select class="inputs" id="type" name="type"  required  <?php if(isset($_POST['regId'])) echo "disabled";?>>
                                     <option value="select" <?php setSelected('type', 'select') ?> disabled selected>Select Type</option>
                                     <option value="proper" <?php setSelected('type', 'proper') ?>>Proper</option>
                                     <?php if($can_repeat){?>
@@ -374,7 +535,7 @@ function setSelected($fieldName, $fieldValue) {
                             </div>
                             <div class="detail-row  my-1 !block lg:!grid !w-full">
                                 <label class="hidden lg:block" for="level">Level: <span class="text-red-500">*</span></label>
-                                <select class="inputs" id="level" name="level" required>
+                                <select class="inputs" id="level" name="level" required <?php if(isset($_POST['regId'])) echo "disabled";?>>
                                     <option value="select" <?php setSelected('level', 'select') ?> disabled selected>Select Level</option>
                                     <option value="1" <?php setSelected('level', 1) ?>>Level 1</option>
                                     <option value="2" <?php setSelected('level', 2) ?>>Level 2</option>
@@ -405,9 +566,7 @@ function setSelected($fieldName, $fieldValue) {
                 <?php }
 
                 function displayStep2($unitsQueryResult) {
-
                     $selectedUnits = (isset($_POST['units']))?$_POST['units']:array();
-                    global $combinationList;
                     $count = 0;
                     ?>
                     <div class="w-full lg:w-11/12 mx-auto">
@@ -419,7 +578,6 @@ function setSelected($fieldName, $fieldValue) {
                             <input type="hidden" name="step" value="2" />
                             <?php if(isset($_POST['regId'])) echo "<input type='hidden' name='regId' value='".$_POST['regId']."' />" ?>
 
-                            <input type="hidden" name="indexNo" value="<?php setValue("indexNo") ?>" />
                             <select id="type" name="type" hidden>
                                 <option value="select" <?php setSelected('type', 'select') ?>>Select Type</option>
                                 <option value="proper" <?php setSelected('type', 'proper') ?>>Proper</option>
@@ -432,15 +590,9 @@ function setSelected($fieldName, $fieldValue) {
                                 <option value="3" <?php setSelected('level', 3) ?>>Level 3</option>
                                 <option value="4" <?php setSelected('level', 4) ?>>Level 4</option>
                             </select>
-                            <select id="combination" name="combination" hidden>
-                                <option value="select" <?php setSelected('combination', 'select') ?>>Select Combination</option>
-                                <?php
-                                while ($userCombination = mysqli_fetch_assoc($combinationList)) { ?>
-                                    <option value="<?php echo $userCombination['combinationID'] ?>" <?php setSelected('combination', $userCombination['combinationID']) ?>>
-                                        <?php echo $userCombination['combinationName']; ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
+
+                            <input type="hidden" value="<?php echo $_POST['combination'] ?>" name="combination">
+
 
 
                             <?php while ($unit = mysqli_fetch_assoc($unitsQueryResult)) {
@@ -458,20 +610,49 @@ function setSelected($fieldName, $fieldValue) {
 
                             <div class="w-full flex items-center justify-around mt-5">
                                 <input class="btn outline-btn w-5/12" type="submit" name="submit" value="&lt; Back" />
-                                <input class="btn fill-btn w-5/12" type="submit" name="submit" value="Next &gt;" />
+                                <input class="btn fill-btn w-5/12" type="submit" name="submit" value="<?php echo ($_POST['type'] == 'repeat')?'Next &gt;':'Submit'?>" />
                             </div>
                         </form>
                     </div>
                 <?php }
 
 
-                function displayStep3() { ?>
+                function displayStep3() {
+                    global $examUnitId, $_POST, $slip_msg;
+                    if(isset($_POST['units']))
+                        $selectedUnits = $_POST['units'];
+                    else if($GLOBALS['edit']){
+                        $selectedUnits = $examUnitId;
+                    }else
+                        $selectedUnits = array();
+                    ?>
                     <div class="mx-auto w-11/12">
                         <div class="text-center">
                             <h3 class="font-bold lg:text-xl text-gray-800">Payment Slip copies</h3>
                             <p class="text-gray-500">Upload the soft copies of payment slip. File type should be <b>PDF</b> and it should <b>include both side of the slip</b>.</p>
                         </div>
-                        <form action="exam_reg.php" method="POST" class="mt-10 min-h-[350px] w-3/4 mx-auto flex flex-col justify-around">
+                        <?php if (isset($slip_msg)) : ?>
+                            <div class="text-center error-msg text-red-500"><?php echo $slip_msg; ?></div>
+                        <?php endif; ?>
+                        <form action="exam_reg.php" method="POST" enctype="multipart/form-data" class="mt-10 min-h-[350px] w-3/4 mx-auto flex flex-col justify-around">
+                            <input type="hidden" name="step" value="3" />
+                            <?php if(isset($_POST['regId'])) echo "<input type='hidden' name='regId' value='".$_POST['regId']."' />" ?>
+                            <?php foreach ($selectedUnits as $unitId) { ?>
+                                <input type="hidden" name="units[]" value="<?php echo $unitId; ?>" />
+                            <?php } ?>
+                            <input type="hidden" value="<?php echo $_POST['combination'] ?>" name="combination">
+                            <select id="type" name="type" hidden>
+                                <option value="select" <?php setSelected('type', 'select') ?>>Select Type</option>
+                                <option value="proper" <?php setSelected('type', 'proper') ?>>Proper</option>
+                                <option value="repeat" <?php setSelected('type', 'repeat') ?>>Repeat</option>
+                            </select>
+                            <select id="level" name="level" hidden>
+                                <option value="select" <?php setSelected('level', 'select') ?>>Select Level</option>
+                                <option value="1" <?php setSelected('level', 1) ?>>Level 1</option>
+                                <option value="2" <?php setSelected('level', 2) ?>>Level 2</option>
+                                <option value="3" <?php setSelected('level', 3) ?>>Level 3</option>
+                                <option value="4" <?php setSelected('level', 4) ?>>Level 4</option>
+                            </select>
                             <div class="detail-row !w-full">
                                 <label for="regno">Payment Slips: </label>
                                 <input type="file" class="col-span-2 w-full h-full file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-[#5465ff] hover:file:bg-violet-100" name="slipFile" required>
@@ -512,11 +693,6 @@ function setSelected($fieldName, $fieldValue) {
     examForm.addEventListener("submit", function(event) {
         if (!validateForm()) {
             event.preventDefault(); // Prevent form submission if validation fails
-        }else {
-            var unitbox = document.createElement('input');
-            unitbox.name = 'units[]';
-            unitbox.value = selectedUnits;
-            examForm.append(unitbox);
         }
     });
 
@@ -552,7 +728,7 @@ function setSelected($fieldName, $fieldValue) {
 
 <?php } ?>
 <script>
-    if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-    }
+    // if (window.history.replaceState) {
+    //     window.history.replaceState(null, null, window.location.href);
+    // }
 </script>
