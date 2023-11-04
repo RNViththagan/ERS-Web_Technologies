@@ -59,6 +59,38 @@ if (mysqli_num_rows($examDetails) == 0) {
     exit();
 }
 
+//registration restriction
+$stud_year = substr($regNo,0,4);
+$exam_year = $exam['academic_year'];
+$exams_type =array("proper"=> array(), "repeat"=>array());
+
+
+$calcyear = ($exam_year - $stud_year) +1;
+$can_repeat =($calcyear) < 8;
+$prop_year = ($calcyear > 4)?5:$calcyear;
+if($calcyear < 5)
+    array_push($exams_type["proper"],$prop_year);
+if($can_repeat)
+    for ($i = 1; $i < $prop_year; $i++) {
+        array_push($exams_type["repeat"],$i);
+    }
+
+$typeDetailsSQL = "SELECT level,type FROM `exam_reg_excep` WHERE regNo = '$regNo' and  exam_id = $exam_id";
+$typeDetails = mysqli_query($con, $typeDetailsSQL);
+while($type = mysqli_fetch_assoc($typeDetails)){
+    array_push($exams_type[$type['type']],$type['level']);
+}
+if ((count($exams_type["repeat"]) + count($exams_type["proper"])) == 0){
+    header("Location: index.php?error=Sorry! You have no exams to register!<br>Contact admin if its a mistake!");
+    exit();
+}
+
+$exams_type["repeat"] = array_unique($exams_type["repeat"]);
+$exams_type["proper"] = array_unique($exams_type["proper"]);
+sort($exams_type["repeat"]);
+sort($exams_type["proper"]);
+
+
 // getting the index number
 $query = "SELECT * FROM `exam_stud_index` WHERE `regNo`= '$regNo' AND `exam_id` = $exam_id";
 $result = mysqli_query($con, $query);
@@ -137,7 +169,7 @@ function setSelected($fieldName, $fieldValue) {
     <?php } ?>
 
 
-    <nav class="w-full h-[15vh] min-h-fit drop-shadow-md bg-white fixed top-0 left-0">
+    <nav style="display: none" class="w-full h-[15vh] min-h-fit drop-shadow-md bg-white fixed top-0 left-0">
         <div class="w-10/12 h-full m-auto flex items-center justify-between">
             <a href="index.php">
                 <img src="../assets/img/logo/ERS_logo.gif" alt="logo" class="w-28 align-middle">
@@ -480,10 +512,6 @@ function setSelected($fieldName, $fieldValue) {
                         $_POST['level'] = $GLOBALS['regDetail']['level'];
                         $_POST['type'] = $GLOBALS['regDetail']['type'];
                     }
-                    //repeat exam registration validation
-                    $stud_year = substr($regNo,0,4);
-                    $exam_year = $exam['academic_year'];
-                    $can_repeat =(($exam_year - $stud_year) < 7);
 
                     if(isset($_POST['units']))
                         $selectedUnits = $_POST['units'];
@@ -527,22 +555,57 @@ function setSelected($fieldName, $fieldValue) {
                                 <label class="hidden lg:block" for="type">Type: <span class="text-red-500">*</span></label>
                                 <select class="inputs" id="type" name="type"  required  <?php if(isset($_POST['regId'])) echo "disabled";?>>
                                     <option value="select" <?php setSelected('type', 'select') ?> disabled selected>Select Type</option>
-                                    <option value="proper" <?php setSelected('type', 'proper') ?>>Proper</option>
-                                    <?php if($can_repeat){?>
-                                    <option value="repeat" <?php setSelected('type', 'repeat') ?>>Repeat</option>
-                                    <?php } ?>
+                                    <?php
+                                    global $exams_type;
+                                    foreach ($exams_type as $type => $val){
+                                        if(count($val))
+                                            echo "<option value='$type' "; setSelected('type', $type); echo ">".ucfirst($type)."</option>";
+                                    } ?>
                                 </select>
                             </div>
-                            <div class="detail-row  my-1 !block lg:!grid !w-full">
+                            <div id="level_block" class="detail-row  my-1 !block lg:!grid !w-full">
                                 <label class="hidden lg:block" for="level">Level: <span class="text-red-500">*</span></label>
                                 <select class="inputs" id="level" name="level" required <?php if(isset($_POST['regId'])) echo "disabled";?>>
                                     <option value="select" <?php setSelected('level', 'select') ?> disabled selected>Select Level</option>
-                                    <option value="1" <?php setSelected('level', 1) ?>>Level 1</option>
-                                    <option value="2" <?php setSelected('level', 2) ?>>Level 2</option>
-                                    <option value="3" <?php setSelected('level', 3) ?>>Level 3</option>
-                                    <option value="4" <?php setSelected('level', 4) ?>>Level 4</option>
+                                    <?php
+                                    global $exams_type;
+                                    if(isset($_POST['type']))
+                                        foreach ($exams_type[$_POST['type']] as $val){
+                                                echo "<option value='$val' "; setSelected('level', $val); echo ">Level ".$val."</option>";
+                                        }
+                                    ?>
                                 </select>
                             </div>
+
+                            <script>
+                                var examsType = <?php global $exams_type; echo json_encode($exams_type); ?>;
+
+                                var typeDropdown = document.getElementById("type");
+                                var levelDropdown = document.getElementById("level");
+                                const levelDropdownBlock = document.getElementById("level_block");
+                                if(typeDropdown.value == "select"){
+                                    levelDropdown.disabled = true;
+                                }
+
+                                typeDropdown.addEventListener("change", function () {
+                                    var selectedType = typeDropdown.value;
+                                    var levelOptions = examsType[selectedType];
+                                    levelDropdown.disabled = false;
+
+                                    // Clear existing options
+                                    while (levelDropdown.options.length > 1) {
+                                        levelDropdown.remove(1);
+                                    }
+
+                                    // Add new options based on the selected type
+                                    for (var i = 0; i < levelOptions.length; i++) {
+                                        var option = document.createElement("option");
+                                        option.value = levelOptions[i];
+                                        option.text = "Level " + levelOptions[i];
+                                        levelDropdown.appendChild(option);
+                                    }
+                                });
+                            </script>
                             <div class="detail-row  my-1 !block lg:!grid !w-full">
                                 <label class="hidden lg:block" for="combination">Subject Combination: <span class="text-red-500">*</span></label>
                                 <select class="inputs" id="combination" name="combination" required>
@@ -728,7 +791,7 @@ function setSelected($fieldName, $fieldValue) {
 
 <?php } ?>
 <script>
-    // if (window.history.replaceState) {
-    //     window.history.replaceState(null, null, window.location.href);
-    // }
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
+    }
 </script>
