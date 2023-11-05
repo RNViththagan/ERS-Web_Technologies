@@ -347,6 +347,10 @@ function setSelected($fieldName, $fieldValue) {
 
 
                         }
+
+                        displayStep3();
+                        // if ($type === "repeat") {
+                        // }
                     }
                 }
 
@@ -564,6 +568,7 @@ function setSelected($fieldName, $fieldValue) {
                                 </select>
                             </div>
                             <div id="level_block" class="detail-row  my-1 !block lg:!grid !w-full">
+
                                 <label class="hidden lg:block" for="level">Level: <span class="text-red-500">*</span></label>
                                 <select class="inputs" id="level" name="level" required <?php if(isset($_POST['regId'])) echo "disabled";?>>
                                     <option value="select" <?php setSelected('level', 'select') ?> disabled selected>Select Level</option>
@@ -606,6 +611,7 @@ function setSelected($fieldName, $fieldValue) {
                                     }
                                 });
                             </script>
+
                             <div class="detail-row  my-1 !block lg:!grid !w-full">
                                 <label class="hidden lg:block" for="combination">Subject Combination: <span class="text-red-500">*</span></label>
                                 <select class="inputs" id="combination" name="combination" required>
@@ -657,7 +663,6 @@ function setSelected($fieldName, $fieldValue) {
                             <input type="hidden" value="<?php echo $_POST['combination'] ?>" name="combination">
 
 
-
                             <?php while ($unit = mysqli_fetch_assoc($unitsQueryResult)) {
                                 $count++;
                                 $unitId = $unit['unitId'];
@@ -689,6 +694,7 @@ function setSelected($fieldName, $fieldValue) {
                     }else
                         $selectedUnits = array();
                     ?>
+
                     <div class="mx-auto w-11/12">
                         <div class="text-center">
                             <h3 class="font-bold lg:text-xl text-gray-800">Payment Slip copies</h3>
@@ -716,6 +722,7 @@ function setSelected($fieldName, $fieldValue) {
                                 <option value="3" <?php setSelected('level', 3) ?>>Level 3</option>
                                 <option value="4" <?php setSelected('level', 4) ?>>Level 4</option>
                             </select>
+
                             <div class="detail-row !w-full">
                                 <label for="regno">Payment Slips: </label>
                                 <input type="file" class="col-span-2 w-full h-full file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-[#5465ff] hover:file:bg-violet-100" name="slipFile" required>

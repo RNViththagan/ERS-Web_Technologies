@@ -1,21 +1,25 @@
 <?php
 if (isset($_POST['regNo'])) {
     $regNo = $_POST['regNo'];
+
     $indexQuery = "";
     if (isset($exam)) {
         $examID = $exam['exam_id'];
         $indexSelect=", exam_stud_index.indexNo ";
         $indexQuery = " LEFT JOIN `exam_stud_index` ON exam_stud_index.regNo = student.regNo AND `exam_id` = $examID";
+
     }
 
     $query = "SELECT student.*, student_check.*".$indexSelect." FROM student INNER JOIN student_check ON student.regNo = student_check.regNo " . $indexQuery . " WHERE student.regNo = '" . $regNo . "'";
     $result = mysqli_query($con, $query);
     $row = mysqli_fetch_assoc($result);
+
     if ($row['indexNo'] != "") {
         $indexNo = $row['indexNo'];
     } else {
         $indexNo = null;
     }
+
 }
 
 ?>
