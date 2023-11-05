@@ -16,7 +16,8 @@ elseif (isset($_SESSION['role'])) {
 }
 
 include("../config/connect.php");
-require($_SERVER['DOCUMENT_ROOT'] . '/ERS-Web_Technologies/vendor/autoload.php'); // Include PHPMailer autoloader
+require($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php'); // Include PHPMailer autoloader
+
 
 $regNo = $_SESSION['userid'];
 
