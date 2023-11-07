@@ -309,23 +309,30 @@ $districts = ['Select District', 'Colombo', 'Kandy', 'Galle', 'Ampara', 'Anuradh
                                                     <td class=\"\">$type</td>
                                                     <td class=\"\">$level</td>
                                                     <td class=\"\">$semester</td>
-                                                    <td class=\"\">$combination</td>
+                                                    <td class=\"\">$combination</td>";
+                                                echo
+                                                        ($exreg)?"
+
                                                     <td>
                                                         <button onclick=\"openReg('$regId','$eState')\" class=\"py-1 px-2 border-2 border-blue-500 rounded-md bg-white text-blue-500 hover:bg-blue-500 hover:text-white transition \">
                                                         <i class=\"fa-solid fa-pencil\"></i>
                                                         </button>
-                                                    </td>";
-                                                echo
-                                                        ($exreg)?"
+                                                    </td>
+
                                                     <td>
                                                         <button onclick=\"openReg('$regId','delete')\" class=\"ml-2 py-1 px-2 border-2 border-red-500 rounded-md bg-white text-red-500 hover:bg-red-500 hover:text-white transition \">
                                                             <i class=\"fa-solid fa-trash-can\"></i>
                                                         </button>
-                                                    </td>":"";
+                                                    </td>":"<td>
+                                                        <button onclick=\"openReg('$regId','$eState')\" class=\"py-1 px-2 border-2 border-blue-500 rounded-md bg-white text-blue-500 hover:bg-blue-500 hover:text-white transition \">
+                                                        <i class=\"fa-solid fa-list\"></i>
+                                                        </button>
+                                                    </td>";
                                                 echo "</tr>
                                                 ";
-                                                } 
-                                        } else { 
+                                                }
+                                        } else {
+
                                             echo "
                                                 <tr class='h-10 even:bg-blue-50'>
                                                     <td colspan='7'>No record found</td>
