@@ -115,13 +115,13 @@ else{
         <button id="addButton" class="btn fill-btn mt-2" onclick="addStudent()">Add</button>
         <table id="studentTable" class="w-full text-center">
             <thead>
-            <tr class="h-12 bg-blue-100 font-semibold">
-                <th>Registration Number</th>
-                <th>Actions</th>
-            </tr>
+                <tr class="h-12 bg-blue-100 font-semibold">
+                    <th>Registration Number</th>
+                    <th>Actions</th>
+                </tr>
             </thead>
             <tbody>
-            <!-- Students will be displayed here -->
+                <!-- Students will be displayed here -->
             </tbody>
         </table>
     </div>

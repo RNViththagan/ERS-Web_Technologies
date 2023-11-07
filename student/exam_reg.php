@@ -269,160 +269,13 @@ function setSelected($fieldName, $fieldValue) {
                         $regUnits = $_POST['units'];
                         $date =date('Y-m-d');
 
-                    if($editRegId){
-
-                        $updateQuery = "UPDATE stud_exam_reg SET
-                                            type = '$type',
-                                            level = $level,
-                                            combId = $combination,
-                                            reg_date = '$date'
-                                            WHERE regId = $editRegId";
-
-                        if (mysqli_query($con, $updateQuery)) {
-
-                            $deleteQuery = "DELETE FROM reg_units WHERE regId = $editRegId";
-                            if (mysqli_query($con, $deleteQuery)) {
-                                $inserted = true;
-                                foreach ($regUnits as $unitId) {
-                                    $reg_units_sql = "INSERT INTO reg_units(regId, exam_unit_id) VALUES($editRegId, $unitId)";
-                                    $reg_units_query = mysqli_query($con, $reg_units_sql);
-
-                                    if (!$reg_units_query) {
-                                        $inserted = false;
-                                        break;
-                                    }
-                                }
-                                if ($inserted) {
-                                    header("Location: index.php?success=Exam registration successfully edited.");
-                                    exit();
-                                } else {
-                                    header("Location: index.php?error=Exam registration editing failed. Please try again.");
-                                    exit();
-                                }
-                            }else {
-                                header("Location: index.php?error=Exam registration editing failed. Please try again.");
-                                exit();
-                            }
-                        } else {
-                            header("Location: index.php?error=Exam registration editing failed. Please try again.");
-                            exit();
-                        }
-                    }else {
-                        $sql = "SELECT * FROM stud_exam_reg WHERE stud_regNo = '$regNo' AND level = '$level' AND type = '$type' AND exam_id = $exam_id";
-
-                        $result = mysqli_query($con, $sql);
-
-                        if (!$result) {
-                            die("Query failed: " . mysqli_error($con));
-                        }
-
-                        if (mysqli_num_rows($result) == 0) {
-                            $stud_exam_reg_sql = "INSERT INTO stud_exam_reg(exam_id, stud_regNo, level, combId, type, reg_date) VALUES($exam_id, '$regNo', $level, $combination, '$type', '$date')";
-                            $stud_exam_reg_query = mysqli_query($con, $stud_exam_reg_sql);
-
-                    if (!$stud_exam_reg_query) {
-                        header("Location: index.php?error=Something-went-wrong");
-                        exit();
-                    }
-
-                            $regId = mysqli_insert_id($con);
-                            $inserted = true;
-
-                            foreach ($regUnits as $unitId) {
-                                $reg_units_sql = "INSERT INTO reg_units(regId, exam_unit_id) VALUES($regId, $unitId)";
-                                $reg_units_query = mysqli_query($con, $reg_units_sql);
-
-                                if (!$reg_units_query) {
-                                    $inserted = false;
-                                    break;
-                                }
-                            }
-
-                            if ($inserted) {
-                                header("location: index.php?success=Successfully Registered.");
-                            } else {
-                                header("Location: index.php?error=Something-went-wrong");
-                            }
-                        } else {
-                            header("Location: index.php?error=You are already registered for the same level, type, and exam.<br>You can edit your existing registration through the menu");
-
-                        }
-
-
-
-                    }
-                }
-
-                function processStep3() {
-                    global $con, $exam;
-                    if(isset($_FILES["slipFile"]["name"]) and $_FILES["slipFile"]["name"] != Null){
-                        $path = $_FILES['slipFile']['name'];
-                        $ext = pathinfo($path, PATHINFO_EXTENSION);
-                    }
-                    if(strtolower($ext) != "pdf"){
-                        global $slip_msg;
-                        $slip_msg = "Upload only pdf file!";
-                        displayStep3();
-                    }
-                    else if (isset($_POST["submit"]) and $_POST["submit"] == "< Back") {
-
-                        $exam_id = $exam['exam_id'];
-                        $type = $_POST['type'];
-                        $level = $_POST['level'];
-                        $combination = $_POST['combination'];
-
-                        $unitSQL = "
-                        SELECT DISTINCT u.unitId, u.unitCode, u.name
-                        FROM unit u
-                        INNER JOIN combination_subjects cs ON u.subject = cs.subject
-                        INNER JOIN unit_sub_exam usexam ON u.unitId = usexam.unitId
-                        WHERE cs.combinationID = $combination
-                        AND u.level = $level
-                        AND usexam.exam_id = $exam_id
-                        AND usexam.type = '$type';
-                    ";
-
-                        $unitsQueryResult = mysqli_query($con, $unitSQL);
-                        //$units = mysqli_fetch_assoc($unitsQueryResult);
-                        //print_r($unitsQueryResult->num_rows);
-                        // exit;
-                        if ($unitsQueryResult) {
-                            if (mysqli_num_rows($unitsQueryResult) == 0) {
-                                header("Location: index.php?error=No units were assign to this combination.");
-                                exit();
-                            }
-                        } else {
-                            header("Location: index.php?error=Something-went-wrong");
-                            exit();
-                        }
-                        displayStep2($unitsQueryResult);
-
-                    }else if(isset($_POST["submit"]) and $_POST["submit"] == "Submit") {
-                        global $con, $exam, $regNo;
-                        $exam_id = $exam['exam_id'];
-                        $type = $_POST['type'];
-                        $level = $_POST['level'];
-                        $editRegId = (isset($_POST['regId']))?$_POST['regId']:false;
-                        $combination = $_POST['combination'];
-                        $regUnits = $_POST['units'];
-                        $date =date('Y-m-d');
-
                         if($editRegId){
-
                             $updateQuery = "UPDATE stud_exam_reg SET
                                                 type = '$type',
                                                 level = $level,
                                                 combId = $combination,
                                                 reg_date = '$date'
                                                 WHERE regId = $editRegId";
-                            if(isset($_FILES["slipFile"]["name"]) and $_FILES["slipFile"]["name"] != Null){
-                                $src = $_FILES["slipFile"]["tmp_name"];
-                                $path = $_FILES['slipFile']['name'];
-                                $ext = pathinfo($path, PATHINFO_EXTENSION);
-                                $slipName = $editRegId.".".$ext;
-                                $target = "../assets/repeat_slips/" . $slipName;
-                                move_uploaded_file($src, $target);
-                            }
 
                             if (mysqli_query($con, $updateQuery)) {
 
@@ -445,7 +298,7 @@ function setSelected($fieldName, $fieldValue) {
                                         header("Location: index.php?error=Exam registration editing failed. Please try again.");
                                         exit();
                                     }
-                                }else {
+                                } else {
                                     header("Location: index.php?error=Exam registration editing failed. Please try again.");
                                     exit();
                                 }
@@ -453,7 +306,7 @@ function setSelected($fieldName, $fieldValue) {
                                 header("Location: index.php?error=Exam registration editing failed. Please try again.");
                                 exit();
                             }
-                        }else {
+                        } else {
                             $sql = "SELECT * FROM stud_exam_reg WHERE stud_regNo = '$regNo' AND level = '$level' AND type = '$type' AND exam_id = $exam_id";
 
                             $result = mysqli_query($con, $sql);
@@ -465,7 +318,7 @@ function setSelected($fieldName, $fieldValue) {
                             if (mysqli_num_rows($result) == 0) {
                                 $stud_exam_reg_sql = "INSERT INTO stud_exam_reg(exam_id, stud_regNo, level, combId, type, reg_date) VALUES($exam_id, '$regNo', $level, $combination, '$type', '$date')";
                                 $stud_exam_reg_query = mysqli_query($con, $stud_exam_reg_sql);
-
+                                
                                 if (!$stud_exam_reg_query) {
                                     header("Location: index.php?error=Something-went-wrong");
                                     exit();
@@ -483,14 +336,6 @@ function setSelected($fieldName, $fieldValue) {
                                         break;
                                     }
                                 }
-                                if(isset($_FILES["slipFile"]["name"]) and $_FILES["slipFile"]["name"] != Null){
-                                    $src = $_FILES["slipFile"]["tmp_name"];
-                                    $path = $_FILES['slipFile']['name'];
-                                    $ext = pathinfo($path, PATHINFO_EXTENSION);
-                                    $slipName = $regId.".".$ext;
-                                    $target = "../assets/repeat_slips/" . $slipName;
-                                    move_uploaded_file($src, $target);
-                                }
 
                                 if ($inserted) {
                                     header("location: index.php?success=Successfully Registered.");
@@ -499,14 +344,9 @@ function setSelected($fieldName, $fieldValue) {
                                 }
                             } else {
                                 header("Location: index.php?error=You are already registered for the same level, type, and exam.<br>You can edit your existing registration through the menu");
-
                             }
-
-
-
                         }
                     }
-
                 }
 
                 function processStep3() {
@@ -987,11 +827,10 @@ function setSelected($fieldName, $fieldValue) {
         // If all validations pass, return true
         return true;
     }
-</script>
 
-<?php } ?>
-<script>
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
     }
 </script>
+
+<?php } ?>
