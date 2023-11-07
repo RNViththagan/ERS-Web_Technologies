@@ -1,6 +1,6 @@
 <nav
         id="navBar"
-        class="fixed top-0 bottom-0 lg:left-0 py-5 px-7 w-[300px] bg-white drop-shadow-sm transition-all">
+        class="fixed top-0 bottom-0 lg:left-0 py-5 px-7 w-[300px] bg-white drop-shadow-sm transition-all z-50">
     <div class="flex items-center justify-between">
         <img
                 src="../assets/img/logo/ERS_logo.gif"
@@ -15,7 +15,7 @@
 
     <hr class="bg-gray-700 my-5"/>
 
-    <div class="flex flex-col gap-5" id="navLinks">
+    <div class="flex flex-col gap-5 " id="navLinks">
         <a
                 id="dashboardLink"
                 href="../admin"
@@ -58,20 +58,37 @@
                 </a>
             <?php }
 
-            $getCurrentExam = "SELECT * FROM exam_reg WHERE status = 'registration'";
+            $getCurrentExam = "SELECT * FROM repeat_slips WHERE status = 'pending'";
             $result = mysqli_query($con, $getCurrentExam);
 
             if ($result->num_rows > 0) {
-                $curExam = mysqli_fetch_assoc($result);
+                $curSlips = mysqli_fetch_assoc($result);
             }
             ?>
-            <?php if (isset($curExam)) { ?>
+            <?php if (isset($curSlips)) { ?>
                 <a
                         id="dashboardLink"
                         href="index.php?page=slips"
                         class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
-                    <i class="bi bi-credit-card-2-front-fill text-xl"></i>
+                    <i class="bi bi-credit-card-2-front text-xl"></i>
                     <span class="transition-all">Repeat Payment Slips</span>
+                </a>
+            <?php }
+
+            $getCurrentExam = "SELECT * FROM `repeat_medical_approval` WHERE status = 'pending'";
+            $result = mysqli_query($con, $getCurrentExam);
+
+            if ($result->num_rows > 0) {
+                $curSlips = mysqli_fetch_assoc($result);
+            }
+            ?>
+            <?php if (isset($curSlips)) { ?>
+                <a
+                        id="dashboardLink"
+                        href="index.php?page=medical"
+                        class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
+                    <i class="bi bi-file-text text-xl"></i>
+                    <span class="transition-all">Senate approval letter</span>
                 </a>
             <?php } ?>
         <?php } ?>

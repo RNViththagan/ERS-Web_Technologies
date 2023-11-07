@@ -265,8 +265,7 @@ $next_page = $current_page + 1;
         console.log(myform);
         myform.submit()
     }
-</script>
-<script>
+
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
     }

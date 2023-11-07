@@ -44,7 +44,7 @@ require_once("navbar.php");
 
 
 <!-- Content body -->
-<div id="nextSibling" class="transition-all ml-[300px] h-auto flex items-center justify-center py-20">
+<div id="nextSibling" class="relative transition-all ml-[300px] h-auto flex items-center justify-center py-20">
     <div class="card drop-shadow-xl">
         <?php
 
@@ -94,6 +94,8 @@ require_once("navbar.php");
                     include("studentAdmin/add_index.php");
                 } else if ($_GET['page'] === "slips") {
                     include("studentAdmin/payment_slips.php");
+                } else if ($_GET['page'] === "medical") {
+                    include("studentAdmin/medical_approval.php");
                 } else
                     include("studentAdmin/stud_admin_dashboard.php");
             } else
@@ -127,6 +129,7 @@ require_once("navbar.php");
                 include("subjectAdmin/subj_admin_dashboard.php");
         ?>
     </div>
+    
 </div>
 
 

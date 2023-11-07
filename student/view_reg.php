@@ -91,9 +91,13 @@ if(isset($_POST['regId'])) {
         </a>
         <ul>
             <?php if (!isset($profile_img)) { ?>
-                <li onclick="openMenu()" class="py-2 px-[14px] bg-[var(--primary)] rounded-full drop-shadow-md cursor-pointer lh:relative"><i class="fa-solid fa-user text-2xl text-[#dfeaff]"></i></li>
+                <li onclick="openMenu()" class="py-2 px-[14px] bg-[var(--primary)] rounded-full drop-shadow-md cursor-pointer lh:relative">
+                    <i class="fa-solid fa-user text-2xl text-[#dfeaff]"></i>
+                </li>
             <?php } else { ?>
-                <img onclick="openMenu()" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full drop-shadow-md cursor-pointer ring-4" src="../assets/uploads/<?php echo $profile_img; ?>" alt="user img">
+                <li onclick="openMenu()" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full drop-shadow-md cursor-pointer ring-4">
+                    <img src="../assets/uploads/<?php echo $profile_img; ?>" alt="user img" class="w-full h-full rounded-full">
+                </div>
             <?php } ?>
         </ul>
 

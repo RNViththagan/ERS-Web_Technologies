@@ -176,9 +176,13 @@ function setSelected($fieldName, $fieldValue) {
             </a>
             <ul>
                 <?php if (!isset($profile_img)) { ?>
-                    <li onclick="openMenu()" class="py-2 px-[14px] bg-[var(--primary)] rounded-full drop-shadow-md cursor-pointer lh:relative"><i class="fa-solid fa-user text-2xl text-[#dfeaff]"></i></li>
+                    <li onclick="openMenu()" class="py-2 px-[14px] bg-[var(--primary)] rounded-full drop-shadow-md cursor-pointer lh:relative">
+                        <i class="fa-solid fa-user text-2xl text-[#dfeaff]"></i>
+                    </li>
                 <?php } else { ?>
-                    <img onclick="openMenu()" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full drop-shadow-md cursor-pointer ring-4" src="../assets/uploads/<?php echo $profile_img; ?>" alt="user img">
+                    <li onclick="openMenu()" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full drop-shadow-md cursor-pointer ring-4">
+                        <img src="../assets/uploads/<?php echo $profile_img; ?>" alt="user img" class="w-full h-full rounded-full">
+                    </div>
                 <?php } ?>
             </ul>
 
@@ -265,6 +269,144 @@ function setSelected($fieldName, $fieldValue) {
                         $regUnits = $_POST['units'];
                         $date =date('Y-m-d');
 
+                    if($editRegId){
+
+                        $updateQuery = "UPDATE stud_exam_reg SET
+                                            type = '$type',
+                                            level = $level,
+                                            combId = $combination,
+                                            reg_date = '$date'
+                                            WHERE regId = $editRegId";
+
+                        if (mysqli_query($con, $updateQuery)) {
+
+                            $deleteQuery = "DELETE FROM reg_units WHERE regId = $editRegId";
+                            if (mysqli_query($con, $deleteQuery)) {
+                                $inserted = true;
+                                foreach ($regUnits as $unitId) {
+                                    $reg_units_sql = "INSERT INTO reg_units(regId, exam_unit_id) VALUES($editRegId, $unitId)";
+                                    $reg_units_query = mysqli_query($con, $reg_units_sql);
+
+                                    if (!$reg_units_query) {
+                                        $inserted = false;
+                                        break;
+                                    }
+                                }
+                                if ($inserted) {
+                                    header("Location: index.php?success=Exam registration successfully edited.");
+                                    exit();
+                                } else {
+                                    header("Location: index.php?error=Exam registration editing failed. Please try again.");
+                                    exit();
+                                }
+                            }else {
+                                header("Location: index.php?error=Exam registration editing failed. Please try again.");
+                                exit();
+                            }
+                        } else {
+                            header("Location: index.php?error=Exam registration editing failed. Please try again.");
+                            exit();
+                        }
+                    }else {
+                        $sql = "SELECT * FROM stud_exam_reg WHERE stud_regNo = '$regNo' AND level = '$level' AND type = '$type' AND exam_id = $exam_id";
+
+                        $result = mysqli_query($con, $sql);
+
+                        if (!$result) {
+                            die("Query failed: " . mysqli_error($con));
+                        }
+
+                        if (mysqli_num_rows($result) == 0) {
+                            $stud_exam_reg_sql = "INSERT INTO stud_exam_reg(exam_id, stud_regNo, level, combId, type, reg_date) VALUES($exam_id, '$regNo', $level, $combination, '$type', '$date')";
+                            $stud_exam_reg_query = mysqli_query($con, $stud_exam_reg_sql);
+
+                    if (!$stud_exam_reg_query) {
+                        header("Location: index.php?error=Something-went-wrong");
+                        exit();
+                    }
+
+                            $regId = mysqli_insert_id($con);
+                            $inserted = true;
+
+                            foreach ($regUnits as $unitId) {
+                                $reg_units_sql = "INSERT INTO reg_units(regId, exam_unit_id) VALUES($regId, $unitId)";
+                                $reg_units_query = mysqli_query($con, $reg_units_sql);
+
+                                if (!$reg_units_query) {
+                                    $inserted = false;
+                                    break;
+                                }
+                            }
+
+                            if ($inserted) {
+                                header("location: index.php?success=Successfully Registered.");
+                            } else {
+                                header("Location: index.php?error=Something-went-wrong");
+                            }
+                        } else {
+                            header("Location: index.php?error=You are already registered for the same level, type, and exam.<br>You can edit your existing registration through the menu");
+
+                        }
+
+
+
+                    }
+                }
+
+                function processStep3() {
+                    global $con, $exam;
+                    if(isset($_FILES["slipFile"]["name"]) and $_FILES["slipFile"]["name"] != Null){
+                        $path = $_FILES['slipFile']['name'];
+                        $ext = pathinfo($path, PATHINFO_EXTENSION);
+                    }
+                    if(strtolower($ext) != "pdf"){
+                        global $slip_msg;
+                        $slip_msg = "Upload only pdf file!";
+                        displayStep3();
+                    }
+                    else if (isset($_POST["submit"]) and $_POST["submit"] == "< Back") {
+
+                        $exam_id = $exam['exam_id'];
+                        $type = $_POST['type'];
+                        $level = $_POST['level'];
+                        $combination = $_POST['combination'];
+
+                        $unitSQL = "
+                        SELECT DISTINCT u.unitId, u.unitCode, u.name
+                        FROM unit u
+                        INNER JOIN combination_subjects cs ON u.subject = cs.subject
+                        INNER JOIN unit_sub_exam usexam ON u.unitId = usexam.unitId
+                        WHERE cs.combinationID = $combination
+                        AND u.level = $level
+                        AND usexam.exam_id = $exam_id
+                        AND usexam.type = '$type';
+                    ";
+
+                        $unitsQueryResult = mysqli_query($con, $unitSQL);
+                        //$units = mysqli_fetch_assoc($unitsQueryResult);
+                        //print_r($unitsQueryResult->num_rows);
+                        // exit;
+                        if ($unitsQueryResult) {
+                            if (mysqli_num_rows($unitsQueryResult) == 0) {
+                                header("Location: index.php?error=No units were assign to this combination.");
+                                exit();
+                            }
+                        } else {
+                            header("Location: index.php?error=Something-went-wrong");
+                            exit();
+                        }
+                        displayStep2($unitsQueryResult);
+
+                    }else if(isset($_POST["submit"]) and $_POST["submit"] == "Submit") {
+                        global $con, $exam, $regNo;
+                        $exam_id = $exam['exam_id'];
+                        $type = $_POST['type'];
+                        $level = $_POST['level'];
+                        $editRegId = (isset($_POST['regId']))?$_POST['regId']:false;
+                        $combination = $_POST['combination'];
+                        $regUnits = $_POST['units'];
+                        $date =date('Y-m-d');
+
                         if($editRegId){
 
                             $updateQuery = "UPDATE stud_exam_reg SET
@@ -273,6 +415,14 @@ function setSelected($fieldName, $fieldValue) {
                                                 combId = $combination,
                                                 reg_date = '$date'
                                                 WHERE regId = $editRegId";
+                            if(isset($_FILES["slipFile"]["name"]) and $_FILES["slipFile"]["name"] != Null){
+                                $src = $_FILES["slipFile"]["tmp_name"];
+                                $path = $_FILES['slipFile']['name'];
+                                $ext = pathinfo($path, PATHINFO_EXTENSION);
+                                $slipName = $editRegId.".".$ext;
+                                $target = "../assets/repeat_slips/" . $slipName;
+                                move_uploaded_file($src, $target);
+                            }
 
                             if (mysqli_query($con, $updateQuery)) {
 
@@ -316,10 +466,10 @@ function setSelected($fieldName, $fieldValue) {
                                 $stud_exam_reg_sql = "INSERT INTO stud_exam_reg(exam_id, stud_regNo, level, combId, type, reg_date) VALUES($exam_id, '$regNo', $level, $combination, '$type', '$date')";
                                 $stud_exam_reg_query = mysqli_query($con, $stud_exam_reg_sql);
 
-                        if (!$stud_exam_reg_query) {
-                            header("Location: index.php?error=Something-went-wrong");
-                            exit();
-                        }
+                                if (!$stud_exam_reg_query) {
+                                    header("Location: index.php?error=Something-went-wrong");
+                                    exit();
+                                }
 
                                 $regId = mysqli_insert_id($con);
                                 $inserted = true;
@@ -332,6 +482,14 @@ function setSelected($fieldName, $fieldValue) {
                                         $inserted = false;
                                         break;
                                     }
+                                }
+                                if(isset($_FILES["slipFile"]["name"]) and $_FILES["slipFile"]["name"] != Null){
+                                    $src = $_FILES["slipFile"]["tmp_name"];
+                                    $path = $_FILES['slipFile']['name'];
+                                    $ext = pathinfo($path, PATHINFO_EXTENSION);
+                                    $slipName = $regId.".".$ext;
+                                    $target = "../assets/repeat_slips/" . $slipName;
+                                    move_uploaded_file($src, $target);
                                 }
 
                                 if ($inserted) {
@@ -347,11 +505,8 @@ function setSelected($fieldName, $fieldValue) {
 
 
                         }
-
-                        displayStep3();
-                        // if ($type === "repeat") {
-                        // }
                     }
+
                 }
 
                 function processStep3() {
@@ -527,15 +682,36 @@ function setSelected($fieldName, $fieldValue) {
                     <h1 class="text-lg font-black text-center underline mt-5 text-gray-800 lg:text-2xl">Exam Registration</h1>
 
                     <div class="instructions mt-7 mb-16">
-                        <p class="font-semibold">Read the following instructions carefully before filling this form ------ &gt; &gt; &gt;</p>
+                        <p class="font-bold">Read the following instructions carefully before filling this form ------ &gt; &gt; &gt;</p>
                         <ol class="ml-4 lg:ml-7 my-4 list-decimal text-justify">
                             <li>Students are advised to use either an individual smartphone or personal computer to avoid technical errors.</li>
-                            <li>Sign out from the Gmail account on your smartphone or PC if you have already signed-in. Then type your own Gmail  ID to login to this the Google form</li>
                             <li>Only one record will be accepted per email ID</li>
-                            <li>After submitting this form, a link with your registered course units will be sent to your email. You are advised to check whether your entries are correct. If you have made any wrong entries, you can edit the registered course units by clicking the link until the deadline</li>
                             <li>If you provide any incorrect information, you will be barred from sitting the examination</li>
                         </ol>
-                        <p>If you have any questions, feel free to contact us at <EMAIL></p>
+                        <hr>
+                        <br>
+                        <p class="ml-0 lg:ml-2 font-semibold">The following instructions are for the repeat candidates</p>
+                        <ol class="ml-4 lg:ml-7 my-4 list-decimal text-justify space-y-4">
+                            <li>
+                                Candidates who are repeating the exam  can pay the exam fees using the <b>normal Deposit Slip</b> available in the <b><u>Peoples Bank</u>. Reference No/Account No - 480000022100084</b>
+                                <br><br><b>Exam Fees:</b>
+                                <ul class="ml-4 lg:ml-7 list-decimal text-justify">
+                                    <li class="font-semibold">Theory and Practical of a course unit - Rs. 250/=</li>
+                                    <li class="font-semibold">Theory or Practical of a course unit - Rs. 250/=</li>
+                                </ul>
+                                <br>
+                                <b class="font-bold"><u>NOTE:</u></b><br>
+                                <ul class="ml-4 lg:ml-7 my-1 list-decimal text-justify">
+                                    <li class="font-semibold">Please write the following details in the back side of the Deposit Slip: <br> 1. Full Name  2. Reg. No.   3. Level of Repeat Exam   4. Applied course units</li>
+                                    <li class="font-semibold">You need to include both sides of the Deposit Slip in a single PDF file and attach that PDF file. (Only one PDF file is allowed)</li>
+                                    <li class="font-semibold">Original Deposit Slip should be handover to the Dean's office</li>
+                                </ul>
+                            </li>
+                            <li>Those who had submitted Medical  Certificate for not sitting the ECEs last year, should also pay Rs. 250/- per course unit</li>
+                            <li>Original Payment Voucher should be submitted to the Dean's Office </li>
+                        </ol>
+
+                        <p>If you have any questions, feel free to contact us at using contact us option in this website.</p>
                         <p class="text-right mt-5">Assistant Registrar<br>FACULTY OF SCIENCE</p>
                     </div>
                     <div class="w-11/12 mx-auto">
@@ -641,7 +817,7 @@ function setSelected($fieldName, $fieldValue) {
                     <div class="w-full lg:w-11/12 mx-auto">
                         <div>
                             <h3 class="font-bold lg:text-xl text-center text-gray-800">Select Units</h3>
-                            <p class="text-center text-gray-500">Select course units you want to apply for the exam.</p>
+                            <p class="text-center text-gray-500">Select course units you want to apply for the exam. If any course units need to be added, please contact the respective Heads of departments.</p>
                         </div>
                         <form action="exam_reg.php" method="POST" class="mt-10 min-h-[350px] w-11/12 lg:w-3/4 mx-auto flex flex-col gap-y-5">
                             <input type="hidden" name="step" value="2" />
@@ -698,12 +874,25 @@ function setSelected($fieldName, $fieldValue) {
                     <div class="mx-auto w-11/12">
                         <div class="text-center">
                             <h3 class="font-bold lg:text-xl text-gray-800">Payment Slip copies</h3>
-                            <p class="text-gray-500">Upload the soft copies of payment slip. File type should be <b>PDF</b> and it should <b>include both side of the slip</b>.</p>
+                            <p class="text-gray-500 mt-1">Read and understand the following instructions</p>
+                            <ol class="ml-4 lg:ml-7 my-4 list-decimal text-justify space-y-4">
+                                <li>
+                                Upload the soft copies of payment slip. File type should be <span class="font-semibold">PDF</span> and it should <span class="font-semibold">include both side of the slip</span>.
+                                    <b class="font-bold"><u>NOTE:</u></b><br>
+                                    <ul class="ml-4 lg:ml-7 my-1 list-decimal text-justify">
+                                        <li class="font-semibold">Please write the following details in the back side of the Deposit Slip: <br> 1. Full Name  2. Reg. No.   3. Level of Repeat Exam   4. Applied course units</li>
+                                        <li class="font-semibold">You need to include both sides of the Deposit Slip in a single PDF file and attach that PDF file. (Only one PDF file is allowed)</li>
+                                        <li class="font-semibold">Original Deposit Slip should be handover to the Dean's office</li>
+                                    </ul>
+                                </li>
+                                <li>Those who had submitted Medical Certificate for not sitting the ECEs last year, should also pay Rs. 250/- per course unit and submit both slip copies and senate approval letter.</li>
+                                <li>Original Payment Voucher and senate approval letter (Optional) should be submitted to the Dean's Office </li>
+                            </ol>
                         </div>
                         <?php if (isset($slip_msg)) : ?>
                             <div class="text-center error-msg text-red-500"><?php echo $slip_msg; ?></div>
                         <?php endif; ?>
-                        <form action="exam_reg.php" method="POST" enctype="multipart/form-data" class="mt-10 min-h-[350px] w-3/4 mx-auto flex flex-col justify-around">
+                        <form action="exam_reg.php" method="POST" enctype="multipart/form-data" class="mt-10 mb-5 w-3/4 mx-auto flex flex-col gap-y-8">
                             <input type="hidden" name="step" value="3" />
                             <?php if(isset($_POST['regId'])) echo "<input type='hidden' name='regId' value='".$_POST['regId']."' />" ?>
                             <?php foreach ($selectedUnits as $unitId) { ?>
@@ -723,9 +912,13 @@ function setSelected($fieldName, $fieldValue) {
                                 <option value="4" <?php setSelected('level', 4) ?>>Level 4</option>
                             </select>
 
-                            <div class="detail-row !w-full">
+                            <div class="w-full flex gap-x-5 items-center justify-between">
                                 <label for="regno">Payment Slips: </label>
-                                <input type="file" class="col-span-2 w-full h-full file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-[#5465ff] hover:file:bg-violet-100" name="slipFile" required>
+                                <input type="file" class="w-full h-full file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-[#5465ff] hover:file:bg-violet-100" name="slipFile" accept=".pdf" required>
+                            </div>
+                            <div class="w-full flex gap-x-5 items-center justify-between">
+                                <label for="regno">Senate approval letter: </label>
+                                <input type="file" class="w-full h-full file:cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-[#5465ff] hover:file:bg-violet-100" name="approvalFile" accept=".pdf">
                             </div>
                             <div class="w-full flex items-center justify-around mt-5">
                                 <input class="btn outline-btn w-5/12" type="submit" name="submit" value="&lt; Back" />
