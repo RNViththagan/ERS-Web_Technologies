@@ -24,3 +24,51 @@ To enable this, you have to do the following:</br>
 <li>if you don't find any result then simply write `extension=fileinfo` `extension=gd` `extension=zip` among the `extensions`</li>
 <li>Close the file and run the restart the apache server again</li>
 </ol>
+
+
+<h2>Exam Registration steps : How to use?</h2>
+<ol>
+    <li>
+        <ol>
+            <li>Login using master admin account
+            <ul>
+            <li>User Name:admin_master@nexus.com</li>
+            <li>Password:Abcd1234@</li>
+            </ul>
+            <li>Create exam or edit exams => change exam state</li>
+            <li>Add specific Students to particular exam  registration (repeat / medical)</li>
+        </ol>
+    </li>
+    <li>
+        <ol>
+            <li>Login using student admin account
+            <ul>
+            <li>User Name:stud_admin1@nexus.com</li>
+            <li>Password:stud_admin1@nexus</li>
+            </ul>
+            <li>Can able to add students => one by one or bulk upload using <b>Excel sheet</b></li>
+            <li>Can able to assign index no to students => bulk upload using <b>Excel sheet</b></li>
+            <li>Can able view repeat students payment slips and senate letter then verify them</li>
+        </ol>
+    </li>
+    <li>
+        <ol>
+            <li>Login using subject admin account
+            <ul>
+            <li>User Name:subj_admin1@nexus.com</li>
+            <li>Password:subj_admin1@nexus</li>
+            </ul>
+            <li>Can able to add subjects</li>
+            <li>Can able to add combinations</li>
+            <li>Can able to add units for subjects</li>
+            <li>Can able to assign units for exam</li>
+        </ol>
+    </li>
+    <li>
+        <ol>
+            <li>Login using student account / register</li>
+            <li>Students can only register for exams if they are able (proper / repeat)</li>
+            <li>Can able to view final registration list after the form closed</li>
+        </ol>
+    </li>
+</ol>

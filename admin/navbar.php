@@ -62,10 +62,10 @@
             $result = mysqli_query($con, $getCurrentExam);
 
             if ($result->num_rows > 0) {
-                $curExam = mysqli_fetch_assoc($result);
+                $onGoingExam = mysqli_fetch_assoc($result);
             }
             ?>
-            <?php if (isset($curExam)) { ?>
+            <?php if (isset($onGoingExam)) { ?>
                 <a
                         id="dashboardLink"
                         href="index.php?page=slips"
@@ -74,7 +74,7 @@
                     <span class="transition-all">Repeat Payment Slips</span>
                 </a>
             <?php }
-            if (isset($curExam)) { ?>
+            if (isset($onGoingExam)) { ?>
                 <a
                         id="dashboardLink"
                         href="index.php?page=senate"
