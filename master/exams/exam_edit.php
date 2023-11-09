@@ -186,6 +186,9 @@ else{
         var level = document.getElementById('level').value;
         var type = document.getElementById('type').value;
 
+        var tbody = document.getElementById("studentTable").getElementsByTagName('tbody')[0];
+        tbody.innerHTML = '';
+
         // Make an AJAX request to get student registration numbers
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "get_students.php?exam_id=" + examId + "&level=" + level + "&type=" + type, true);
@@ -193,8 +196,6 @@ else{
             if (xhr.readyState === 4 && xhr.status === 200) {
                 // Parse the JSON response and update the table
                 var students = JSON.parse(xhr.responseText);
-                var tbody = document.getElementById("studentTable").getElementsByTagName('tbody')[0];
-                tbody.innerHTML = '';
 
                 if (students.length === 0) {
                     var noRecordsRow = tbody.insertRow(0);
