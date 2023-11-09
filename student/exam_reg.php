@@ -100,6 +100,8 @@ if (mysqli_num_rows($result)) {
     $indexNo = $row['indexNo'];
 } else {
     $indexNo = "Contact the Dean office";
+    header("Location: index.php?error=Sorry! your index number has not been assigned!<br>Contact the Dean office!");
+    exit();
 }
 
 $selectSQL1 = "SELECT * FROM combination";
