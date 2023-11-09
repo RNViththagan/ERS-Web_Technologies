@@ -120,9 +120,13 @@ $profile_img = isset($user['profile_img']) ? $user['profile_img'] : "blankProfil
                 <li><a href="exam_reg.php" class="hidden btn outline-btn md:block">Exam Registration</a></li>
 
                 <?php if (!isset($profile_img)) { ?>
-                    <li onclick="openMenu()" class="py-2 px-3 bg-[var(--primary)] rounded-full drop-shadow-md cursor-pointer lh:relative"><i class="fa-solid fa-user text-2xl text-[#dfeaff]"></i></li>
+                    <li onclick="openMenu()" class="py-2 px-[14px] bg-[var(--primary)] rounded-full drop-shadow-md cursor-pointer lh:relative">
+                        <i class="fa-solid fa-user text-2xl text-[#dfeaff]"></i>
+                    </li>
                 <?php } else { ?>
-                    <img onclick="openMenu()" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full drop-shadow-md cursor-pointer ring-4" src="../assets/uploads/<?php echo $profile_img; ?>" alt="user img">
+                    <li onclick="openMenu()" class="w-10 h-10 lg:w-12 lg:h-12 rounded-full drop-shadow-md cursor-pointer ring-4">
+                        <img src="../assets/uploads/<?php echo $profile_img; ?>" alt="user img" class="w-full h-full rounded-full">
+                    </div>
                 <?php } ?>
                 
             </ul>
@@ -186,3 +190,14 @@ $profile_img = isset($user['profile_img']) ? $user['profile_img'] : "blankProfil
     </div>
 </body>
 </html>
+
+<script>
+    const userMenu = document.getElementById('user-menu');
+
+    function openMenu() {
+        userMenu.classList.toggle('hidden');
+        userMenu.classList.toggle('absolute');
+        userMenu.classList.toggle('-translate-y-full');
+        userMenu.classList.toggle('lg:translate-x-full');
+    }
+</script>

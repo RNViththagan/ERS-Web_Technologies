@@ -87,11 +87,11 @@ else{
 <!-- New section for managing allowed students -->
 <div class="w-[500px] mx-auto mt-5">
     <h1 class="title mb-2">Manage Allowed Students</h1>
-    <div id="dropdowns" class="grid grid-cols-2 gap-4">
+    <div id="dropdowns" class="grid grid-cols-3 gap-5 mt-5 mb-10">
         <div>
             <label for="level">Level:</label>
             <select name="level" id="level"
-                    class="w-full border-2 border-gray-400 rounded-full px-5 outline-none focus-border-blue-500" disabled>
+                    class="w-full border-2 h-8 border-gray-400 rounded-full px-5 outline-none focus-border-blue-500">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -101,27 +101,29 @@ else{
         <div>
             <label for="type">Type:</label>
             <select name="type" id="type"
-                    class="w-full border-2 border-gray-400 rounded-full px-5 outline-none focus-border-blue-500" disabled>
+                    class="w-full border-2 h-8 border-gray-400 rounded-full px-5 outline-none focus-border-blue-500">
                 <option value="proper">Proper</option>
                 <option value="repeat">Repeat</option>
             </select>
         </div>
+        <button id="manageButton" class="btn fill-btn mt-2" onclick="manageStudents()">Manage</button>
     </div>
-    <button id="manageButton" class="btn fill-btn mt-2" onclick="manageStudents()">Manage</button>
     <div id="studentsSection" style="display: none;">
-        <input type="text" id="studentInput"
-               class="w-full border-2 border-gray-400 rounded-full px-5 outline-none focus-border-blue-500 mt-2"
-               placeholder="Enter student registration number">
-        <button id="addButton" class="btn fill-btn mt-2" onclick="addStudent()">Add</button>
+        <div class="grid grid-cols-3 gap-5 mt-5 mb-10">
+            <input type="text" id="studentInput"
+                   class="w-full col-span-2 border-2 border-gray-400 rounded-full px-5 outline-none focus-border-blue-500 mt-2"
+                   placeholder="Enter student registration number">
+            <button id="addButton" class="col-span-1 btn fill-btn mt-2" onclick="addStudent()">Add</button>
+        </div>
         <table id="studentTable" class="w-full text-center">
             <thead>
-            <tr class="h-12 bg-blue-100 font-semibold">
-                <th>Registration Number</th>
-                <th>Actions</th>
-            </tr>
+                <tr class="h-12 bg-blue-100 font-semibold">
+                    <th>Registration Number</th>
+                    <th>Actions</th>
+                </tr>
             </thead>
             <tbody>
-            <!-- Students will be displayed here -->
+                <!-- Students will be displayed here -->
             </tbody>
         </table>
     </div>

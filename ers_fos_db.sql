@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 25, 2023 at 11:06 PM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: sql309.infinityfree.com
+-- Generation Time: Nov 09, 2023 at 03:30 AM
+-- Server version: 10.4.17-MariaDB
+-- PHP Version: 7.2.22
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ers_fos_db`
+-- Database: `if0_35002363_ers_fos_db`
 --
 
 -- --------------------------------------------------------
@@ -33,7 +34,7 @@ CREATE TABLE `admin` (
   `name` varchar(25) NOT NULL,
   `role` varchar(50) NOT NULL DEFAULT 'Student',
   `status` varchar(100) NOT NULL DEFAULT 'active'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `admin`
@@ -61,7 +62,7 @@ CREATE TABLE `admin_details` (
   `department` varchar(100) DEFAULT NULL,
   `mobileNo` int(10) DEFAULT NULL,
   `profile_img` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `admin_details`
@@ -84,7 +85,7 @@ INSERT INTO `admin_details` (`adminId`, `email`, `title`, `fullName`, `departmen
 CREATE TABLE `combination` (
   `combinationID` int(11) NOT NULL,
   `combinationName` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `combination`
@@ -114,7 +115,7 @@ INSERT INTO `combination` (`combinationID`, `combinationName`) VALUES
 CREATE TABLE `combination_subjects` (
   `combinationID` int(11) NOT NULL,
   `subject` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `combination_subjects`
@@ -172,7 +173,7 @@ CREATE TABLE `exam_reg` (
   `status` enum('draft','registration','closed','hidden') DEFAULT 'draft',
   `closing_date` date NOT NULL DEFAULT '2020-01-01',
   `date_created` date DEFAULT '2020-01-01'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `exam_reg`
@@ -180,7 +181,32 @@ CREATE TABLE `exam_reg` (
 
 INSERT INTO `exam_reg` (`exam_id`, `academic_year`, `semester`, `status`, `closing_date`, `date_created`) VALUES
 (1, '2020', '1', 'hidden', '2023-08-28', '2023-08-28'),
-(2, '2020', '2', 'draft', '2023-09-14', '2023-09-01');
+(2, '2020', '2', 'registration', '2023-09-14', '2023-09-01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exam_reg_excep`
+--
+
+CREATE TABLE `exam_reg_excep` (
+  `exam_id` int(11) NOT NULL,
+  `level` int(11) NOT NULL,
+  `type` enum('proper','repeat') NOT NULL,
+  `regNo` varchar(12) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `exam_reg_excep`
+--
+
+INSERT INTO `exam_reg_excep` (`exam_id`, `level`, `type`, `regNo`) VALUES
+(2, 1, 'proper', '2020/CSC/007'),
+(2, 2, 'proper', '2020/CSC/007'),
+(2, 2, 'proper', '2020/CSC/051'),
+(2, 2, 'proper', '2020/CSC/074'),
+(2, 2, 'repeat', '2020/CSC/074'),
+(2, 3, 'proper', '2020/CSC/074');
 
 -- --------------------------------------------------------
 
@@ -192,7 +218,7 @@ CREATE TABLE `exam_stud_index` (
   `exam_id` int(11) NOT NULL,
   `regNo` varchar(12) NOT NULL,
   `indexNo` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `exam_stud_index`
@@ -236,7 +262,7 @@ INSERT INTO `exam_stud_index` (`exam_id`, `regNo`, `indexNo`) VALUES
 CREATE TABLE `reg_units` (
   `regId` int(11) NOT NULL,
   `exam_unit_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `reg_units`
@@ -431,7 +457,28 @@ INSERT INTO `reg_units` (`regId`, `exam_unit_id`) VALUES
 (45, 38),
 (45, 39),
 (45, 40),
-(45, 41);
+(45, 41),
+(46, 2),
+(46, 21);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `repeat_slips`
+--
+
+CREATE TABLE `repeat_slips` (
+  `regId` int(11) NOT NULL,
+  `payment_slip` varchar(50) NOT NULL,
+  `payment_slip_status` enum('accepted','pending','rejected') NOT NULL DEFAULT 'pending',
+  `senate_approval_letter` varchar(50) NOT NULL,
+  `senate_approval_letter_status` enum('accepted','pending','rejected') NOT NULL DEFAULT 'pending'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `repeat_slips`
+--
+
 
 -- --------------------------------------------------------
 
@@ -450,13 +497,14 @@ CREATE TABLE `student` (
   `homeAddress` varchar(300) DEFAULT NULL,
   `addressInJaffna` varchar(300) DEFAULT NULL,
   `profile_img` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `student`
 --
 
 INSERT INTO `student` (`regNo`, `title`, `nameWithInitial`, `fullName`, `district`, `mobileNo`, `landlineNo`, `homeAddress`, `addressInJaffna`, `profile_img`) VALUES
+('2014/CSC/051', 'mr', 'test', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2018/SB/001', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 ('2019/CSC/041', 'Mr', 'Saanusan', NULL, NULL, NULL, NULL, NULL, 'Kandaramadam', '2019CSC041.jpg'),
 ('2019/SP/178', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -533,13 +581,14 @@ CREATE TABLE `student_check` (
   `status` varchar(20) NOT NULL DEFAULT 'unregistered',
   `verificationCode` int(11) DEFAULT NULL,
   `verificationStatus` varchar(15) NOT NULL DEFAULT 'not_verified'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `student_check`
 --
 
 INSERT INTO `student_check` (`regNo`, `email`, `password`, `status`, `verificationCode`, `verificationStatus`) VALUES
+('2014/CSC/051', '2014CSC051@gmail.com', '$2y$10$43cjXmjEzaBbdy5aNR/LquaQqXrqVU9r/Hj4tcshbN9UUHhNlCzIO', 'active', NULL, 'verified'),
 ('2018/SB/001', '001sb18@test.com', '$2y$10$beowQ3HLK6AmzhFjT7qkLud2bCwuQZHXzevwHOEVfEIT1loisfVP.', 'unregistered', 422791, 'not_verified'),
 ('2019/CSC/041', 'saanusansaanu@gmail.com', '$2y$10$rOKfjhDCai20ZtBWEZTdXuQnP.kqaHRv4xDMIdnE8j8Vxqa8qPDKC', 'active', 0, 'verified'),
 ('2019/SP/178', '178sp19@test.com', NULL, 'unregistered', NULL, 'not_verified'),
@@ -618,7 +667,7 @@ CREATE TABLE `stud_exam_reg` (
   `combId` int(11) NOT NULL,
   `type` enum('proper','repeat') NOT NULL,
   `reg_date` date DEFAULT '2020-01-01'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `stud_exam_reg`
@@ -651,7 +700,8 @@ INSERT INTO `stud_exam_reg` (`regId`, `exam_id`, `stud_regNo`, `level`, `combId`
 (42, 2, '2020/CSC/074', 2, 1, 'proper', '2023-09-06'),
 (43, 2, '2020/CSC/007', 2, 1, 'proper', '2023-09-07'),
 (44, 2, '2020/CSC/033', 2, 1, 'proper', '2023-09-08'),
-(45, 2, '2020/CSC/051', 2, 1, 'proper', '2023-09-13');
+(45, 2, '2020/CSC/051', 2, 1, 'proper', '2023-11-04'),
+(46, 2, '2020/CSC/074', 1, 1, 'proper', '2023-11-05');
 
 -- --------------------------------------------------------
 
@@ -661,7 +711,7 @@ INSERT INTO `stud_exam_reg` (`regId`, `exam_id`, `stud_regNo`, `level`, `combId`
 
 CREATE TABLE `subject` (
   `subject` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `subject`
@@ -692,7 +742,7 @@ CREATE TABLE `unit` (
   `subject` varchar(50) NOT NULL,
   `level` int(1) NOT NULL,
   `acYearAdded` int(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `unit`
@@ -794,7 +844,7 @@ CREATE TABLE `unit_sub_exam` (
   `exam_id` int(11) NOT NULL,
   `unitId` int(11) NOT NULL,
   `type` enum('proper','repeat') NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `unit_sub_exam`
@@ -810,12 +860,16 @@ INSERT INTO `unit_sub_exam` (`exam_unit_id`, `exam_id`, `unitId`, `type`) VALUES
 (93, 2, 24, 'proper'),
 (92, 2, 25, 'proper'),
 (98, 2, 31, 'proper'),
+(105, 2, 31, 'repeat'),
 (97, 2, 32, 'proper'),
+(106, 2, 32, 'repeat'),
 (96, 2, 33, 'proper'),
+(107, 2, 33, 'repeat'),
 (99, 2, 38, 'proper'),
 (102, 2, 39, 'proper'),
 (101, 2, 40, 'proper'),
 (100, 2, 41, 'proper'),
+(108, 2, 41, 'repeat'),
 (21, 2, 43, 'proper'),
 (22, 2, 44, 'proper'),
 (23, 2, 45, 'proper'),
@@ -877,6 +931,13 @@ ALTER TABLE `exam_reg`
   ADD UNIQUE KEY `academic_year` (`academic_year`,`semester`);
 
 --
+-- Indexes for table `exam_reg_excep`
+--
+ALTER TABLE `exam_reg_excep`
+  ADD PRIMARY KEY (`exam_id`,`level`,`type`,`regNo`),
+  ADD KEY `exam_reg_excep_ibfk_2` (`regNo`);
+
+--
 -- Indexes for table `exam_stud_index`
 --
 ALTER TABLE `exam_stud_index`
@@ -888,6 +949,12 @@ ALTER TABLE `exam_stud_index`
 --
 ALTER TABLE `reg_units`
   ADD PRIMARY KEY (`regId`,`exam_unit_id`);
+
+--
+-- Indexes for table `repeat_slips`
+--
+ALTER TABLE `repeat_slips`
+  ADD PRIMARY KEY (`regId`);
 
 --
 -- Indexes for table `student`
@@ -958,7 +1025,7 @@ ALTER TABLE `exam_reg`
 -- AUTO_INCREMENT for table `stud_exam_reg`
 --
 ALTER TABLE `stud_exam_reg`
-  MODIFY `regId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `regId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `unit`
@@ -970,7 +1037,7 @@ ALTER TABLE `unit`
 -- AUTO_INCREMENT for table `unit_sub_exam`
 --
 ALTER TABLE `unit_sub_exam`
-  MODIFY `exam_unit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `exam_unit_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- Constraints for dumped tables
@@ -990,6 +1057,13 @@ ALTER TABLE `combination_subjects`
   ADD CONSTRAINT `combination_subjects_ibfk_2` FOREIGN KEY (`subject`) REFERENCES `subject` (`subject`);
 
 --
+-- Constraints for table `exam_reg_excep`
+--
+ALTER TABLE `exam_reg_excep`
+  ADD CONSTRAINT `exam_reg_excep_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `exam_reg` (`exam_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `exam_reg_excep_ibfk_2` FOREIGN KEY (`regNo`) REFERENCES `student_check` (`regNo`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `exam_stud_index`
 --
 ALTER TABLE `exam_stud_index`
@@ -1001,6 +1075,12 @@ ALTER TABLE `exam_stud_index`
 --
 ALTER TABLE `reg_units`
   ADD CONSTRAINT `reg_units_ibfk_1` FOREIGN KEY (`regId`) REFERENCES `stud_exam_reg` (`regId`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `repeat_slips`
+--
+ALTER TABLE `repeat_slips`
+  ADD CONSTRAINT `FK_repeat_slps_examID` FOREIGN KEY (`regId`) REFERENCES `stud_exam_reg` (`regId`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `student`
