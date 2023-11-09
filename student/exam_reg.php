@@ -359,12 +359,18 @@ function setSelected($fieldName, $fieldValue) {
                 }
 
                 function processStep3() {
-                    global $con, $exam;
+                    global $con, $exam, $regNo;
                     if(isset($_FILES["slipFile"]["name"]) and $_FILES["slipFile"]["name"] != Null){
                         $path = $_FILES['slipFile']['name'];
-                        $ext = pathinfo($path, PATHINFO_EXTENSION);
+                        $ext_slipFile = pathinfo($path, PATHINFO_EXTENSION);
                     }
-                    if(strtolower($ext) != "pdf"){
+
+                    if(isset($_FILES["approvalFile"]["name"]) and $_FILES["approvalFile"]["name"] != Null) {
+                        $path = $_FILES['approvalFile']['name'];
+                        $ext_approvalFile = pathinfo($path, PATHINFO_EXTENSION);
+                    }
+
+                    if(strtolower($ext_slipFile) != "pdf" or (isset($ext_approvalFile) and strtolower($ext_approvalFile) != "pdf")){
                         global $slip_msg;
                         $slip_msg = "Upload only pdf file!";
                         displayStep3();
@@ -388,9 +394,6 @@ function setSelected($fieldName, $fieldValue) {
                     ";
 
                         $unitsQueryResult = mysqli_query($con, $unitSQL);
-                        //$units = mysqli_fetch_assoc($unitsQueryResult);
-                        //print_r($unitsQueryResult->num_rows);
-                        // exit;
                         if ($unitsQueryResult) {
                             if (mysqli_num_rows($unitsQueryResult) == 0) {
                                 header("Location: index.php?error=No units were assign to this combination.");
@@ -420,14 +423,29 @@ function setSelected($fieldName, $fieldValue) {
                                                 combId = $combination,
                                                 reg_date = '$date'
                                                 WHERE regId = $editRegId";
+
+                            $payslipName ="None";
                             if(isset($_FILES["slipFile"]["name"]) and $_FILES["slipFile"]["name"] != Null){
                                 $src = $_FILES["slipFile"]["tmp_name"];
                                 $path = $_FILES['slipFile']['name'];
                                 $ext = pathinfo($path, PATHINFO_EXTENSION);
-                                $slipName = $editRegId.".".$ext;
-                                $target = "../assets/repeat_slips/" . $slipName;
+                                $payslipName = str_replace("/","",$regNo)."_".$editRegId."_payment_slip".".".$ext;
+                                $target = "../assets/uploads/repeat_slips/payment_slips/" . $payslipName;
                                 move_uploaded_file($src, $target);
                             }
+                            $senateLetterName ="None";
+                            if(isset($_FILES["approvalFile"]["name"]) and $_FILES["approvalFile"]["name"] != Null){
+                                $src = $_FILES["approvalFile"]["tmp_name"];
+                                $path = $_FILES['approvalFile']['name'];
+                                $ext = pathinfo($path, PATHINFO_EXTENSION);
+                                $senateLetterName = str_replace("/","",$regNo)."_".$editRegId."_senate_approval_letter".".".$ext;
+                                $target = "../assets/uploads/repeat_slips/senate_approval_letter/" . $senateLetterName;
+                                move_uploaded_file($src, $target);
+                            }
+
+                            $slip_sql = "UPDATE repeat_slips SET payment_slip = '$payslipName', senate_approval_letter ='$senateLetterName', payment_slip_status = 'pending' , senate_approval_letter_status = 'pending' 
+                                  WHERE regId = $editRegId";
+                            $slip_sql_query = mysqli_query($con, $slip_sql);
 
                             if (mysqli_query($con, $updateQuery)) {
 
@@ -488,13 +506,30 @@ function setSelected($fieldName, $fieldValue) {
                                         break;
                                     }
                                 }
+                                $payslipName ="None";
                                 if(isset($_FILES["slipFile"]["name"]) and $_FILES["slipFile"]["name"] != Null){
                                     $src = $_FILES["slipFile"]["tmp_name"];
                                     $path = $_FILES['slipFile']['name'];
                                     $ext = pathinfo($path, PATHINFO_EXTENSION);
-                                    $slipName = $regId.".".$ext;
-                                    $target = "../assets/repeat_slips/" . $slipName;
+                                    $payslipName = str_replace("/","",$regNo)."_".$regId."_payment_slip".".".$ext;
+                                    $target = "../assets/uploads/repeat_slips/payment_slips/" . $payslipName;
                                     move_uploaded_file($src, $target);
+                                }
+                                $senateLetterName ="None";
+                                if(isset($_FILES["approvalFile"]["name"]) and $_FILES["approvalFile"]["name"] != Null){
+                                    $src = $_FILES["approvalFile"]["tmp_name"];
+                                    $path = $_FILES['approvalFile']['name'];
+                                    $ext = pathinfo($path, PATHINFO_EXTENSION);
+                                    $senateLetterName = str_replace("/","",$regNo)."_".$regId."_senate_approval_letter".".".$ext;
+                                    $target = "../assets/uploads/repeat_slips/senate_approval_letter/" . $senateLetterName;
+                                    move_uploaded_file($src, $target);
+                                }
+
+                                $slip_sql = "INSERT INTO repeat_slips(regId, payment_slip, senate_approval_letter) VALUES($regId, '$payslipName','$senateLetterName')";
+                                $slip_sql_query = mysqli_query($con, $slip_sql);
+
+                                if (!$slip_sql_query) {
+                                    $inserted = false;
                                 }
 
                                 if ($inserted) {

@@ -58,14 +58,14 @@
                 </a>
             <?php }
 
-            $getCurrentExam = "SELECT * FROM repeat_slips WHERE status = 'pending'";
+            $getCurrentExam = "SELECT * FROM exam_reg WHERE status = 'registration' or status = 'closed'";
             $result = mysqli_query($con, $getCurrentExam);
 
             if ($result->num_rows > 0) {
-                $curSlips = mysqli_fetch_assoc($result);
+                $curExam = mysqli_fetch_assoc($result);
             }
             ?>
-            <?php if (isset($curSlips)) { ?>
+            <?php if (isset($curExam)) { ?>
                 <a
                         id="dashboardLink"
                         href="index.php?page=slips"
@@ -74,18 +74,10 @@
                     <span class="transition-all">Repeat Payment Slips</span>
                 </a>
             <?php }
-
-            $getCurrentExam = "SELECT * FROM `repeat_medical_approval` WHERE status = 'pending'";
-            $result = mysqli_query($con, $getCurrentExam);
-
-            if ($result->num_rows > 0) {
-                $curSlips = mysqli_fetch_assoc($result);
-            }
-            ?>
-            <?php if (isset($curSlips)) { ?>
+            if (isset($curExam)) { ?>
                 <a
                         id="dashboardLink"
-                        href="index.php?page=medical"
+                        href="index.php?page=senate"
                         class="flex items-center gap-4 w-full bg-gray-100 rounded-xl py-2.5 px-4 cursor-pointer transition-all hover:bg-gray-200 hover:text-black font-semibold text-gray-700">
                     <i class="bi bi-file-text text-xl"></i>
                     <span class="transition-all">Senate approval letter</span>

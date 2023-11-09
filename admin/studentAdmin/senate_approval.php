@@ -1,21 +1,22 @@
 <?php
 
-require($_SERVER['DOCUMENT_ROOT'] . '/ERS-Web_Technologies/vendor/autoload.php'); // Include PHPMailer autoloader
+require($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php'); // Include PHPMailer autoloader
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 $examID = $exam['exam_id'];
 
-if (isset($_POST['regNo'])) {
+if (isset($_POST['regID'])) {
+    $regID = $_POST['regID'];
     $regNo = $_POST['regNo'];
     $action = (isset($_POST['accept'])) ? "accepted" : "rejected";
 
-    $sql = "UPDATE `repeat_medical_approval` SET `status`='$action' WHERE `exam_id`=$examID AND `reg_id`='$regNo'";
+    $sql = "UPDATE `repeat_slips` SET `senate_approval_letter_status`='$action' WHERE `regId`='$regID'";
     $result = mysqli_query($con, $sql);
 
     if (!$result) {
-        header("Location: index.php?page=medical&error=Something went wrong!");
+        header("Location: index.php?page=senate&error=Something went wrong!");
     } else {
         if ($action === 'rejected') {
             $sql = "SELECT `email` FROM `student_check` WHERE `regNo`='$regNo'";
@@ -26,9 +27,9 @@ if (isset($_POST['regNo'])) {
                 $student = mysqli_fetch_assoc($result);
                 $email = $student['email'];
     
-                if ($data_check) {
-                    $subject = "ERS - Repeat Exam Payment Slip Rejected";
-                    $message = "Your payment slip for the repeate exam/s have been Rejected. Please contact the dean office for further details.";
+                if ($student) {
+                    $subject = "ERS - Repeat Senate approval letter Rejected";
+                    $message = "Your Senate approval letter for the repeat exam/s have been Rejected. Please contact the dean office for further details.";
                     $sender_name = "Exam Registration System | Faculty of Science";
                     $sender_mail = "ers.fos.csc@gmail.com";
                     $htmlBody = '
@@ -68,36 +69,61 @@ if (isset($_POST['regNo'])) {
                         // Send email
                         $mail->send();
                     } catch (Exception $e) {
-                        header("Location: index.php?page=medical&error=Failed while sending code!");
+                        header("Location: index.php?page=senate&error=Failed while sending code!");
                     }
                 } else {
-                    header("Location: index.php?page=medical&error=Failed while inserting data into database!");
+                    header("Location: index.php?page=senate&error=Failed while inserting data into database!");
                 }
             }
         }
-        echo "<script>objectElementParentElement.removeChild(objectElement);</script>";
-    }    
+    }
 }
 
 $current_page = isset($_GET['no']) ? intval($_GET['no']) : 1;
 $records_per_page = 10;
 $offset = ($current_page - 1) * $records_per_page;
-
-$sql = "SELECT rma.*, s.regNo, s.title, s.fullName, s.nameWithInitial, i.indexNo FROM `repeat_medical_approval` rma 
-        INNER JOIN `student` s ON rma.reg_id = s.regNo
-        INNER JOIN `exam_stud_index` i ON rma.reg_id = i.regNo
-        WHERE i.exam_id = $examID AND rma.status = 'pending'";
+$order =" ORDER BY CAST(SUBSTRING_INDEX(s.regNo, '/', 1) AS UNSIGNED) DESC,
+  SUBSTRING_INDEX(SUBSTRING_INDEX(s.regNo, '/', 2), '/', -1),
+  CAST(SUBSTRING_INDEX(s.regNo, '/', -1) AS UNSIGNED)";
+$sql = "SELECT rs.*, s.regNo, s.title, s.fullName, s.nameWithInitial, i.indexNo FROM `repeat_slips` rs 
+        INNER JOIN `stud_exam_reg` ser ON ser.regId  = rs.regId
+        INNER JOIN `student` s ON ser.stud_regNo  = s.regNo
+        INNER JOIN `exam_stud_index` i ON ser.stud_regNo = i.regNo
+        WHERE ser.exam_id = $examID AND rs.senate_approval_letter != 'None'";
 
 $limit = " LIMIT $offset, $records_per_page";
 
+$year = "";
+$status = "";
+$filterOp = "";
+if (isset($_POST['filter'])) {
+    $year = $_POST['year'];
+    $status = (isset($_POST['status']))?$_POST['status']:"none";
+    if ($year != "none")
+        $filterOp .= " s.regNo LIKE '$year%'";
+
+    if ($status != "none") {
+        if ($filterOp != "")
+            $filterOp .= " And ";
+        $filterOp .= " rs.senate_approval_letter_status = '$status'";
+    }
+    if ($filterOp != "") {
+        $sql .= " And " . $filterOp;
+    }
+}
+
+
+
 $searchOp = "";
+
 if (isset($_POST['search'])) {
     $searchkey = $_POST['searchkey'];
-    $searchOp = " rma.reg_id LIKE '%$searchkey%' or s.nameWithInitial LIKE '%$searchkey%' or i.indexNo LIKE '%$searchkey%'";
+    $searchOp = " s.regNo LIKE '%$searchkey%' or s.nameWithInitial LIKE '%$searchkey%' or i.indexNo LIKE '%$searchkey%' or rs.senate_approval_letter_status LIKE '%$searchkey%'";
     if ($searchOp != "") $sql .= " AND " . $searchOp;
 }
 
 $forcount = $sql;
+$sql .=$order;
 $sql .= $limit;
 $stdlist = mysqli_query($con, $sql);
 
@@ -106,13 +132,66 @@ $stdlist = mysqli_query($con, $sql);
 <div class="static flex flex-col items-center justify-around gap-5">
     <h1 class="title !mb-5">Senate Approval Letter</h1>
 
-    <form  id="searchform" action="index.php?page=slips" method="post" class="flex items-center gap-5">
+    <form  id="searchform" action="index.php?page=senate" method="post" class="flex items-center gap-5">
         <div class="search-bar w-96 h-10 border-2 border-gray-500 rounded-full flex items-center gap-5 px-5">
             <i class="bi bi-search"></i>
             <input type="text" name="searchkey" placeholder="Search Here" value="<?php echo (isset($searchkey)) ? $searchkey : "" ?>" class="outline-none h-full w-full" required>
         </div>
         <button class="btn fill-btn" type="submit" name="search">Search</button>
     </form>
+
+    <div class="filter">
+        <form id="filterform" method="post" action="index.php?page=senate"  class="flex gap-5 items-center">
+
+            <select name="year" id="year"  class="p-2 border-2 border-gray-500 rounded-lg outline-none">
+                <option value="none">Select Year</option>
+                <?php
+                $distinctYear = "SELECT DISTINCT SUBSTRING(ser.stud_regNo, 1, 4) AS starting_year FROM `repeat_slips` rs 
+                INNER JOIN `stud_exam_reg` ser ON ser.regId  = rs.regId";
+                $result = $con->query($distinctYear);
+                if ($result->num_rows > 0) {
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value='" . $row["starting_year"] . "' ";
+                        echo ($year == $row["starting_year"]) ? "selected" : "";
+                        echo ">" . ucfirst($row["starting_year"]) . "</option>";
+                    }
+                }
+                ?>
+            </select>
+
+            <?php
+
+            $distinctStatus = "SELECT DISTINCT rs.senate_approval_letter_status  FROM `repeat_slips` rs 
+                INNER JOIN `stud_exam_reg` ser ON ser.regId  = rs.regId";
+            $result = $con->query($distinctStatus);
+
+            if ($result->num_rows > 1) { ?>
+
+                <select for="status" name="status" class="p-2 border-2 border-gray-500 rounded-lg outline-none">
+                    <option value="none">Select Status</option>
+                    <?php
+                    while ($row = $result->fetch_assoc()) {
+                        echo "<option value='" . $row["senate_approval_letter_status"] . "' ";
+                        echo ($status == $row["senate_approval_letter_status"]) ? "selected" : "";
+                        echo ">" . ucfirst($row["senate_approval_letter_status"]) . "</option>";
+                    }
+                    ?>
+                </select>
+                <?php
+            }
+            ?>
+
+            <div class="flex items-center gap-5">
+                <button type="submit" name="filter" value="Filter" class="btn fill-btn">Filter</button>
+                <a href="index.php?page=senate">
+                    <button id="add" class="btn outline-btn">Reset</button>
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+
 
     <table class="w-10/12 text-center">
         <tr class="h-12 bg-blue-100 font-semibold">
@@ -125,19 +204,20 @@ $stdlist = mysqli_query($con, $sql);
         <?php
         if (mysqli_num_rows($stdlist) > 0) {
         while ($row = mysqli_fetch_assoc($stdlist)) {
-            $regID = $row['regNo'];
+            $regNo = $row['regNo'];
             $indexNo = $row['indexNo'];
             $name = ($row['title'] != "") ? $row['title'] . ". " . $row['nameWithInitial'] : $row['nameWithInitial'];
             $fullName = $row['fullName'];
-            $status = $row['status'];
+            $status = ucfirst($row['senate_approval_letter_status']);
+            $regID = ucfirst($row['regId']);
             ?>
             <tr class="h-12 odd:bg-blue-50">
-                <td><?php echo $regID; ?></td>
+                <td><?php echo $regNo; ?></td>
                 <td><?php echo $name; ?></td>
                 <td><?php echo $indexNo; ?></td>
                 <td><?php echo $status; ?></td>
                 <td>
-                    <button onclick="view(<?php echo '\''.$regID.'\', \''.$fullName.'\', \''.$indexNo.'\', \''.$row['fileName'].'\'' ?>)" class="btn outline-btn !py-1">View</button>
+                    <button onclick="view(<?php echo '\''.$regNo.'\', \''.$regID.'\', \''.$fullName.'\', \''.$indexNo.'\', \''.$row['senate_approval_letter'].'\'' ?>)" class="btn outline-btn !py-1">View</button>
                 </td>
             </tr>
             
@@ -162,8 +242,9 @@ $stdlist = mysqli_query($con, $sql);
                         <span id="regIDSpan" class="mr-1 text-lg"></span>
                         Senate approval letter
                     </h3>
-                    <form method="post" action="index.php?page=slips" class="flex items-center gap-5">
-                        <input type="hidden" name="regNo" id="regIDInput">
+                    <form method="post" action="index.php?page=senate" class="flex items-center gap-5">
+                        <input type="hidden" name="regID" id="regIDInput">
+                        <input type="hidden" name="regNo" id="regNoInput">
                         <input type="submit" value="Accept" name="accept" class="btn fill-btn !bg-green-500">
                         <input type="submit" value="Reject" name="reject" class="btn fill-btn !bg-red-500">
                         <button id="close-btn" type="button" class="text-zinc-100 bg-transparent hover:bg-white hover:text-zinc-800 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center">
@@ -188,12 +269,9 @@ $stdlist = mysqli_query($con, $sql);
                         <p>Full Name</p>
                         <span class="col-span-2" id="fullName"></span>
                     </div>
-                    <!-- <object data="../assets/uploads/slips/sankavi_payment_slips.pdf" type="application/pdf" width="100%" height="600px">
-                        <p>Unable to display PDF file. <a href="../assets/uploads/slips/sankavi_payment_slips.pdf">Download</a> instead.</p>
-                    </object> -->
                 </div>
                 <!-- Modal footer -->
-                <form method="post" action="index.php?page=slips" class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
+                <form method="post" action="index.php?page=senate" class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
                     
                 </form>
             </div>
@@ -226,11 +304,12 @@ $stdlist = mysqli_query($con, $sql);
 
 
 <script>
-    function view(regNo, fullName, indexNo, $fileName) {
+    function view(regNo, regID, fullName, indexNo, $fileName) {
         const modal = document.getElementById('slips-modal');
         const modalCloseBtn = document.getElementById('close-btn');
         const regIDSpan = document.getElementById('regIDSpan');
         const regIDInput = document.getElementById('regIDInput');
+        const regNoInput = document.getElementById('regNoInput');
         const indexNoSpan = document.getElementById('indexNoSpan');
         const regNoSpan = document.getElementById('regNoSpan');
         const fName = document.getElementById('fullName');
@@ -247,17 +326,18 @@ $stdlist = mysqli_query($con, $sql);
             objectElementParentElement.removeChild(objectElement);
         })
         regIDSpan.innerHTML = regNo;
-        regIDInput.value = regNo;
+        regIDInput.value = regID;
+        regNoInput.value = regNo;
         indexNoSpan.innerHTML = ": " + indexNo;
         regNoSpan.innerHTML = ": " + regNo;
         fName.innerHTML = ": " + fullName;
 
-        objectElement.data = "../assets/uploads/medicals/" + $fileName;
+        objectElement.data = "../assets/uploads/repeat_slips/senate_approval_letter/" + $fileName;
         objectElement.type = "application/pdf";
         objectElement.width = "100%";
         objectElement.height = "600px";
 
-        objectElementFailLink.href = "../assets/uploads/medicals/" + $fileName;
+        objectElementFailLink.href = "../assets/uploads/repeat_slips/senate_approval_letter/" + $fileName;
         objectElementFailLink.classList.add('text-blue-500', 'underline');
         objectElementFailLink.innerHTML = "Download";
         objectElementFailLink.target = "_blank";
@@ -284,7 +364,7 @@ $stdlist = mysqli_query($con, $sql);
     const parentElement = document.getElementById(formid);
     function pagechange(no) {
         var myform = document.createElement("form");
-        myform.action = "index.php?page=stud&no="+no;
+        myform.action = "index.php?page=senate&no="+no;
         myform.method = "post";
         myform.style.display = "none"; // Hide the form
         if(formid!="") {

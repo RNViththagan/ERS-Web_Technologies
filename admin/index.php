@@ -94,8 +94,8 @@ require_once("navbar.php");
                     include("studentAdmin/add_index.php");
                 } else if ($_GET['page'] === "slips") {
                     include("studentAdmin/payment_slips.php");
-                } else if ($_GET['page'] === "medical") {
-                    include("studentAdmin/medical_approval.php");
+                } else if ($_GET['page'] === "senate") {
+                    include("studentAdmin/senate_approval.php");
                 } else
                     include("studentAdmin/stud_admin_dashboard.php");
             } else
