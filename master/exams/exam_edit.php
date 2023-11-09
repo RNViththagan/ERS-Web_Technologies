@@ -186,8 +186,14 @@ else{
         var level = document.getElementById('level').value;
         var type = document.getElementById('type').value;
 
-        var tbody = document.getElementById("studentTable").getElementsByTagName('tbody')[0];
-        tbody.innerHTML = '';
+        var loadtbody = document.getElementById("studentTable").getElementsByTagName('tbody')[0];
+        loadtbody.innerHTML = '';
+
+        var loadingRecordsRow = loadtbody.insertRow(0);
+        loadingRecordsRow.className = 'h-12 odd:bg-blue-50'; // Add the class to the row
+        var loadingRecordsCell = loadingRecordsRow.insertCell(0);
+        loadingRecordsCell.colSpan = 2; // Update the colspan to include the "Actions" column
+        loadingRecordsCell.textContent = "Loading...";
 
         // Make an AJAX request to get student registration numbers
         var xhr = new XMLHttpRequest();
@@ -196,6 +202,8 @@ else{
             if (xhr.readyState === 4 && xhr.status === 200) {
                 // Parse the JSON response and update the table
                 var students = JSON.parse(xhr.responseText);
+                var tbody = document.getElementById("studentTable").getElementsByTagName('tbody')[0];
+                tbody.innerHTML = '';
 
                 if (students.length === 0) {
                     var noRecordsRow = tbody.insertRow(0);
