@@ -186,6 +186,15 @@ else{
         var level = document.getElementById('level').value;
         var type = document.getElementById('type').value;
 
+        var loadtbody = document.getElementById("studentTable").getElementsByTagName('tbody')[0];
+        loadtbody.innerHTML = '';
+
+        var loadingRecordsRow = loadtbody.insertRow(0);
+        loadingRecordsRow.className = 'h-12 odd:bg-blue-50'; // Add the class to the row
+        var loadingRecordsCell = loadingRecordsRow.insertCell(0);
+        loadingRecordsCell.colSpan = 2; // Update the colspan to include the "Actions" column
+        loadingRecordsCell.textContent = "Loading...";
+
         // Make an AJAX request to get student registration numbers
         var xhr = new XMLHttpRequest();
         xhr.open("GET", "get_students.php?exam_id=" + examId + "&level=" + level + "&type=" + type, true);
