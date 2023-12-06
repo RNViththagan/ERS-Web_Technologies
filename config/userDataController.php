@@ -16,10 +16,15 @@ $errors = array();
 
 //if user Sign-Up button
 if (isset($_POST['reg-btn'])) {
+    $sign_up = array();
     $username = mysqli_real_escape_string($con, $_POST['username']);
     $email = mysqli_real_escape_string($con, $_POST['email']);
     $password = mysqli_real_escape_string($con, $_POST['password']);
     $cpassword = mysqli_real_escape_string($con, $_POST['cpassword']);
+
+    $sign_up['email'] = $email;
+    $sign_up['username'] = $username;
+
 
     $regNoPattern1 = '/^\d{4}[A-Za-z]{2,3}\/?\d{3}$/';
     $regNoPattern2 = '/^\d{4}\/[A-Za-z]+\/\d{3}$/';
@@ -44,7 +49,7 @@ if (isset($_POST['reg-btn'])) {
     elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $errors['email'] = "Invalid email format";
     } // Check the Password validation
-    elseif (strlen($_POST["password"]) <= '8') {
+    elseif (strlen($_POST["password"]) < 8) {
         $errors['password'] = "Your Password Must Contain At Least 8 Characters!";
     } elseif (!preg_match("#[0-9]+#", $password)) {
         $errors['password'] = "Your Password Must Contain At Least 1 Number!";
