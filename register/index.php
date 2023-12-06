@@ -48,7 +48,7 @@
             <div class="<?php echo (isset($errors['username']) ? "error-input" : "")?> text-input lg:w-9/12">
                 <i class="fa-solid fa-user"></i>
                 <div></div>
-                <input class="lg:w-full" type="text" name="username" placeholder="Register Num(XXXX/XXX/XXX)" />
+                <input class="lg:w-full" type="text" name="username" placeholder="Register Num(XXXX/XXX/XXX)" <?php if (isset($sign_up['username'])) echo "value='$sign_up[username]'" ?>/>
             </div>
 
             <?php if (isset($errors['email'])) { ?>
@@ -57,7 +57,7 @@
             <div class="<?php echo (isset($errors['email']) ? "error-input" : "")?> text-input lg:w-9/12">
                 <i class="fa-solid fa-at"></i>
                 <div></div>
-                <input class="lg:w-full" type="email" name="email" placeholder="E-mail" />
+                <input class="lg:w-full" type="email" name="email" placeholder="E-mail" <?php if (isset($sign_up['email'])) echo "value='$sign_up[email]'" ?>/>
             </div>
 
             <?php if (isset($errors['password'])) { ?>
