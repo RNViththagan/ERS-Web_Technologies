@@ -4,9 +4,9 @@ if (!isset($_SESSION['role'])) {
     header("location:../login.php");
     exit();
 }
-
-include($_SERVER['DOCUMENT_ROOT'] . '/config/connect.php');
-require($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php');
+require_once ("rootPath.php");
+include($rootPath . '/config/connect.php');
+require($rootPath . '/vendor/autoload.php');
 
 if (isset($_POST['upload'])) {
     $indexno = $_POST['indexno'];
