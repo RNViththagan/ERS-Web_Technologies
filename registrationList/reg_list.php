@@ -79,7 +79,7 @@ if ($form == "DisplayList" || isset($_POST['DisplayList'])) {
     ?>
     <div class="w-11/12 mb-10 mx-auto flex flex-col gap-y-5 text-center">
         <h1 class="title text-2xl">View Registration</h1>
-        <form action="" method="post" class="w-full grid grid-cols-3 gap-x-5 items-center content-center">
+        <form action="" method="post" onsubmit="return validateForm();" class="w-full grid grid-cols-3 gap-x-5 items-center content-center">
             <input type="hidden" name="exam_id" value="<?php echo $examID ?>">
             <select class="!w-11/12 border-2 rounded-full py-2 px-5" id="type" name="type" required>
                 <option value="select" <?php setSelected('type', 'select') ?> disabled selected>Select Type <span
@@ -172,7 +172,18 @@ if ($form == "DisplayList" || isset($_POST['DisplayList'])) {
 
 
 <script>
-    const userMenu = document.getElementById('user-menu');
+        function validateForm() {
+        var typeSelect = document.getElementById('type');
+        var levelSelect = document.getElementById('level');
+
+        if (typeSelect.value === 'select' || levelSelect.value === 'select') {
+        alert('Please select both Type and Level');
+        return false;
+    }
+        document.forms['yourFormName'].submit();
+    }
+
+const userMenu = document.getElementById('user-menu');
 
     function openMenu() {
         userMenu.classList.toggle('hidden');

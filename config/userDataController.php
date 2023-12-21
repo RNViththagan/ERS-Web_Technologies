@@ -3,9 +3,9 @@ ob_start();
 if (!isset($_SESSION)) {
     session_start();
 }
-
-require($_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php'); // Include PHPMailer autoloader
-require($_SERVER['DOCUMENT_ROOT'] . '/config/connect.php');
+require_once ("rootPath.php");
+require($rootPath . '/vendor/autoload.php'); // Include PHPMailer autoloader
+require($rootPath . '/config/connect.php');
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
